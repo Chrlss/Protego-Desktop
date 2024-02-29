@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Protego_Desktop.View.Home"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Protego_Desktop.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="700">
+    <Grid>
+        <Border CornerRadius="0,20,20,0" Margin="0,5,5,0">
+
+            <ui:CardAction Grid.Row="1" Margin="368,222,266,0" Height="152" VerticalAlignment="Top" Foreground="#303030">
+                <TextBlock>
+                    HAHAHAHA
+                </TextBlock>
+            </ui:CardAction>
+
+        </Border>
+    </Grid>
+</UserControl>

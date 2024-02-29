@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace samplex.Pages
+namespace Protego.Pages
 {
     /// <summary>
-    /// Interaction logic for Dashboard.xaml
+    /// Interaction logic for Protection.xaml
     /// </summary>
-    public partial class Dashboard : Page
+    public partial class Protection : Page
     {
-        public Dashboard()
+        public Protection()
         {
             InitializeComponent();
         }

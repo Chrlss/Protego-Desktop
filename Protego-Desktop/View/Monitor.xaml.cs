@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace samplex.View.UserControls
+namespace Protego_Desktop.View
 {
     /// <summary>
-    /// Interaction logic for DashboardMenu.xaml
+    /// Interaction logic for Monitor.xaml
     /// </summary>
-    public partial class DashboardMenu : UserControl
+    public partial class Monitor : UserControl
     {
-        public DashboardMenu()
+        public Monitor()
         {
             InitializeComponent();
         }

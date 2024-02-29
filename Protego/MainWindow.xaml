@@ -1,0 +1,122 @@
+﻿<Window x:Class="Protego.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tray="http://schemas.lepo.co/wpfui/2022/xaml/tray"
+        xmlns:pages="clr-namespace:Protego.Pages"
+        xmlns:local="clr-namespace:Protego"
+        mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" 
+        Title="MainWindow" Height="450" Width="800" Background="Transparent">
+
+    <Border Grid.Row="1" CornerRadius="12" Background="#211F1F">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+
+            <TextBlock VerticalAlignment="Center" FontSize="12" Grid.Row="0" Foreground="White" Margin="30,0,0,0">
+                Protego
+            </TextBlock>
+            <Image Source="E:\source\repos\Protego\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,10,0">
+                <ui:Button x:Name="btnMinimize" Content="_" Width="20" Height="20" 
+                    BorderBrush="Transparent" Background="Transparent" 
+                    Click="btnMinimize_Click" Margin="0,0,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="DarkGray"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#1D84B5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </ui:Button>
+                <ui:Button x:Name="btnMaximize" Content="🗖" Width="20" Height="20" 
+                    BorderBrush="Transparent" Background="Transparent" 
+                    Click="btnMaximize_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5" Margin="0,0,0,0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="DarkGray"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#1D84B5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </ui:Button>
+                <ui:Button x:Name="btnClose" Content="X" Width="20" Height="20" 
+                    BorderBrush="Transparent" Background="Transparent"
+                    Click="btnClose_Click" Margin="0,0,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="DarkGray"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#1D84B5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </ui:Button>
+            </StackPanel>
+
+            <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent" >
+                <ui:NavigationView.MenuItems>
+                    <ui:NavigationViewItem Content="Home" Tag="Home" Icon="{ui:SymbolIcon Home20}"   
+                                           TargetPageType="{x:Type pages:Home}" />
+                    <ui:NavigationViewItem Content="Protection" Tag="Protection" Icon="{ui:SymbolIcon Shield20}"
+                                           TargetPageType="{x:Type pages:Protection}" />
+                    <ui:NavigationViewItem Content="Security" Tag="Security" Icon="{ui:SymbolIcon LockClosed20}" 
+                                           TargetPageType="{x:Type pages:Security}" />
+                    <ui:NavigationViewItem Content="Monitor" Tag="Monitor" Icon="{ui:SymbolIcon DataHistogram20}"
+                                           TargetPageType="{x:Type pages:Monitor}" />
+                </ui:NavigationView.MenuItems>
+                <ui:NavigationView.FooterMenuItems>
+                    <ui:NavigationViewItem Content="Help" Tag="Help" Icon="{ui:SymbolIcon QuestionCircle20}" 
+                                           TargetPageType="{x:Type pages:Help}" />
+                    <ui:NavigationViewItem Content="Settings" Tag="Settings" Icon="{ui:SymbolIcon Settings20}"
+                                           TargetPageType="{x:Type pages:Settings}" />
+                </ui:NavigationView.FooterMenuItems>
+                <ui:NavigationView.ContentOverlay>
+                    <Grid>
+                        <ui:SnackbarPresenter x:Name="SnackbarPresenter" />
+                    </Grid>
+                </ui:NavigationView.ContentOverlay>
+            </ui:NavigationView>
+
+        </Grid>
+    </Border>
+</Window>
