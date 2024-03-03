@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using Protego.Pages;
+using System;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,7 +10,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
+
 
 
 namespace Protego
@@ -23,12 +27,9 @@ namespace Protego
         public MainWindow()
         {
             InitializeComponent();
-         
 
         }
-
-       
-
+        
 
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
@@ -48,14 +49,7 @@ namespace Protego
             Close();
         }
 
-        private void NavigationViewItem_Click(object sender, RoutedEventArgs e)
-        {
+        
 
-        }
-
-        private void NavigationViewItem_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

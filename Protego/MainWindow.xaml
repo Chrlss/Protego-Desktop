@@ -93,9 +93,9 @@
                 </ui:Button>
             </StackPanel>
 
-            <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent" >
+            <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent">
                 <ui:NavigationView.MenuItems>
-                    <ui:NavigationViewItem Content="Home" Tag="Home" Icon="{ui:SymbolIcon Home20}"   
+                    <ui:NavigationViewItem x:Name="Home" Content="Home" Tag="Home" Icon="{ui:SymbolIcon Home20}"   
                                            TargetPageType="{x:Type pages:Home}" />
                     <ui:NavigationViewItem Content="Protection" Tag="Protection" Icon="{ui:SymbolIcon Shield20}"
                                            TargetPageType="{x:Type pages:Protection}" />
@@ -116,7 +116,8 @@
                     </Grid>
                 </ui:NavigationView.ContentOverlay>
             </ui:NavigationView>
-
+            
         </Grid>
     </Border>
+    
 </Window>

@@ -92,10 +92,10 @@ public interface INavigationViewItem
     /// <summary>
     /// Correctly activates
     /// </summary>
-    void Activate(INavigationView navigationView);
+    void Activate(NavigationView navigationView);
 
     /// <summary>
     /// Correctly deactivates
     /// </summary>
-    void Deactivate(INavigationView navigationView);
+    void Deactivate(NavigationView navigationView);
 }
