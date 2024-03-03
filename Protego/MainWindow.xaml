@@ -8,7 +8,8 @@
         xmlns:pages="clr-namespace:Protego.Pages"
         xmlns:local="clr-namespace:Protego"
         mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" 
-        Title="MainWindow" Height="450" Width="800" Background="Transparent">
+        Title="MainWindow" Height="450" Width="800" Background="Transparent"
+        WindowStartupLocation="CenterScreen">
 
     <Border Grid.Row="1" CornerRadius="12" Background="#211F1F">
 
