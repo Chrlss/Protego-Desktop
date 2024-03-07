@@ -25,6 +25,9 @@ namespace Protego.Pages
             InitializeComponent();
         }
 
+        private void CardAction_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

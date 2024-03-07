@@ -22,7 +22,8 @@ namespace Protego
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        private bool isDragging = false;
+        private Point lastMousePosition;
 
         public MainWindow()
         {
@@ -48,8 +49,6 @@ namespace Protego
         {
             Close();
         }
-
-        
 
     }
 }

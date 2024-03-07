@@ -20,10 +20,11 @@
             </Grid.RowDefinitions>
 
 
-
-            <TextBlock VerticalAlignment="Center" FontSize="12" Grid.Row="0" Foreground="White" Margin="30,0,0,0">
+            
+            <TextBlock VerticalAlignment="Center" FontSize="12" Grid.Row="0" Foreground="White" Margin="30,0,0,0" >
                 Protego
             </TextBlock>
+            
             <Image Source="E:\source\repos\Protego\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,10,0">
                 <ui:Button x:Name="btnMinimize" Content="_" Width="20" Height="20" 
@@ -83,7 +84,7 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="DarkGray"/>
+                                    <Setter TargetName="border" Property="Background" Value="red"/>
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
                                     <Setter TargetName="border" Property="Background" Value="#1D84B5"/>
@@ -113,7 +114,7 @@
                 </ui:NavigationView.FooterMenuItems>
                 <ui:NavigationView.ContentOverlay>
                     <Grid>
-                        <ui:SnackbarPresenter x:Name="SnackbarPresenter" />
+                        <ui:SnackbarPresenter x:Name="SnackbarPresenter" Margin="10,0,-10,0" />
                     </Grid>
                 </ui:NavigationView.ContentOverlay>
             </ui:NavigationView>
