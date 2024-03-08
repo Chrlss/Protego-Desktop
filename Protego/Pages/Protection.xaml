@@ -16,34 +16,25 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <ui:Button Grid.Column="0" Width="200
-                   "  Height="55" Click="CardAction_Click" Margin="16,32,16,0" VerticalAlignment="Top" MouseOverBackground="#1D84B5">
-
-            <StackPanel>
-                <TextBlock Text="Scan" FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Center">
-                    <ui:SymbolIcon Symbol="ScanDash28" Width="20" Height="20" />
-                </TextBlock>
-            </StackPanel>
+        <ui:Button Grid.Column="0" Width="200" Height="55" Margin="16,32,16,0" VerticalAlignment="Top" MouseOverBackground="#1D84B5" HorizontalAlignment="Center">
+            <Grid>
+                <TextBlock Text="Scan" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-16,0,0,0"/>
+                <Image Source="E:\source\repos\Protego\Assets\scan-64.png" Width="30" Height="30" Margin="41,3,-18,0" />
+            </Grid>
         </ui:Button>
 
-        <ui:Button Grid.Column="1" Width="200
-                   "  Height="55" Click="CardAction_Click" Margin="16,32,16,0" VerticalAlignment="Top">
-
-            <StackPanel>
-                <TextBlock Text="Backup" FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Center">
-             <ui:SymbolIcon Symbol="Cloud24" Width="49" Height="21" />
-                </TextBlock>
-            </StackPanel>
+        <ui:Button Grid.Column="1" Width="200"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <Grid>
+                <TextBlock Text="Backup" FontSize="25" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-31,-2,0,0"/>
+                <Image Source="E:\source\repos\Protego\Assets\cloud-100.png" Width="30" Height="30" Margin="54,1,-35,0"/>
+            </Grid>
         </ui:Button>
 
-        <ui:Button Grid.Column="2" Width="200
-                   "  Height="55" Click="CardAction_Click" Margin="16,32,16,0" VerticalAlignment="Top">
-
-            <StackPanel>
-                <TextBlock Text="USB Baiting" FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Center">
-     <ui:SymbolIcon Symbol="UsbPlug20"  Width="49" Height="21" />
-                </TextBlock>
-            </StackPanel>
+        <ui:Button Grid.Column="2" Width="200"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <Grid>
+                <TextBlock Text="USB Baiting" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-16,0,0,0"/>
+                <Image Source="E:\source\repos\Protego\Assets\usb-64.png" Width="30" Height="30" Margin="87,1,-14,-1" />
+            </Grid>
         </ui:Button>
 
 

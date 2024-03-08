@@ -9,8 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\cloud-100.png" />
     <None Remove="Assets\flashdrive.png" />
     <None Remove="Assets\Protego_logo.png" />
+    <None Remove="Assets\scan-64.png" />
+    <None Remove="Assets\usb-64.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,12 +21,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
     <PackageReference Include="WPF-UI" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\cloud-100.png" />
     <Resource Include="Assets\flashdrive.png" />
     <Resource Include="Assets\Protego_logo.png" />
+    <Resource Include="Assets\scan-64.png" />
+    <Resource Include="Assets\usb-64.png" />
   </ItemGroup>
 
 </Project>

@@ -99,7 +99,7 @@
                 <ui:NavigationView.MenuItems>
                     <ui:NavigationViewItem x:Name="Home" Content="Home" Tag="Home" Icon="{ui:SymbolIcon Home20}"   
                                            TargetPageType="{x:Type pages:Home}" />
-                    <ui:NavigationViewItem Content="Protection" Tag="Protection" Icon="{ui:SymbolIcon Shield20}"
+                    <ui:NavigationViewItem Content="Protect" Tag="Protection" Icon="{ui:SymbolIcon Shield20}"
                                            TargetPageType="{x:Type pages:Protection}" />
                     <ui:NavigationViewItem Content="Security" Tag="Security" Icon="{ui:SymbolIcon LockClosed20}" 
                                            TargetPageType="{x:Type pages:Security}" />

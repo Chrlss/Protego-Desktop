@@ -21,11 +21,16 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <ui:CardAction Grid.Column="0" Grid.Row="1" Width="235" IsChevronVisible="False" Height="200">
-
+        <ui:CardAction Grid.Column="0" 
+                       Grid.Row="1" 
+                       Width="235" 
+                       IsChevronVisible="False" 
+                       Height="200">
             <StackPanel>
-                
-                <TextBlock Text="Sa monitor" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" />
+                <TextBlock Text="Sa monitor" 
+                           FontSize="25" 
+                           TextWrapping="Wrap" 
+                           HorizontalAlignment="Center" />
             </StackPanel>
         </ui:CardAction>
 
@@ -33,7 +38,7 @@
         <ui:CardAction Grid.ColumnSpan="2" 
                        Height="200" 
                        VerticalContentAlignment="Top" 
-                       IsChevronVisible="False" 
+                       IsChevronVisible="False"
                        Width="480">
             <StackPanel>
                 <TextBlock FontSize="20"
@@ -62,37 +67,27 @@
         <ui:CardAction Grid.Column="2" Width="235" IsChevronVisible="False" Height="200">
 
             <StackPanel>
-                <Image Source="E:\source\repos\Protego\Assets\flashdrive.png" Width="100" Height="100" />
+                <Image Source="E:\source\repos\Protego\Assets\usb-64.png" Width="100" Height="100" />
                 <TextBlock Text="Protect yourself from USB baiting" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" />
             </StackPanel>
         </ui:CardAction>
 
         <ui:CardAction Grid.Column="1" Grid.Row="1" Width="235" IsChevronVisible="False" Height="200">
-
-            <StackPanel>
-                
-                <TextBlock Text="sa monitor storage" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" />
-            </StackPanel>
+            <Grid>
+                <TextBlock Text="sa monitor storage" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+            </Grid>
         </ui:CardAction>
         <ui:CardAction Grid.Column="2" Grid.Row="1" Width="235" IsChevronVisible="False" Height="200">
-            <Grid>
+            <Grid Height="164">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0">
-                    <TextBlock Text="Sa scan" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" />
-                    
-                </StackPanel>
-                <StackPanel Grid.Row="1">
-                    <ui:Button Content="Scan" Width="180" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="#1D84B5" MouseOverBackground="#1D84B5"/>
-                </StackPanel>
 
+                <TextBlock Text="Sa scan" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" />
+                <ui:Button Content="Scan" Width="150" HorizontalAlignment="Center" VerticalContentAlignment="Bottom" Background="#1D84B5" MouseOverBackground="#1D84B5" Grid.Row="1" Margin="0,45,0,0" VerticalAlignment="Top"/>
             </Grid>
-            
-
-            
         </ui:CardAction>
 
 
