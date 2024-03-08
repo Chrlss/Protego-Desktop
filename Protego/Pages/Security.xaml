@@ -25,7 +25,7 @@
         </ui:Button>
 
 
-        <ui:Button Grid.Column="1" Width="300"  Height="65" Margin="16,32,16,0"  VerticalAlignment="Top" MouseOverBackground="#1D84B5">
+        <ui:Button Grid.Column="1" Width="200"  Height="65" Margin="16,32,16,0" HorizontalAlignment="Center" VerticalAlignment="Top" MouseOverBackground="#1D84B5">
 
         </ui:Button>
 
