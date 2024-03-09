@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:tray="http://schemas.lepo.co/wpfui/2022/xaml/tray"
         xmlns:pages="clr-namespace:Protego.Pages"
+        
         xmlns:local="clr-namespace:Protego"
         mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" 
         Title="MainWindow" Height="450" Width="800" Background="Transparent"
@@ -19,23 +20,17 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-
-            
-            <TextBlock VerticalAlignment="Center" FontSize="12" Grid.Row="0" Foreground="White" Margin="30,0,0,0" >
-                Protego
-            </TextBlock>
-            
-            <Image Source="E:\source\repos\Protego\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,10,0">
+
                 <ui:Button x:Name="btnMinimize" Content="_" Width="20" Height="20" 
-                    BorderBrush="Transparent" Background="Transparent" 
-                    Click="btnMinimize_Click" Margin="0,0,0,0">
+        BorderBrush="Transparent" Background="Transparent" 
+        Click="btnMinimize_Click" Margin="0,0,0,0">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border" Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="5">
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="5">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -50,14 +45,14 @@
                     </Button.Template>
                 </ui:Button>
                 <ui:Button x:Name="btnMaximize" Content="🗖" Width="20" Height="20" 
-                    BorderBrush="Transparent" Background="Transparent" 
-                    Click="btnMaximize_Click">
+        BorderBrush="Transparent" Background="Transparent" 
+        Click="btnMaximize_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border" Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="5" Margin="0,0,0,0">
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="5" Margin="0,0,0,0">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -72,14 +67,14 @@
                     </Button.Template>
                 </ui:Button>
                 <ui:Button x:Name="btnClose" Content="X" Width="20" Height="20" 
-                    BorderBrush="Transparent" Background="Transparent"
-                    Click="btnClose_Click" Margin="0,0,0,0">
+        BorderBrush="Transparent" Background="Transparent"
+        Click="btnClose_Click" Margin="0,0,0,0">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border" Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="5">
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="5">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -94,6 +89,7 @@
                     </Button.Template>
                 </ui:Button>
             </StackPanel>
+
 
             <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent">
                 <ui:NavigationView.MenuItems>
@@ -118,8 +114,13 @@
                     </Grid>
                 </ui:NavigationView.ContentOverlay>
             </ui:NavigationView>
-            
+            <StackPanel Orientation="Horizontal" MouseLeftButtonDown="StackPanel_MouseDown" MouseMove="StackPanel_MouseMove" MouseLeftButtonUp="StackPanel_MouseUp" Width="800">
+                <Image Source="E:\source\repos\Protego\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
+                <TextBlock VerticalAlignment="Center" FontSize="12" Grid.Row="0" Foreground="White" Margin="0,0,0,0" ><Run Text="Protego"/></TextBlock>
+
+            </StackPanel>
+
         </Grid>
     </Border>
-    
+
 </Window>

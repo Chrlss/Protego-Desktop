@@ -7,30 +7,51 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Converters;
 
 
 
 namespace Protego
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private bool isDragging = false;
-        private Point lastMousePosition;
+        private Point initialMousePosition;
+
+        
 
         public MainWindow()
         {
             InitializeComponent();
 
         }
-        
+
+        private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = true;
+            initialMousePosition = e.GetPosition(this);
+        }
+
+        private void StackPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                Vector offset = e.GetPosition(this) - initialMousePosition;
+                this.Left += offset.X;
+                this.Top += offset.Y;
+            }
+        }
+
+        private void StackPanel_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = false;
+        }
 
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
@@ -49,6 +70,8 @@ namespace Protego
         {
             Close();
         }
+
+        
 
     }
 }
