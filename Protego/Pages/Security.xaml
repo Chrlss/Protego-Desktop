@@ -29,9 +29,9 @@
 
         </ui:Button>
 
-        <ui:Button Margin="0,380,0,0" Grid.Column="2" Content="Logs" Width="150" Background="#1D84B5" MouseOverBackground="#1D84B5"  VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <ui:Button Margin="0,366,0,0" Grid.Column="2" Content="Logs" Width="180" Background="#1D84B5" MouseOverBackground="#1D84B5"  VerticalAlignment="Top" HorizontalAlignment="Center"/>
 
-        
+
 
 
     </Grid>
