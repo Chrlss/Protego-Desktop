@@ -10,6 +10,6 @@
       Title="Help">
 
     <Grid>
-        
+        <TextBlock Text="HAHAHAHAHAHAHAH" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Page>
