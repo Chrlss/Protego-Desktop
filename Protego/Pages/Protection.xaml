@@ -19,7 +19,7 @@
         <ui:Button Grid.Column="0" Width="200" Height="55" Margin="16,32,16,0" VerticalAlignment="Top" MouseOverBackground="#1D84B5" HorizontalAlignment="Center">
             <Grid>
                 <TextBlock Text="Scan" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-16,0,0,0"/>
-                <Image Source="E:\source\repos\Protego\Assets\scan-64.png" Width="30" Height="30" Margin="41,3,-18,0" />
+                <Image Source="C:\Users\princess ann rotia\Source\Repos\Chrlss\Protego-Desktop\Protego\Assets\scan-64.png" Width="30" Height="30" Margin="41,3,-18,0" />
             </Grid>
         </ui:Button>
 
