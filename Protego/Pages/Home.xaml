@@ -86,7 +86,7 @@
 
 
                 <TextBlock Text="Sa scan" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" />
-                <ui:Button Content="Scan" Width="150" HorizontalAlignment="Center" VerticalContentAlignment="Bottom" Background="#1D84B5" MouseOverBackground="#1D84B5" Grid.Row="1" Margin="0,45,0,0" VerticalAlignment="Top"/>
+                <ui:Button Content="Scan" Width="150" HorizontalAlignment="Center" VerticalContentAlignment="Bottom" Background="#1D84B5" MouseOverBackground="#1D84B5" Grid.Row="1" Margin="0,45,0,0" VerticalAlignment="Top" Click="Button_Click"/>
             </Grid>
         </ui:CardAction>
 
