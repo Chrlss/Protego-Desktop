@@ -30,5 +30,6 @@ namespace Protego.Pages
             LogIn logIn = new LogIn();
             logIn.Show();
         }
+
     }
 }
