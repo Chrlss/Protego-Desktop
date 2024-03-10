@@ -16,7 +16,6 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-
         <ui:Button Grid.Column="0" Width="200
                    "  Height="65
                    "  Margin="16,32,16,0"  VerticalAlignment="Top" HorizontalAlignment="Center" MouseOverBackground="#1D84B5">
