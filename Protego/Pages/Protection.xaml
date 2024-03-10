@@ -19,21 +19,21 @@
         <ui:Button Grid.Column="0" Width="200" Height="55" Margin="16,32,16,0" VerticalAlignment="Top" MouseOverBackground="#1D84B5" HorizontalAlignment="Center">
             <Grid>
                 <TextBlock Text="Scan" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-16,0,0,0"/>
-                <Image Source="C:\Users\princess ann rotia\Source\Repos\Chrlss\Protego-Desktop\Protego\Assets\scan-64.png" Width="30" Height="30" Margin="41,3,-18,0" />
+                <Image Source="\Assets\scan-64.png" Width="30" Height="30" Margin="41,3,-18,0" />
             </Grid>
         </ui:Button>
 
         <ui:Button Grid.Column="1" Width="200"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center">
             <Grid>
                 <TextBlock Text="Backup" FontSize="25" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-31,-2,0,0"/>
-                <Image Source="E:\source\repos\Protego\Assets\cloud-100.png" Width="30" Height="30" Margin="54,1,-35,0"/>
+                <Image Source="\Assets\cloud-100.png" Width="30" Height="30" Margin="54,1,-35,0"/>
             </Grid>
         </ui:Button>
 
         <ui:Button Grid.Column="2" Width="200"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center">
             <Grid>
                 <TextBlock Text="USB Baiting" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-16,0,0,0"/>
-                <Image Source="E:\source\repos\Protego\Assets\usb-64.png" Width="30" Height="30" Margin="87,1,-14,-1" />
+                <Image Source="\Assets\usb-64.png" Width="30" Height="30" Margin="87,1,-14,-1" />
             </Grid>
         </ui:Button>
 

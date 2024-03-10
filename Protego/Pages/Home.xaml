@@ -67,7 +67,7 @@
         <ui:CardAction Grid.Column="2" Width="235" IsChevronVisible="False" Height="200">
 
             <StackPanel>
-                <Image Source="E:\source\repos\Protego\Assets\usb-64.png" Width="100" Height="100" />
+                <Image Source="\Assets\usb-64.png" Width="100" Height="100" />
                 <TextBlock Text="Protect yourself from USB baiting" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" />
             </StackPanel>
         </ui:CardAction>
