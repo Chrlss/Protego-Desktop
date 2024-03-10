@@ -14,8 +14,19 @@
                 
             </ResourceDictionary.MergedDictionaries>
 
-            
 
+            <Style TargetType="{x:Type Window}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Border BorderBrush="Black" BorderThickness="1">
+                                <Grid>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

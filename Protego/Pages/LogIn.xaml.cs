@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Protego.Pages
@@ -19,11 +20,15 @@ namespace Protego.Pages
     /// </summary>
     public partial class LogIn : Window
     {
+        public static readonly RoutedEvent ShowSignUpEvent =
+        EventManager.RegisterRoutedEvent("ShowSignUp", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(LogIn));
+
         private bool isDragging = false;
         private Point initialMousePosition;
         public LogIn()
         {
             InitializeComponent();
+            LogInFrame.Navigate(new SignUp());
         }
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
@@ -61,7 +66,5 @@ namespace Protego.Pages
         {
             isDragging = false;
         }
-
-
     }
 }
