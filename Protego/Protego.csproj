@@ -6,13 +6,14 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Assets\Protego_logo.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\logo,.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\cloud-100.png" />
     <None Remove="Assets\flashdrive.png" />
     <None Remove="Assets\GoogleSignIn.png" />
+    <None Remove="Assets\LogInBg..jpg" />
     <None Remove="Assets\LogInBg.jpg" />
     <None Remove="Assets\Protego_logo.png" />
     <None Remove="Assets\scan-64.png" />
@@ -25,7 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Assets\logo,.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\GoogleSignIn.png" />
+    <Resource Include="Assets\LogInBg..jpg" />
     <Resource Include="Assets\Protego_logo.ico" />
   </ItemGroup>
 
