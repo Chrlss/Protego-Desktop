@@ -21,7 +21,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,10,0">
-
+                <Image Source="\Assets\UserProfile.png" Width="22" Height="22" MouseLeftButtonDown="Image_MouseLeftButtonDown"  />
                 <ui:Button x:Name="btnMinimize" Content="_" Width="20" Height="20" 
         BorderBrush="Transparent" Background="Transparent" 
         Click="btnMinimize_Click" Margin="0,0,0,0">
@@ -90,12 +90,11 @@
                 </ui:Button>
             </StackPanel>
 
-
-            <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent">
+            <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent" OpenPaneLength="70" SelectionChanged="OnNavigationSelectionChanged">
                 <ui:NavigationView.MenuItems>
                     <ui:NavigationViewItem x:Name="Home" Content="Home" Tag="Home" Icon="{ui:SymbolIcon Home20}"   
-                                           TargetPageType="{x:Type pages:Home}" />
-                    <ui:NavigationViewItem Content="Protect" Tag="Protection" Icon="{ui:SymbolIcon Shield20}"
+                                           TargetPageType="{x:Type pages:Home}" IsActive="True"/>
+                    <ui:NavigationViewItem Content="Protection" Tag="Protection" Icon="{ui:SymbolIcon Shield20}"
                                            TargetPageType="{x:Type pages:Protection}" />
                     <ui:NavigationViewItem Content="Security" Tag="Security" Icon="{ui:SymbolIcon LockClosed20}" 
                                            TargetPageType="{x:Type pages:Security}" />
