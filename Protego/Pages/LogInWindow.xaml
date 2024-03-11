@@ -125,7 +125,7 @@
                 </StackPanel>
                 <ui:Button Grid.Row="8" Content="Sign up" Icon="Fluent24" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,30,0"/>
                 
-
+                
 
             </Grid>
 
