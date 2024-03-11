@@ -22,16 +22,22 @@
             <RowDefinition Height="25*"/>
             <RowDefinition Height="25*"/>
             <RowDefinition Height="25*"/>
+            <RowDefinition Height="25*"/>
+
 
         </Grid.RowDefinitions>
         <TextBlock FontSize="30" Foreground="White" HorizontalAlignment="Left" Margin="75,10,0,0">
            Profile
         </TextBlock>
         <ui:TextBox Text="Name" Grid.Row="3"  Width="250" Height="90" Grid.Column="0" VerticalAlignment="Center" Margin="75,0,75,0"/>
-        <ui:TextBox Text="User Name" Grid.Row="2"  Width="250" Height="90" Grid.Column="0" VerticalAlignment="Center" Margin="75,68,75,0" Grid.RowSpan="4"/>
-        <ui:TextBox Text="Phone number" Grid.Row="5"  Width="250" Height="90" Grid.Column="0" VerticalAlignment="Center" Margin="75,0,75,0"/>
-        <ui:Button Content="Edit Profile" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Row="6" Width="130" Height="30" Foreground="white" HorizontalAlignment="Center"/>
-        <ui:Button Content="log out" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Column="1" Grid.Row="6" Width="130" Height="30" Foreground="white" HorizontalAlignment="Center" />
+        <ui:TextBox Text="User Name" Grid.Row="4"  Width="250" Height="90" Grid.Column="0" VerticalAlignment="Top" Margin="75,10,75,0" Grid.RowSpan="2"/>
+        <ui:TextBox Text="Age" Grid.Row="5" Height="90" Grid.Column="0" VerticalAlignment="Center" Margin="75,0,223,0"/>
+        <ui:TextBox Text="Sex" Grid.Row="5" Height="90" Grid.Column="0" VerticalAlignment="Center" Margin="200,0,75,0"/>
+        <ui:TextBox Text="Birthday" Grid.Row="6" Height="90" Grid.Column="0" VerticalAlignment="Top" Margin="75,10,223,0" Grid.RowSpan="2"/>
+        <ui:TextBox Text="Phone nu,ber" Grid.Row="6" Height="90" Grid.Column="0" VerticalAlignment="Top" Margin="200,10,75,0" Grid.RowSpan="2"/>
+        <ui:Button Content="Edit Profile" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Row="7" Width="130" Height="30" Foreground="white" HorizontalAlignment="Center"/>
+        <ui:Button Content="log out" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Column="1" Grid.Row="7" Width="130" Height="30" Foreground="white" HorizontalAlignment="Center" />
 
+        <Image Source="\Assets\Protego_logo.png" Height="250" Width="250" Grid.Column="1" Grid.Row="0" Grid.RowSpan="9" HorizontalAlignment="Center"></Image>
     </Grid>
 </Page>

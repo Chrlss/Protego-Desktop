@@ -11,6 +11,9 @@
         >
     <Border Grid.Row="1" CornerRadius="12" Background="#211F1F">
         <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="\Assets\Protego_logo.png" Opacity=".1" Stretch="Uniform" />
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition  Height="40"/>
                 <RowDefinition />
@@ -22,11 +25,10 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-
-
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,10,0">
+
+
 
                 <ui:Button x:Name="btnMinimize" Content="_" Width="20" Height="20" 
                     BorderBrush="Transparent" Background="Transparent" 
@@ -105,21 +107,15 @@ Click="btnClose_Click" Margin="0,0,0,0">
                     Grid.Row="2"  Width="250" Height="35" Foreground="White"/>
             <ui:PasswordBox PlaceholderText="Password" FontSize="16" FontFamily="Inter" FontWeight="Light" 
             Grid.Row="3"  Width="250" Height="40" Foreground="White"/>
-<<<<<<< HEAD
-            <ui:Button Content="Log in" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Row="4" Width="130" Height="40" Foreground="white" Margin="17,0,0,0" CornerRadius="10" />
-            <ui:Button Content="Sign up" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Row="4" Width="130" Height="40" Foreground="white" Margin="245,0,0,0" CornerRadius="10" />
-
-=======
-            <ui:Button Content="Log in" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Row="4" Width="130" Height="30" 
-                   HorizontalAlignment="Center" Foreground="white" />
-            <TextBlock Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Bottom"> 
+            <ui:Button Content="Log in" FontFamily="Inter" FontSize="16" Appearance="Primary" Grid.Row="4" Height="40" Foreground="white" CornerRadius="10" Background="Transparent" HorizontalAlignment="Center" />
+            <ui:Button Content="Sign up" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Row="5" Width="80" Height="40" Foreground="White"  Background="Transparent" Margin="477,0,0,0" CornerRadius="10" />
+            <ui:Button Content="Log in" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Row="4" Width="67" Height="40" Foreground="white" Margin="50,0,0,0" />
+            <TextBlock Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"> 
             <Hyperlink NavigateUri="">Forgot Password?</Hyperlink>
             </TextBlock>
-            <TextBlock Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" 
-                       Foreground="White"> Don't have an account?
+            <TextBlock Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"> Don't have an account?
             </TextBlock>
->>>>>>> c01201fd4eac76830b4233d7073fbd0fdbdb54fa
-            <Image Source="\Assets\Protego_logo.png" Height="250" Width="250" Grid.Column="1" Grid.Row="1" Grid.RowSpan="5" HorizontalAlignment="Center"></Image>
+            <!-- <Image Source="\Assets\Protego_logo.png" Height="250" Width="250" Grid.Column="1" Grid.Row="1" Grid.RowSpan="5" HorizontalAlignment="Center"></Image> -->
             <StackPanel Orientation="Horizontal" MouseLeftButtonDown="StackPanel_MouseDown" MouseMove="StackPanel_MouseMove" MouseLeftButtonUp="StackPanel_MouseUp" Width="800">
                 <Image Source="E:\source\repos\Protego\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
                 <TextBlock VerticalAlignment="Center" FontSize="12" Grid.Row="0" Foreground="White" Margin="0,0,0,0" ><Run Text="Protego"/></TextBlock>
@@ -128,5 +124,3 @@ Click="btnClose_Click" Margin="0,0,0,0">
         </Grid>
     </Border>
 </Window>
-    
-    ss

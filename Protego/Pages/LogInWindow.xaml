@@ -26,7 +26,7 @@
                         <ImageBrush Stretch="UniformToFill" ImageSource="\Assets\LogInBg.jpg" />
                     </Border.Background>
                     <Border.OpacityMask>
-                        <ImageBrush ImageSource="\Assets\LogInBg.jpg">
+                        <ImageBrush ImageSource="\Assets\LogInBg.jpg" Opacity=".4">
                             <ImageBrush.RelativeTransform>
                                 <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                             </ImageBrush.RelativeTransform>
@@ -35,7 +35,7 @@
                 </Border>
             </Grid>
             <StackPanel Orientation="Horizontal" MouseLeftButtonDown="StackPanel_MouseDown" MouseMove="StackPanel_MouseMove" MouseLeftButtonUp="StackPanel_MouseUp" Width="800">
-                <Image Source="E:\source\repos\Protego\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
+                <Image Source="\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
                 <TextBlock VerticalAlignment="Center" FontSize="12" Grid.Row="0" Foreground="White" Margin="0,0,0,0" ><Run Text="Protego"/></TextBlock>
             </StackPanel>
             <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,10,0">
