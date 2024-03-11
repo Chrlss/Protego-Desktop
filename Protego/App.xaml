@@ -10,12 +10,17 @@
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
-
-                
             </ResourceDictionary.MergedDictionaries>
 
-
-            <Style TargetType="{x:Type Window}">
+            <Style x:Key="CustomFont">
+                <Setter Property="TextElement.FontFamily"
+                        Value="/Font/KodeMono-SemiBold.ttf#Kode Mono">
+                    
+                </Setter>
+            </Style>
+            
+           <!--
+             <Style TargetType="{x:Type Window}">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate>
@@ -23,10 +28,13 @@
                                 <Grid>
                                 </Grid>
                             </Border>
-                        </ControlTemplate>
+                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>
+             </Style>
+            -->
+           
+           
         </ResourceDictionary>
     </Application.Resources>
 </Application>

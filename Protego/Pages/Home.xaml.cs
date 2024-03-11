@@ -27,7 +27,7 @@ namespace Protego.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            LogIn logIn = new LogIn();
+            LogInWindow logIn = new LogInWindow();
             logIn.Show();
         }
 

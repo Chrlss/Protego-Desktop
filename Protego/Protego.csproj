@@ -6,14 +6,27 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\Protego_logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\cloud-100.png" />
     <None Remove="Assets\flashdrive.png" />
+    <None Remove="Assets\GoogleSignIn.png" />
+    <None Remove="Assets\LogInBg.jpg" />
     <None Remove="Assets\Protego_logo.png" />
     <None Remove="Assets\scan-64.png" />
     <None Remove="Assets\usb-64.png" />
+    <None Remove="Font\KodeMono-Bold.ttf" />
+    <None Remove="Font\KodeMono-Medium.ttf" />
+    <None Remove="Font\KodeMono-Regular.ttf" />
+    <None Remove="Font\KodeMono-SemiBold.ttf" />
+    <None Remove="Font\KodeMono-VariableFont_wght.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\GoogleSignIn.png" />
+    <Resource Include="Assets\Protego_logo.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,9 +41,25 @@
   <ItemGroup>
     <Resource Include="Assets\cloud-100.png" />
     <Resource Include="Assets\flashdrive.png" />
+    <Resource Include="Assets\LogInBg.jpg" />
     <Resource Include="Assets\Protego_logo.png" />
     <Resource Include="Assets\scan-64.png" />
     <Resource Include="Assets\usb-64.png" />
+    <Resource Include="Font\KodeMono-Bold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Font\KodeMono-Medium.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Font\KodeMono-Regular.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Font\KodeMono-SemiBold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Font\KodeMono-VariableFont_wght.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
