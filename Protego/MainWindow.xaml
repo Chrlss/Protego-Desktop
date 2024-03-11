@@ -90,7 +90,7 @@
                 </ui:Button>
             </StackPanel>
 
-            <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent" OpenPaneLength="70" SelectionChanged="OnNavigationSelectionChanged">
+            <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent" >
                 <ui:NavigationView.MenuItems>
                     <ui:NavigationViewItem x:Name="Home" Content="Home" Tag="Home" Icon="{ui:SymbolIcon Home20}"   
                                            TargetPageType="{x:Type pages:Home}" IsActive="True"/>
