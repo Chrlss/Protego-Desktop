@@ -24,7 +24,7 @@
             <RowDefinition Height="25*"/>
 
         </Grid.RowDefinitions>
-        <TextBlock FontSize="30" Foreground="White" HorizontalAlignment="Left" Margin="94,10,0,0">
+        <TextBlock FontSize="30" Foreground="White" HorizontalAlignment="Left" Margin="75,10,0,0">
            Profile
         </TextBlock>
         <ui:TextBox Text="Name" Grid.Row="3"  Width="250" Height="90" Grid.Column="0" VerticalAlignment="Center" Margin="75,0,75,0"/>
