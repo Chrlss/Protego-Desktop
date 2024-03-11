@@ -88,6 +88,7 @@
                     </Button.Template>
                 </ui:Button>
             </StackPanel>
+            
 
             <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent" >
                 <ui:NavigationView.MenuItems>

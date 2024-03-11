@@ -25,7 +25,6 @@
             <RowDefinition Height="25*"/>
             <RowDefinition Height="25*"/>
 
-
         </Grid.RowDefinitions>
         <TextBlock FontSize="30" Foreground="White" HorizontalAlignment="Left" Margin="75,10,0,0">
            Profile
@@ -41,6 +40,8 @@
         <ui:Button Content="log out" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Column="1" Grid.Row="7" Width="130" Height="30" Foreground="white" HorizontalAlignment="Center" />
 
         <Image Source="\Assets\Protego_logo.png" Height="250" Width="250" Grid.Column="1" Grid.Row="0" Grid.RowSpan="9" HorizontalAlignment="Center"></Image>
-        <Image Source="\Assets\sampleniwano.png" Width="100"  Height="100" Grid.Column="0" Grid.RowSpan="3" Margin="200,25,100,25"/>
+        
+        <Image Source="\Assets\sampleniwano.png" Grid.Column="0" Grid.RowSpan="3" Margin="212,33,75,28" Opacity="0.7"/>
     </Grid>
+    
 </Page>
