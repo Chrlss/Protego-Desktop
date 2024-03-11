@@ -16,6 +16,7 @@
     <None Remove="Assets\LogInBg..jpg" />
     <None Remove="Assets\LogInBg.jpg" />
     <None Remove="Assets\Protego_logo.png" />
+    <None Remove="Assets\sampleniwano.png" />
     <None Remove="Assets\scan-64.png" />
     <None Remove="Assets\usb-64.png" />
     <None Remove="Assets\UserProfile.png" />
@@ -49,6 +50,7 @@
     <Resource Include="Assets\flashdrive.png" />
     <Resource Include="Assets\LogInBg.jpg" />
     <Resource Include="Assets\Protego_logo.png" />
+    <Resource Include="Assets\sampleniwano.png" />
     <Resource Include="Assets\scan-64.png" />
     <Resource Include="Assets\usb-64.png" />
     <Resource Include="Assets\UserProfile.png" />

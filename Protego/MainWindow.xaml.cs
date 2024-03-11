@@ -78,9 +78,6 @@ namespace Protego
             logIn.Show();
         }
 
-        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
+     
     }
 }
