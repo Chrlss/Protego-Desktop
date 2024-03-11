@@ -17,6 +17,7 @@ using Wpf.Ui.Converters;
 
 
 
+
 namespace Protego
 {
     public partial class MainWindow : Window
@@ -71,7 +72,12 @@ namespace Protego
             Close();
         }
 
-        
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LogInWindow logIn = new LogInWindow();
+            logIn.Show();
+        }
 
+        
     }
 }
