@@ -29,10 +29,15 @@ namespace Protego
 
         public MainWindow()
         {
+            
+
             InitializeComponent();
 
+            Loaded += (_, _) => NavMenu.Navigate(typeof(Home));
+            
         }
 
+        
         private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             isDragging = true;
