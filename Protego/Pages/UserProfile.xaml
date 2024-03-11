@@ -41,6 +41,6 @@
         <ui:Button Content="log out" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Column="1" Grid.Row="7" Width="130" Height="30" Foreground="white" HorizontalAlignment="Center" />
 
         <Image Source="\Assets\Protego_logo.png" Height="250" Width="250" Grid.Column="1" Grid.Row="0" Grid.RowSpan="9" HorizontalAlignment="Center"></Image>
-        <Image Source="\Assets\sampleniwano.png" Width="100"  Height="100" Grid.Column="0" Grid.RowSpan="3" Margin="200,28,100,41"/>
+        <Image Source="\Assets\sampleniwano.png" Width="100"  Height="100" Grid.Column="0" Grid.RowSpan="3" Margin="200,25,100,25"/>
     </Grid>
 </Page>

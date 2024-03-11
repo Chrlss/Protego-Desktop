@@ -31,9 +31,9 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="10">
             <Grid.Background>
-                <ImageBrush ImageSource="\Assets\signupbeybe.jpg" Opacity="0.1" Stretch="UniformToFill" />
+                <ImageBrush ImageSource="\Assets\signupbeybe.jpg" Opacity="0.2" Stretch="UniformToFill" />
             </Grid.Background>
-            <Image Source="\Assets\Protego_logo.png" Height="200" Width="200" Opacity=".5" />
+            <Image Source="\Assets\Protego_logo.png" Height="200" Width="200" Opacity=".6" />
 
         </Grid>
         <TextBlock Grid.Row="1" Text="Sign Up" HorizontalAlignment="Center" Foreground="White" FontSize="25" VerticalAlignment="Center" />
