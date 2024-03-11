@@ -75,5 +75,7 @@ namespace Protego.Pages
         {
             isDragging = false;
         }
+
+       
     }
 }

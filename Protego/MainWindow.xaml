@@ -6,7 +6,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:tray="http://schemas.lepo.co/wpfui/2022/xaml/tray"
         xmlns:pages="clr-namespace:Protego.Pages"
-        
         xmlns:local="clr-namespace:Protego"
         mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" 
         Title="MainWindow" Height="450" Width="800" Background="Transparent"
@@ -110,7 +109,7 @@
                 </ui:NavigationView.FooterMenuItems>
                 <ui:NavigationView.ContentOverlay>
                     <Grid>
-                        <ui:SnackbarPresenter x:Name="SnackbarPresenter" Margin="10,0,-10,0" />
+                        <ui:SnackbarPresenter x:Name="SnackbarPresenter"/>
                     </Grid>
                 </ui:NavigationView.ContentOverlay>
             </ui:NavigationView>
