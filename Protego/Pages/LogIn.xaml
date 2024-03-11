@@ -109,7 +109,8 @@ Click="btnClose_Click" Margin="0,0,0,0">
             <ui:Button Content="Log in" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Row="4" Width="130" Height="40" Foreground="white" Margin="17,0,0,0" CornerRadius="10" />
             <ui:Button Content="Sign up" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Row="4" Width="130" Height="40" Foreground="white" Margin="245,0,0,0" CornerRadius="10" />
 
-    <ui:Button Content="Log in" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Row="4" Width="130" Height="30" 
+=======
+            <ui:Button Content="Log in" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Row="4" Width="130" Height="30" 
                    HorizontalAlignment="Center" Foreground="white" />
             <TextBlock Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Bottom"> 
             <Hyperlink NavigateUri="">Forgot Password?</Hyperlink>
