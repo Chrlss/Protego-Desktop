@@ -6,7 +6,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:tray="http://schemas.lepo.co/wpfui/2022/xaml/tray"
         xmlns:pages="clr-namespace:Protego.Pages"
-        
         xmlns:local="clr-namespace:Protego"
         mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" 
         Title="MainWindow" Height="450" Width="800" Background="Transparent"
@@ -90,11 +89,11 @@
                 </ui:Button>
             </StackPanel>
 
-            <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent" OpenPaneLength="70" SelectionChanged="OnNavigationSelectionChanged">
+            <ui:NavigationView x:Name="NavMenu" Grid.Row="1"  PaneDisplayMode="LeftFluent">
                 <ui:NavigationView.MenuItems>
                     <ui:NavigationViewItem x:Name="Home" Content="Home" Tag="Home" Icon="{ui:SymbolIcon Home20}"   
-                                           TargetPageType="{x:Type pages:Home}" IsActive="True"/>
-                    <ui:NavigationViewItem Content="Protection" Tag="Protection" Icon="{ui:SymbolIcon Shield20}"
+                                           TargetPageType="{x:Type pages:Home}" NavigationCacheMode="Enabled"/>
+                    <ui:NavigationViewItem Content="Protect" Tag="Protection" Icon="{ui:SymbolIcon Shield20}"
                                            TargetPageType="{x:Type pages:Protection}" />
                     <ui:NavigationViewItem Content="Security" Tag="Security" Icon="{ui:SymbolIcon LockClosed20}" 
                                            TargetPageType="{x:Type pages:Security}" />
@@ -109,7 +108,7 @@
                 </ui:NavigationView.FooterMenuItems>
                 <ui:NavigationView.ContentOverlay>
                     <Grid>
-                        <ui:SnackbarPresenter x:Name="SnackbarPresenter" Margin="10,0,-10,0" />
+                        <ui:SnackbarPresenter x:Name="SnackbarPresenter"/>
                     </Grid>
                 </ui:NavigationView.ContentOverlay>
             </ui:NavigationView>

@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:Protego.Pages"
         mc:Ignorable="d"  WindowStyle="None" AllowsTransparency="True" 
         Title="LogInWindow" Height="450" Width="800" Background="Transparent"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" >
     <Border Grid.Row="1" CornerRadius="12" Background="#211F1F">
         <Grid>
             <Grid.RowDefinitions>
