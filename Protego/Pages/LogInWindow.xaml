@@ -23,7 +23,7 @@
             <Grid Grid.RowSpan="2">
                 <Border CornerRadius="12">
                     <Border.Background>
-                        <ImageBrush Stretch="UniformToFill" ImageSource="\Assets\LogInBg..jpg" />
+                        <ImageBrush Stretch="UniformToFill" ImageSource="\Assets\LogInBg..jpg" Opacity=".2" />
                     </Border.Background>
                     <Border.OpacityMask>
                         <ImageBrush ImageSource="\Assets\LogInBg.jpg">
