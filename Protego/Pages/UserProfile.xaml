@@ -34,11 +34,11 @@
         <ui:TextBox Text="Age" Grid.Row="5" Height="90" Grid.Column="0" VerticalAlignment="Center" Margin="75,0,223,0"/>
         <ui:TextBox Text="Sex" Grid.Row="5" Height="90" Grid.Column="0" VerticalAlignment="Center" Margin="200,0,75,0"/>
         <ui:TextBox Text="Birthday" Grid.Row="6" Height="90" Grid.Column="0" VerticalAlignment="Top" Margin="75,10,223,0" Grid.RowSpan="2"/>
-        <ui:TextBox Text="Phone nu,ber" Grid.Row="6" Height="90" Grid.Column="0" VerticalAlignment="Top" Margin="200,10,75,0" Grid.RowSpan="2"/>
+        <ui:TextBox Text="Phone Numbber" Grid.Row="6" Height="90" Grid.Column="0" VerticalAlignment="Top" Margin="200,10,75,0" Grid.RowSpan="2"/>
         <ui:Button Content="Edit Profile" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Row="7" Width="130" Height="30" Foreground="white" HorizontalAlignment="Center"/>
         <ui:Button Content="log out" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Column="1" Grid.Row="7" Width="130" Height="30" Foreground="white" HorizontalAlignment="Center" />
 
         <Image Source="\Assets\Protego_logo.png" Height="250" Width="250" Grid.Column="1" Grid.Row="0" Grid.RowSpan="9" HorizontalAlignment="Center"></Image>
-        <Image Source="\Assets\sampleniwano.png" Width="100"  Height="100" Grid.Column="0" Grid.RowSpan="3" Margin="200,28,100,41"/>
+        <Image Source="\Assets\sampleniwano.png" Width="100"  Height="100" Grid.Column="0" Grid.RowSpan="2" Margin="67,5,233,8" Grid.Row="1"/>
     </Grid>
 </Page>
