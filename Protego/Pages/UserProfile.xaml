@@ -40,7 +40,7 @@
         <ui:Button Content="log out" FontFamily="Inter" FontSize="16"  Appearance="Primary" Grid.Column="1" Grid.Row="7" Width="130" Height="30" Foreground="white" HorizontalAlignment="Center" />
 
         <Image Source="\Assets\Protego_logo.png" Height="250" Width="250" Grid.Column="1" Grid.Row="0" Grid.RowSpan="9" HorizontalAlignment="Center"></Image>
-        <Image Source="\Assets\sampleniwano.png" Grid.Column="0" Grid.RowSpan="3" Margin="212,33,75,28" Opacity="0.7"/>
+        <Image Source="\Assets\sampleniwano.png" Grid.Column="0" Grid.RowSpan="3" Margin="212,33,75,28" Opacity="0.7" RenderTransformOrigin="0.414,0.463"/>
     </Grid>
     
 </Page>
