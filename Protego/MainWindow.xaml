@@ -115,7 +115,7 @@
                 </ui:NavigationView.ContentOverlay>
             </ui:NavigationView>
             <StackPanel Orientation="Horizontal" MouseLeftButtonDown="StackPanel_MouseDown" MouseMove="StackPanel_MouseMove" MouseLeftButtonUp="StackPanel_MouseUp" Width="800">
-                <Image Source="E:\source\repos\Protego\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
+                <Image Source="Protego\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
                 <TextBlock VerticalAlignment="Center" FontSize="12" Grid.Row="0" Foreground="White" Margin="0,0,0,0" ><Run Text="Protego"/></TextBlock>
             </StackPanel>
 

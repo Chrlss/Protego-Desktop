@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
     <PackageReference Include="WPF-UI" Version="3.0.0" />
   </ItemGroup>
 

@@ -110,9 +110,8 @@ Click="btnClose_Click" Margin="0,0,0,0">
             <TextBlock Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Bottom"> 
             <Hyperlink NavigateUri="">Forgot Password?</Hyperlink>
             </TextBlock>
-            <TextBlock Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10"
-                   Foreground="White"> 
-            Don't have an account? <Hyperlink Click="Hyperlink_Click" >Sign up</Hyperlink>
+            <TextBlock Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" 
+                       Foreground="White"> Don't have an account?
             </TextBlock>
             <Image Source="\Assets\Protego_logo.png" Height="250" Width="250" Grid.Column="1" Grid.Row="1" Grid.RowSpan="5" HorizontalAlignment="Center"></Image>
             <StackPanel Orientation="Horizontal" MouseLeftButtonDown="StackPanel_MouseDown" MouseMove="StackPanel_MouseMove" MouseLeftButtonUp="StackPanel_MouseUp" Width="800">
