@@ -34,7 +34,9 @@ namespace Protego
             InitializeComponent();
 
             Loaded += (_, _) => NavMenu.Navigate(typeof(Home));
+
             
+
         }
 
         

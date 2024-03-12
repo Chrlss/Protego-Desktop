@@ -18,6 +18,7 @@
     <None Remove="Assets\Protego_logo.png" />
     <None Remove="Assets\sampleniwano.png" />
     <None Remove="Assets\scan-64.png" />
+    <None Remove="Assets\SignUpBg.jpg" />
     <None Remove="Assets\usb-64.png" />
     <None Remove="Assets\UserProfile.png" />
     <None Remove="Font\KodeMono-Bold.ttf" />
@@ -53,6 +54,7 @@
     <Resource Include="Assets\Protego_logo.png" />
     <Resource Include="Assets\sampleniwano.png" />
     <Resource Include="Assets\scan-64.png" />
+    <Resource Include="Assets\SignUpBg.jpg" />
     <Resource Include="Assets\usb-64.png" />
     <Resource Include="Assets\UserProfile.png" />
     <Resource Include="Font\KodeMono-Bold.ttf">

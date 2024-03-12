@@ -6,35 +6,27 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="CustomFont">
-                <Setter Property="TextElement.FontFamily"
-                        Value="/Font/KodeMono-SemiBold.ttf#Kode Mono">
-                    
+                <Setter Property="TextElement.FontFamily" Value="/Font/KodeMono-SemiBold.ttf#Kode Mono">
+
                 </Setter>
             </Style>
-            
-           <!--
-             <Style TargetType="{x:Type Window}">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <Border BorderBrush="Black" BorderThickness="1">
-                                <Grid>
-                                </Grid>
-                            </Border>
-                         </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-             </Style>
-            -->
-           
-           
+            <Storyboard x:Key="FadeWithSlideIn">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
+                    <EasingDoubleKeyFrame KeyTime="0" Value="-50"/>
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
         </ResourceDictionary>
+ 
     </Application.Resources>
 </Application>

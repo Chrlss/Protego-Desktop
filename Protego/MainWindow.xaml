@@ -10,9 +10,11 @@
         mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" 
         Title="MainWindow" Height="450" Width="800" Background="Transparent"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary Source="\Style\Transition.xaml"/>
+    </Window.Resources>
 
     <Border Grid.Row="1" CornerRadius="12" Background="#211F1F">
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
@@ -21,15 +23,12 @@
 
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,10,0">
                 <Image Source="\Assets\UserProfile.png" Width="22" Height="22" MouseLeftButtonDown="Image_MouseLeftButtonDown"  />
-                <ui:Button x:Name="btnMinimize" Content="_" Width="20" Height="20" 
-        BorderBrush="Transparent" Background="Transparent" 
-        Click="btnMinimize_Click" Margin="0,0,0,0">
+
+                
+                <ui:Button x:Name="btnMinimize" Content="_" Width="20" Height="20" BorderBrush="Transparent" Background="Transparent" Click="btnMinimize_Click" Margin="0,0,0,0">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="border" Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    CornerRadius="5">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -43,15 +42,10 @@
                         </ControlTemplate>
                     </Button.Template>
                 </ui:Button>
-                <ui:Button x:Name="btnMaximize" Content="🗖" Width="20" Height="20" 
-        BorderBrush="Transparent" Background="Transparent" 
-        Click="btnMaximize_Click">
+                <ui:Button x:Name="btnMaximize" Content="🗖" Width="20" Height="20" BorderBrush="Transparent" Background="Transparent" Click="btnMaximize_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="border" Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    CornerRadius="5" Margin="0,0,0,0">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" Margin="0,0,0,0">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -65,15 +59,10 @@
                         </ControlTemplate>
                     </Button.Template>
                 </ui:Button>
-                <ui:Button x:Name="btnClose" Content="X" Width="20" Height="20" 
-        BorderBrush="Transparent" Background="Transparent"
-        Click="btnClose_Click" Margin="0,0,0,0">
+                <ui:Button x:Name="btnClose" Content="X" Width="20" Height="20" BorderBrush="Transparent" Background="Transparent" Click="btnClose_Click" Margin="0,0,0,0">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="border" Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    CornerRadius="5">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -92,20 +81,14 @@
 
             <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent" >
                 <ui:NavigationView.MenuItems>
-                    <ui:NavigationViewItem x:Name="Home" Content="Home" Tag="Home" Icon="{ui:SymbolIcon Home20}"   
-                                           TargetPageType="{x:Type pages:Home}"/>
-                    <ui:NavigationViewItem Content="Protect" Tag="Protection" Icon="{ui:SymbolIcon Shield20}"
-                                           TargetPageType="{x:Type pages:Protection}" />
-                    <ui:NavigationViewItem Content="Security" Tag="Security" Icon="{ui:SymbolIcon LockClosed20}" 
-                                           TargetPageType="{x:Type pages:Security}" />
-                    <ui:NavigationViewItem Content="Monitor" Tag="Monitor" Icon="{ui:SymbolIcon DataHistogram20}"
-                                           TargetPageType="{x:Type pages:Monitor}" />
+                    <ui:NavigationViewItem x:Name="Home" Content="Home" Tag="Home" Icon="{ui:SymbolIcon Home20}" TargetPageType="{x:Type pages:Home}"/>
+                    <ui:NavigationViewItem Content="Protect" Tag="Protection" Icon="{ui:SymbolIcon Shield20}" TargetPageType="{x:Type pages:Protection}" />
+                    <ui:NavigationViewItem Content="Security" Tag="Security" Icon="{ui:SymbolIcon LockClosed20}" TargetPageType="{x:Type pages:Security}" />
+                    <ui:NavigationViewItem Content="Monitor" Tag="Monitor" Icon="{ui:SymbolIcon DataHistogram20}" TargetPageType="{x:Type pages:Monitor}" />
                 </ui:NavigationView.MenuItems>
                 <ui:NavigationView.FooterMenuItems>
-                    <ui:NavigationViewItem Content="Help" Tag="Help" Icon="{ui:SymbolIcon QuestionCircle20}" 
-                                           TargetPageType="{x:Type pages:Help}" />
-                    <ui:NavigationViewItem Content="Settings" Tag="Settings" Icon="{ui:SymbolIcon Settings20}"
-                                           TargetPageType="{x:Type pages:Settings}" />
+                    <ui:NavigationViewItem Content="Help" Tag="Help" Icon="{ui:SymbolIcon QuestionCircle20}" TargetPageType="{x:Type pages:Help}" />
+                    <ui:NavigationViewItem Content="Settings" Tag="Settings" Icon="{ui:SymbolIcon Settings20}" TargetPageType="{x:Type pages:Settings}" />
                 </ui:NavigationView.FooterMenuItems>
                 <ui:NavigationView.ContentOverlay>
                     <Grid>

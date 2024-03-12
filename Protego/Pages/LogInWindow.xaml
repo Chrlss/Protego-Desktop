@@ -8,8 +8,8 @@
         xmlns:local="clr-namespace:Protego.Pages"
         mc:Ignorable="d"  WindowStyle="None" AllowsTransparency="True" 
         Title="LogInWindow" Height="450" Width="800" Background="Transparent"
-        WindowStartupLocation="CenterScreen" >
-    <Border Grid.Row="1" CornerRadius="12" Background="#211F1F">
+        WindowStartupLocation="CenterScreen">
+    <Border Grid.Row="1" CornerRadius="12" Background="#211F1F" >
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
@@ -20,6 +20,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            
+            <ContentControl x:Name="LogInContent" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"/>
             <Grid Grid.RowSpan="2">
                 <Border CornerRadius="12">
                     <Border.Background>
@@ -96,7 +98,7 @@
                     <DropShadowEffect Color="Black" Opacity="0.5" ShadowDepth="10" Direction="270" />
                 </Image.Effect>
             </Image>
-            <TextBlock Text="Your shield against scam and frauds" FontSize="20" Style="{StaticResource CustomFont}" Grid.Row="1" Foreground="White" TextWrapping="Wrap" TextAlignment="Center" Margin="30,210,30,-210">
+            <TextBlock Text="Your shield against scams and frauds" FontSize="20" Style="{StaticResource CustomFont}" Grid.Row="1" Foreground="White" TextWrapping="Wrap" TextAlignment="Center" Margin="30,210,30,-210">
                 <TextBlock.Effect>
                     <DropShadowEffect Color="Black" Opacity="0.5" ShadowDepth="5" Direction="270" />
                 </TextBlock.Effect>
@@ -117,13 +119,14 @@
 
                 <TextBlock Grid.Row="1" Text="LOG IN" Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" />
                 <ui:TextBox x:Name="FlyTb" PlaceholderText="Username" FontWeight="Light" IconPlacement="Right" Grid.Row="2" Width="250" Height="35" Icon="Password24"/>
-                
+
                 <ui:PasswordBox PlaceholderText="Password" FontWeight="Light" Grid.Row="3" Width="250" Height="35" Icon="Password24" VerticalAlignment="Center"/>
                 <ui:Button Grid.Row="4" Content="Log in" Icon="Fluent24" VerticalAlignment="Center" HorizontalAlignment="Center" />
                 <TextBlock Grid.Row="5" Text="OR" FontSize="10" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Center" />
                 <StackPanel Orientation="Horizontal" Grid.Row="6" VerticalAlignment="Top" HorizontalAlignment="Center">
                     <Image Source="\Assets\GoogleSignIn.png" Width="40" Height="40"/>
                 </StackPanel>
+                <TextBlock Grid.Row="8" Text="Don't have an account?" Foreground="White" VerticalAlignment="Top" Margin="250,6,-250,0" />
                 <ui:Button Grid.Row="8" Content="Sign up" Icon="Fluent24" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,30,0" />
 
 

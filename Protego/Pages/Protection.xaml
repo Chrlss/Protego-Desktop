@@ -15,8 +15,9 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <ContentControl x:Name="MainContent" Grid.Column="0" Grid.ColumnSpan="3"/>
 
-        <ui:Button Grid.Column="0" Width="200" Height="55" Margin="16,32,16,0" VerticalAlignment="Top" MouseOverBackground="#1D84B5" HorizontalAlignment="Center">
+        <ui:Button Grid.Column="0" Width="200" Height="55" Margin="16,32,16,0" VerticalAlignment="Top" MouseOverBackground="#1D84B5" HorizontalAlignment="Center" Click="Button_Click">
             <Grid>
                 <TextBlock Text="Scan" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-16,0,0,0"/>
                 <Image Source="\Assets\scan-64.png" Width="30" Height="30" Margin="41,3,-18,0" />
@@ -39,6 +40,6 @@
 
 
 
-
+        
     </Grid>
 </Page>

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -17,19 +16,13 @@ using System.Windows.Shapes;
 namespace Protego.Pages
 {
     /// <summary>
-    /// Interaction logic for Protection.xaml
+    /// Interaction logic for Sample2.xaml
     /// </summary>
-    public partial class Protection : Page
+    public partial class Sample2 : UserControl
     {
-        public Protection()
+        public Sample2()
         {
             InitializeComponent();
-            MainContent.Content = new Sample();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MainContent.Content = new Sample2();
         }
     }
 }
