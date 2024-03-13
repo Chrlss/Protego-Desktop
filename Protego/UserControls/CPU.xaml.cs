@@ -53,7 +53,7 @@ namespace Protego.UserControls
     }
     [ValueConversion(typeof(int), typeof(double))]
     public class ValueToAngle : IValueConverter
-    {
+   {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return (double)(((int)value * 0.1) * 360);
