@@ -7,6 +7,7 @@
         xmlns:tray="http://schemas.lepo.co/wpfui/2022/xaml/tray"
         xmlns:pages="clr-namespace:Protego.Pages"
         xmlns:local="clr-namespace:Protego"
+        xmlns:userControl="clr-namespace:Protego.UserControls"
         mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" 
         Title="MainWindow" Height="450" Width="800" Background="Transparent"
         WindowStartupLocation="CenterScreen">
