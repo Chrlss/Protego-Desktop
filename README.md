@@ -1,2 +1,2 @@
-Protego mga boang <br>
-Mga 10% or 12% progress na hehe 
+Protego lulubog lilitaw  <br>
+Mga 15% or 19% progress
