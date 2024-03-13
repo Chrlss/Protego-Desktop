@@ -73,6 +73,6 @@ namespace Protego.Pages
             return $"{value:F1}{units[i]}";
         }
 
-        
+       
     }
 }

@@ -56,7 +56,7 @@ namespace Protego.UserControls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (double)(((int)value * 0.01) * 360);
+            return (double)(((int)value * 0.1) * 360);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
