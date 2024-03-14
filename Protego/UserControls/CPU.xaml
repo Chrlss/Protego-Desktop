@@ -14,9 +14,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <Grid>
-            <ed:Arc Fill="Gray" StartAngle="0" EndAngle="360"/>
-        </Grid>
+        <!---->
         <Grid>
             <Ellipse x:Name="Background" Fill="{Binding BackgroundBrush, ElementName=_this}" Margin="0" Stroke="Gray" />
             <ed:Arc x:Name="Indicator" ArcThickness="10" ArcThicknessUnit="Pixel" 
@@ -24,6 +22,7 @@
             StartAngle="0" Stretch="None"/>
             <Ellipse x:Name="Border" Fill="{Binding ProgressBorderBrush, ElementName=_this}" Margin="10" Stroke="Gray"/>
         </Grid>
+        
     </Grid>
-    
+        
 </UserControl>

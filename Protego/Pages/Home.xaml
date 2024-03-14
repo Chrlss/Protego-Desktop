@@ -7,9 +7,10 @@
       xmlns:ViewModel="clr-namespace:Protego.ViewModel"
       xmlns:local="clr-namespace:Protego.Pages" 
       xmlns:class="clr-namespace:Protego.Class" 
+      
       xmlns:userControl="clr-namespace:Protego.UserControls"
       mc:Ignorable="d" 
-      d:DesignHeight="420" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="800"
       Title="Home"
       x:Name="HomePage">
 
@@ -25,8 +26,14 @@
         </Grid.RowDefinitions>
 
         <ui:CardAction Grid.Column="0" Grid.Row="1" IsChevronVisible="False" Height="200" Grid.ColumnSpan="2" Margin="5,0,119,0">
-            
+            <Grid Height="183" Width="390">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
+                <TextBlock Grid.Row="1" x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="0,54,0,0"/>
+            </Grid>
         </ui:CardAction>
         <ui:CardAction Grid.ColumnSpan="2" Height="200" VerticalContentAlignment="Top" IsChevronVisible="False" Width="480">
             <StackPanel>
@@ -40,11 +47,12 @@
             <StackPanel>
                 <Image Source="\Assets\usb-64.png" Width="100" Height="100" />
                 <TextBlock Text="Protect yourself from USB baiting" FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
+                
             </StackPanel>
         </ui:CardAction>
-        <ui:CardAction Grid.Column="1" Grid.Row="1" IsChevronVisible="False" Height="200" Grid.ColumnSpan="2" Margin="133,0,178,0" Command="{Binding OnCardAction}">
+        <ui:CardAction Grid.Column="1" Grid.Row="1" IsChevronVisible="False" Height="200" Grid.ColumnSpan="2" Margin="133,0,178,0" Command="{Binding CardActionCommand}">
             <Grid>
-                <userControl:CPU x:Name="CPU" Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Center" IndicatorBrush="#1D84B5" />
+                <userControl:CPU x:Name="CPU" Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Top" IndicatorBrush="#1D84B5" />
                 <TextBlock x:Name="CPUpercent"   HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Grid>
         </ui:CardAction>

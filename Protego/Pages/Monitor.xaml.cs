@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Management;
 
 namespace Protego.Pages
 {
@@ -20,14 +21,15 @@ namespace Protego.Pages
     /// </summary>
     public partial class Monitor : Page
     {
+        System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
         public Monitor()
         {
             InitializeComponent();
-        }
+            timer.Tick += new EventHandler(Timer_Tick);
+            timer.Interval = new TimeSpan(0, 0, 0);
+            timer.Start();
 
-        private void CardAction_Click(object sender, RoutedEventArgs e)
-        {
-
+            GetOSInfo();
         }
     }
 }

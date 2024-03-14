@@ -15,7 +15,8 @@ using System.Windows.Shapes;
 using System.Management;
 
 namespace Protego.Pages
-{    
+{
+    #region
     public partial class SystemSpec : Page
     {
         System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
@@ -40,6 +41,9 @@ namespace Protego.Pages
             date = DateTime.Now;
             lbl1.Text = date.ToLongDateString() + "   " + date.ToLongTimeString();
         }
+        #endregion
+
+        #region // OS Info
         private void GetOSInfo()
         {
             System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_ComputerSystem");
@@ -51,6 +55,9 @@ namespace Protego.Pages
                 lbl2.Text = "System Sku :" + " " + systemSku.ToString();
             }
         }
+        #endregion
+
+        #region // Processor Info
         private void GetProcessorInfo()
         {
             System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_Processor");
@@ -64,11 +71,12 @@ namespace Protego.Pages
                 Boolean powerManagementSupported = Convert.ToBoolean(provider["PowerManagementSupported"]);
 
                 lbl3.Text = "Processor Family: " + " " + procFamily.ToString();
-                lbl4.Text = "Processor Clock    Speed: " + " " + procSpeed.ToString();
+                lbl4.Text = "Processor Clock   Speed: " + " " + procSpeed.ToString();
                 lbl5.Text = "Processor Status" + " " + procStatus.ToString();
                 lbl6.Text = powerManagementSupported.ToString();
             }
         }
+        #endregion
     }
-    
+
 }
