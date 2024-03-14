@@ -27,7 +27,7 @@
             <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
 
-        <ui:CardExpander Height="5000" Margin="6,49,10,0" Grid.ColumnSpan="10" RenderTransformOrigin="0.506,0.101" Header="" VerticalAlignment="Top">
+        <ui:CardExpander Height="400" Margin="6,49,10,0" Grid.ColumnSpan="20" RenderTransformOrigin="0.506,0.101" Header="" VerticalAlignment="Top">
 
             <StackPanel>
                 <TextBlock Text="Guides" Foreground="White" Height="70" FontSize="38"/>
