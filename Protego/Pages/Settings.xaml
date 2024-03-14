@@ -10,31 +10,32 @@
       Title="Settings">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="98*"/>
+            <RowDefinition Height="353*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
+        <Grid Grid.ColumnSpan="2" Margin="0,0,266,0" Grid.RowSpan="2">
+            <TextBlock Text="Settings" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26,10,0,0" Foreground="White" />
 
-        <ui:Button Width="200"  Height="66"  Margin="0,45,0,0"  VerticalAlignment="Top" HorizontalAlignment="Center" MouseOverBackground="#1D84B5">
-            <Grid>
-                <TextBlock Text="" FontSize="25"/>
-            </Grid>
-        </ui:Button>
+        </Grid>
 
-        <ui:Button Grid.Column="1" Width="200"
-                   Height="65"  Margin="0,46,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" MouseOverBackground="#1D84B5">
-            <Grid>
-                <TextBlock Text="" FontSize="25"/>
-            </Grid>
-        </ui:Button>
+        <ui:CardExpander Height="393" Margin="12,0,10,0" Grid.ColumnSpan="3" RenderTransformOrigin="0.506,0.101" Header="" Grid.Row="1">
 
-        <ui:Button Grid.Column="2" Width="200"  
-                   Height="65"  Margin="0,46,0,0"  VerticalAlignment="Top" HorizontalAlignment="Center" MouseOverBackground="#1D84B5">
-            <Grid>
-                <TextBlock Text="" FontSize="25"/>
-            </Grid>
-        </ui:Button>
+            <StackPanel>
+                <TextBlock Text="settings" Foreground="White" Height="30"/>
+            </StackPanel>
+        </ui:CardExpander>
+        <ui:CardExpander Height="394" Margin="12,145,10,0" VerticalAlignment="Top" Grid.ColumnSpan="3" RenderTransformOrigin="0.506,0.101" Grid.Row="1">
+            <StackPanel>
+                <TextBlock Text="settings" Foreground="White" Height="30"/>
+            </StackPanel>
+        </ui:CardExpander>
+
     </Grid>
 </Page>

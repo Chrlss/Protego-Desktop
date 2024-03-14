@@ -11,36 +11,36 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition  />
             <ColumnDefinition />
+            <ColumnDefinition  />
             <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
+
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition  />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <ui:CardAction Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Width="360" IsChevronVisible="False" Height="200">
-            <Grid>
-                <TextBlock x:Name="LblClock"  FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-            </Grid>
-        </ui:CardAction>
-        <ui:CardAction Grid.Column="2" Grid.ColumnSpan="4" Grid.Row="0" Width="360" IsChevronVisible="False" Height="200">
-            <Grid>
-                <TextBlock x:Name="LblSku" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-            </Grid>
-        </ui:CardAction>
-        <ui:CardAction Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Width="509" IsChevronVisible="False" Height="200" HorizontalAlignment="Right" Margin="0,2,4,0" VerticalAlignment="Top">
-            <Grid>
-                <TextBlock Text="sa monitor storage" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-            </Grid>
-        </ui:CardAction>
-        <ui:CardAction Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Width="217" IsChevronVisible="False" Height="200" HorizontalAlignment="Left" Margin="4,2,0,0" VerticalAlignment="Top">
-            <Grid>
-                <TextBlock x:Name="LblStatus" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-            </Grid>
-        </ui:CardAction>
+        <ui:CardAction Grid.Column="0" Grid.ColumnSpan="2" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="12,15,80,0" VerticalAlignment="Top"/>
+        <ui:CardAction Grid.Column="1" Grid.ColumnSpan="3" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="120,15,160,0" VerticalAlignment="Top"/>
+        <ui:CardAction Grid.Column="3" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="38,15,10,0" VerticalAlignment="Top"/>
+        <ui:CardExpander Height="393" Margin="10,32,12,0" VerticalAlignment="Top" Grid.ColumnSpan="4" Grid.Row="1" RenderTransformOrigin="0.506,0.101">
 
+            <StackPanel>
+                <TextBlock Text="AHAHAHAHAH" Foreground="White" Height="18"/>
+            </StackPanel>
+
+
+        </ui:CardExpander>
+
+        <ui:CardExpander Height="392" Margin="10,95,12,0" VerticalAlignment="Top" Grid.ColumnSpan="4" Grid.Row="1" RenderTransformOrigin="0.506,0.101">
+            <StackPanel>
+                <TextBlock Text="AHAHAHAHAH" Foreground="White" Height="42"/>
+            </StackPanel>
+
+
+        </ui:CardExpander>
     </Grid>
 </Page>
