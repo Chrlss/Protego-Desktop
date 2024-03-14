@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Wpf.Ui.Controls;
 using TextBlock = Wpf.Ui.Controls.TextBlock;
 
+
 namespace Protego.Pages
 {
     /// <summary>

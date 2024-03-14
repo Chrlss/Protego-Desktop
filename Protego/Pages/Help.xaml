@@ -10,7 +10,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Help">
 
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -18,25 +18,13 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
+        <ui:CardExpander Height="393" Margin="12,0,10,0" Grid.ColumnSpan="3" RenderTransformOrigin="0.506,0.101" Header="" Grid.Row="1">
 
-        <ui:Button Width="200"  Height="66"  Margin="0,45,0,0"  VerticalAlignment="Top" HorizontalAlignment="Center" MouseOverBackground="#1D84B5">
-            <Grid>
-                <TextBlock Text="Guides" FontSize="25"/>
-            </Grid>
-        </ui:Button>
+            <StackPanel>
+                <TextBlock Text="Guides" Foreground="White" Height="30"/>
+            </StackPanel>
+        </ui:CardExpander>
 
-        <ui:Button Grid.Column="1" Width="200"
-                   Height="65"  Margin="0,46,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" MouseOverBackground="#1D84B5">
-            <Grid>
-                <TextBlock Text="Privacy Policy" FontSize="25"/>
-            </Grid>
-        </ui:Button>
 
-        <ui:Button Grid.Column="2" Width="200"  
-                   Height="65"  Margin="0,46,0,0"  VerticalAlignment="Top" HorizontalAlignment="Center" MouseOverBackground="#1D84B5">
-            <Grid>
-                <TextBlock Text="FAQ" FontSize="25"/>
-            </Grid>
-        </ui:Button>
     </Grid>
 </Page>
