@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:ViewModel="clr-namespace:Protego.ViewModel"
       xmlns:local="clr-namespace:Protego.Pages" 
       xmlns:class="clr-namespace:Protego.Class" 
       xmlns:userControl="clr-namespace:Protego.UserControls"
@@ -41,9 +42,9 @@
                 <TextBlock Text="Protect yourself from USB baiting" FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
             </StackPanel>
         </ui:CardAction>
-        <ui:CardAction Grid.Column="1" Grid.Row="1" IsChevronVisible="False" Height="200" Grid.ColumnSpan="2" Margin="133,0,178,0">
+        <ui:CardAction Grid.Column="1" Grid.Row="1" IsChevronVisible="False" Height="200" Grid.ColumnSpan="2" Margin="133,0,178,0" Command="{Binding OnCardAction}">
             <Grid>
-                <userControl:CPU x:Name="CPU" Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Center" IndicatorBrush="#1D84B5"/>
+                <userControl:CPU x:Name="CPU" Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Center" IndicatorBrush="#1D84B5" />
                 <TextBlock x:Name="CPUpercent"   HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Grid>
         </ui:CardAction>
