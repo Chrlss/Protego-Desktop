@@ -14,18 +14,36 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="26*" />
+            <ColumnDefinition Width="32*"/>
+            <ColumnDefinition Width="209*"/>
+            <ColumnDefinition Width="193*" />
+            <ColumnDefinition Width="32*"/>
+            <ColumnDefinition Width="41*"/>
+            <ColumnDefinition Width="127*" />
+            <ColumnDefinition Width="46*"/>
+            <ColumnDefinition Width="38*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
 
-        <ui:CardExpander Height="393" Margin="12,0,10,0" Grid.ColumnSpan="3" RenderTransformOrigin="0.506,0.101" Header="" Grid.Row="1">
+        <ui:CardExpander Height="5000" Margin="6,49,10,0" Grid.ColumnSpan="10" RenderTransformOrigin="0.506,0.101" Header="" VerticalAlignment="Top">
 
             <StackPanel>
-                <TextBlock Text="Guides" Foreground="White" Height="30"/>
+                <TextBlock Text="Guides" Foreground="White" Height="70" FontSize="38"/>
+                <TextBlock TextWrapping="Wrap" Text="
+Backup and Recovery:
+Backup Utilities: Create copies of your important files and folders to guard against data loss due to hardware failure or accidental deletion.
+Data Recovery: In case of data loss, some utilities attempt to recover deleted or corrupted files.
+" Foreground="White" Height="100" TextAlignment="Justify" FontSize="17"/>
+                <TextBlock TextWrapping="Wrap" Text="System Monitoring and Diagnostics:
+System Monitoring Tools: Track system resources like CPU usage, memory allocation, and network activity to identify bottlenecks or potential problems.
+Diagnostic Tools: Help pinpoint hardware or software issues that might be causing system instability or crashes." Foreground="White" Height="100" TextAlignment="Justify" FontSize="17"/>
             </StackPanel>
-        </ui:CardExpander>
 
+
+
+        </ui:CardExpander>
 
     </Grid>
 </Page>
