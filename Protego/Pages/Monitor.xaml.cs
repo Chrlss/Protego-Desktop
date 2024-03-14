@@ -25,11 +25,9 @@ namespace Protego.Pages
         public Monitor()
         {
             InitializeComponent();
-            timer.Tick += new EventHandler(Timer_Tick);
-            timer.Interval = new TimeSpan(0, 0, 0);
-            timer.Start();
+            
 
-            GetOSInfo();
+            
         }
     }
 }
