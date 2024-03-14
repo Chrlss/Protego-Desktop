@@ -21,15 +21,6 @@ namespace Protego.Pages
     /// </summary>
     public partial class Monitor : Page
     {
-        System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
-        public Monitor()
-        {
-            InitializeComponent();
-            timer.Tick += new EventHandler(Timer_Tick);
-            timer.Interval = new TimeSpan(0, 0, 0);
-            timer.Start();
-
-            GetOSInfo();
-        }
+        
     }
 }

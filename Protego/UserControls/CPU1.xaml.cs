@@ -50,9 +50,10 @@ namespace Protego.UserControls
                     double normalizedClockSpeed = (double)clockSpeedMHz / 2592; // Assuming a maximum clock speed of 5000 MHz
 
                     // Update the progress bar
-                   
-                    cpuClockProgressBar.Value = normalizedClockSpeed * 100; // Convert to percentage
-                   
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        cpuClockProgressBar.Value = normalizedClockSpeed * 100; // Convert to percentage
+                    });
                 }
             }
             catch (Exception ex)
