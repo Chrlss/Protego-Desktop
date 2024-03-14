@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Protego.Class;
 using System.Timers;
+using Protego.UserControls;
 
 namespace Protego.Pages
 {
@@ -27,13 +28,17 @@ namespace Protego.Pages
     public partial class Home : Page
     {
         PerformanceCounter perfCPU = new PerformanceCounter("Processor Information", "% Processor Time", "_Total");
-       System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
+        System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
+        
         public Home()
         {
             InitializeComponent();
             timer.Tick += new EventHandler(Timer_Tick);
             timer.Interval = new TimeSpan(0, 0, 0, 1);
             timer.Start();
+
+            //GetOSInfo();
+            ProcessorFamily();
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -49,30 +54,44 @@ namespace Protego.Pages
         }
        
 
-        private long GetTotalRAM()
+       /*
+       private void GetOSInfo()
         {
-            long totalVisibleBytes = 0;
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select Capacity From Win32_PhysicalMemory");
-            foreach (ManagementObject queryObj in searcher.Get())
-            {
-                totalVisibleBytes += Convert.ToInt64(queryObj["Capacity"]);
-            }
-            return totalVisibleBytes;
-        }
+            System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_Processor");
+            var providers = wmi.GetInstances();
 
-        private string FormatBytes(long bytes)
+            foreach (var provider in providers)
+            {
+                int systemSku = Convert.ToInt16(provider["Family"]);
+                LblSystemSku.Text = "System Sku :" + " " + systemSku.ToString();
+
+                if (systemSku == 198)
+                {
+                    LblProcFamily.Text = "Family :" + " " + "Intel(R) Core(TM) i7 processor";
+                }
+            }
+        } */
+        private void ProcessorFamily()
         {
-            string[] units = { "B", "KB", "MB", "GB", "TB" };
-            double value = bytes;
-            int i = 0;
-            while (value >= 1024 && i < units.Length - 1)
-            {
-                value /= 1024;
-                ++i;
-            }
-            return $"{value:F1}{units[i]}";
-        }
+            System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_Processor");
+            var providers = wmi.GetInstances();
 
-       
+            foreach (var provider in providers)
+            {
+                int ProcFamily = Convert.ToInt16(provider["Family"]);
+                LblProcFamily.Text = ProcFamily.ToString();
+
+                if (ProcFamily == 198)
+                {
+                    LblProcFamily.Text = "Intel(R) Core(TM) i7 processor";
+                }
+                if (ProcFamily == 07)
+                {
+                    LblProcFamily.Text = "AMD Ryzen 5 5600G";
+                }
+            }
+
+        }
+        
     }
 }
