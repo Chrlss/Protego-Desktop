@@ -118,7 +118,7 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="1" Text="LOG IN" Foreground="White" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                <ui:TextBox x:Name="FlyTb" PlaceholderText="Username" FontWeight="Light" IconPlacement="Right" Grid.Row="2" Width="250" Height="35" Icon="Password24"/>
+                <ui:TextBox x:Name="FlyTb" PlaceholderText="Username" FontWeight="Light" IconPlacement="Right" Grid.Row="2" Width="250" Height="35" Icon="Password24" TextChanged="FlyTb_TextChanged"/>
 
                 <ui:PasswordBox PlaceholderText="Password" FontWeight="Light" Grid.Row="3" Width="250" Height="35" Icon="Password24" VerticalAlignment="Center"/>
                 <ui:Button Grid.Row="4" Content="Log in" Icon="Fluent24" VerticalAlignment="Center" HorizontalAlignment="Center" />

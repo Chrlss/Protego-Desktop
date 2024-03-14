@@ -34,7 +34,7 @@
             CREATE ACCOUNT
         </TextBlock>
         <ui:TextBox PlaceholderText="Username" FontSize="16" FontFamily="Inter" FontWeight="Light" 
-            Grid.Row="2"  Width="250" Height="35" Foreground="White"/>
+            Grid.Row="2"  Width="250" Height="35" Foreground="White" TextChanged="TextBox_TextChanged"/>
         <ui:PasswordBox PlaceholderText="Password" FontSize="16" FontFamily="Inter" FontWeight="Light" 
             Grid.Row="3"  Width="250" Height="40" Foreground="White"/>
         <ui:PasswordBox PlaceholderText="Confirm Password" FontSize="16" FontFamily="Inter" FontWeight="Light" 
