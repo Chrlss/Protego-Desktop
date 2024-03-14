@@ -16,9 +16,9 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <ui:Button   Grid.Column="0" Width="200"  Height="65"  Margin="16,32,16,0"  VerticalAlignment="Top" HorizontalAlignment="Center" MouseOverBackground="#1D84B5" Click="Button_Click" Content="URL Analysis" Foreground="White" FontSize="16"/>
+        <ui:Button   Grid.Column="0" Width="200"  Height="65"  Margin="16,32,16,0"  VerticalAlignment="Top" HorizontalAlignment="Center" MouseOverBackground="#1D84B5" Content="URL Analysis" Foreground="White" FontSize="16"/>
 
-        <ui:Button Margin="0,371,0,0" Grid.Column="2" Width="150"   Height="40" Background="#1D84B5" MouseOverBackground="#1D84B5"  VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click_1" Content="Logs"/>
+        <ui:Button Margin="0,371,0,0" Grid.Column="2" Width="150"   Height="40" Background="#1D84B5" MouseOverBackground="#1D84B5"  VerticalAlignment="Center" HorizontalAlignment="Center" Content="Logs"/>
     
 
 

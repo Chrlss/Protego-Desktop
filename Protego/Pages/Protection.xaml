@@ -33,8 +33,8 @@
 
         <ui:Button Grid.Column="2" Width="200"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center">
             <Grid>
-                <TextBlock Text="Flashdrive Baiting" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="-16,0,0,2"/>
-                <Image Source="\Assets\usb-64.png" Width="30" Height="30" Margin="87,1,-14,-1" />
+                <TextBlock Text="Flashdrive Baiting" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-20,0,0,0"/>
+                <Image Source="\Assets\usb-64.png" Width="30" Height="30" Margin="135,0,-26,0" />
             </Grid>
         </ui:Button>
 
