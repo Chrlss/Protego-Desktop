@@ -31,7 +31,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <userControl:CPU1 />
+                
                 <TextBlock Grid.Row="1" x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="0,54,0,0"/>
             </Grid>
         </ui:CardAction>
@@ -46,7 +46,7 @@
         <ui:CardAction Grid.Column="2" Width="235" IsChevronVisible="False" Height="200">
             <StackPanel>
                 <Image Source="\Assets\usb-64.png" Width="100" Height="100" />
-                <TextBlock Text="Protect yourself from USB baiting" FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
+                <TextBlock Text="Protect yourself from Flashdrive baiting" FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
                 
             </StackPanel>
         </ui:CardAction>

@@ -83,6 +83,9 @@ namespace Protego.Pages
             isDragging = false;
         }
 
-       
+        private void FlyTb_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
