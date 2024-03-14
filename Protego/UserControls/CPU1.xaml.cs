@@ -44,7 +44,7 @@ namespace Protego.UserControls
                 foreach (ManagementObject obj in searcher.Get())
                 {
                     // Get the CPU clock speed in MHz
-                    uint clockSpeedMHz = (uint)obj["MaxClockSpeed"];
+                    uint clockSpeedMHz = (uint)obj["CurrentClockSpeed"];
 
                     // Normalize the clock speed to a value between 0 and 100 for the progress bar
                     double normalizedClockSpeed = (double)clockSpeedMHz / 2592; // Assuming a maximum clock speed of 5000 MHz
