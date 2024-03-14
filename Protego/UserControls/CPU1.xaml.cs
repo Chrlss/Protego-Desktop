@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Management;
 using System.Text;
@@ -22,44 +23,28 @@ namespace Protego.UserControls
     /// </summary>
     public partial class CPU1 : UserControl
     {
-        
+       
         public CPU1()
         {
             InitializeComponent();
-            
-
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += (s, e) =>
-            {
-               GetAndDisplayCPUClockSpeed();
-            };
-            timer.Start();
+            GetAndDisplayCPUClockSpeed();
         }
         private void GetAndDisplayCPUClockSpeed()
         {
-            try
-            {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
-                foreach (ManagementObject obj in searcher.Get())
-                {
-                    // Get the CPU clock speed in MHz
-                    uint clockSpeedMHz = (uint)obj["CurrentClockSpeed"];
 
-                    // Normalize the clock speed to a value between 0 and 100 for the progress bar
-                    double normalizedClockSpeed = (double)clockSpeedMHz / 2592; // Assuming a maximum clock speed of 5000 MHz
-
-                    // Update the progress bar
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        cpuClockProgressBar.Value = normalizedClockSpeed * 100; // Convert to percentage
-                    });
-                }
-            }
-            catch (Exception ex)
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
+            foreach (ManagementObject obj in searcher.Get())
             {
-                MessageBox.Show("Error: " + ex.Message);
+                // Get the CPU clock speed in MHz
+                uint clockSpeedMHz = (uint)obj["MaxClockSpeed"];
+
+                // Normalize the clock speed to a value between 0 and 100 for the progress bar
+                double normalizedClockSpeed = (double)clockSpeedMHz / 2000; // Assuming a maximum clock speed of 5000 MHz
+
+                // Update the progress bar
+                cpuClockProgressBar.Value = normalizedClockSpeed * 100; // Convert to percentage
             }
+
         }
 
        

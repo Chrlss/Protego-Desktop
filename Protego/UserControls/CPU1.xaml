@@ -5,8 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Protego.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">  
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ProgressBar x:Name="cpuClockProgressBar" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="30"/>
+        <ProgressBar x:Name="cpuClockProgressBar" Control.Foreground="Red" RangeBase.Value="{Binding Path=CpuClockProgress,Mode=OneWay}" ValueChanged="cpuClockProgressBar_ValueChanged" Height="30" />
     </Grid>
+
+    <!-- cpuClockProgressBar
+    <ProgressBar  Control.Foreground="{DynamicResource RadiographGreenGradientBrush}" RangeBase.Value="{Binding Path=CpuClockProgress,Mode=OneWay}" />
+        -->
+    
 </UserControl>
