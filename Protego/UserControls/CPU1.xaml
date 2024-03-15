@@ -7,7 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ProgressBar x:Name="cpuClockProgressBar" Control.Foreground="Red" RangeBase.Value="{Binding Path=CpuClockProgress,Mode=OneWay}" ValueChanged="cpuClockProgressBar_ValueChanged" Height="30" />
+        <StackPanel Orientation="Horizontal">
+            <Label x:Name="label" Content="Clock Speed: "/>
+            <ProgressBar x:Name="cpuClockProgressBar" Maximum="100" Value="{Binding ElementName=MainWindow, Path=clockSpeed}"/>
+        </StackPanel>
     </Grid>
 
     <!-- cpuClockProgressBar

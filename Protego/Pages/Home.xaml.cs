@@ -39,6 +39,7 @@ namespace Protego.Pages
 
             //GetOSInfo();
             ProcessorFamily();
+            
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -53,6 +54,7 @@ namespace Protego.Pages
             logIn.Show();
         }
        
+
 
        /*
        private void GetOSInfo()
@@ -92,6 +94,7 @@ namespace Protego.Pages
             }
 
         }
-        
+
+       
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Management;
 using System.Text;
@@ -23,30 +24,52 @@ namespace Protego.UserControls
     /// </summary>
     public partial class CPU1 : UserControl
     {
-       
+        private PerformanceCounter cpuCounter;
         public CPU1()
         {
             InitializeComponent();
-            GetAndDisplayCPUClockSpeed();
+            // Create a PerformanceCounter to get the processor's clock speed
+            cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+
+            // Create a Binding to bind the ProgressBar's Value property to the clock speed
+            Binding binding = new Binding();
+            binding.Source = cpuCounter;
+            binding.Path = new PropertyPath("NextValue");
+            binding.Converter = new ClockSpeedConverter();
+            binding.Mode = BindingMode.OneWay;
+
+            // Set the binding to the ProgressBar
+            cpuClockProgressBar.SetBinding(ProgressBar.ValueProperty, binding);
+
+            // Create a DispatcherTimer to update the clock speed every second
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
         }
-        private void GetAndDisplayCPUClockSpeed()
+        private void Timer_Tick(object sender, EventArgs e)
         {
+            // Update the clock speed
+            cpuCounter.NextValue();
+        }
 
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
-            foreach (ManagementObject obj in searcher.Get())
+        public class ClockSpeedConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
             {
-                // Get the CPU clock speed in MHz
-                uint clockSpeedMHz = (uint)obj["MaxClockSpeed"];
-
-                // Normalize the clock speed to a value between 0 and 100 for the progress bar
-                double normalizedClockSpeed = (double)clockSpeedMHz / 2000; // Assuming a maximum clock speed of 5000 MHz
-
-                // Update the progress bar
-                cpuClockProgressBar.Value = normalizedClockSpeed * 100; // Convert to percentage
+                int clockSpeed = (int)value;
+                int maxValue = 100; // Set the maximum value of the ProgressBar to 100
+                int progressBarValue = (int)((double)clockSpeed / 100 * maxValue);
+                return progressBarValue;
             }
 
+            public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
         }
 
-       
+
+
     }
 }
