@@ -28,7 +28,7 @@
         <ui:CardAction Grid.Column="1" Grid.ColumnSpan="3" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="120,15,160,0" VerticalAlignment="Top"/>
         <ui:CardAction Grid.Column="3" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="38,15,10,0" VerticalAlignment="Top"/>
 
-        <ui:CardExpander ContentPadding="0" Grid.ColumnSpan="4" Margin="11,10,10,0" VerticalAlignment="Top" Grid.Row="1">
+        <ui:CardExpander ContentPadding="0" Grid.ColumnSpan="4" Margin="10,20,11,0" VerticalAlignment="Top" Grid.Row="1">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -83,7 +83,7 @@
                 </ui:Anchor>
             </StackPanel>
         </ui:CardExpander>
-        <ui:CardExpander ContentPadding="0" Grid.ColumnSpan="4" Margin="12,80,9,0" VerticalAlignment="Top" Grid.Row="1">
+        <ui:CardExpander ContentPadding="0" Grid.ColumnSpan="4" Margin="9,84,11,0" VerticalAlignment="Top" Grid.Row="1">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -91,14 +91,16 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="193*" />
+                        <ColumnDefinition Width="517*"/>
+                        <ColumnDefinition Width="26*"/>
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ui:TextBlock
                         Grid.Row="0"
                         Grid.Column="0"
                         FontTypography="Body"
-                        Text="RAM" />
+                        Text="RAM" Grid.ColumnSpan="3" Grid.RowSpan="2" />
 
                 </Grid>
             </ui:CardExpander.Header>
@@ -138,7 +140,7 @@
                 </ui:Anchor>
             </StackPanel>
         </ui:CardExpander>
-        <ui:CardExpander ContentPadding="0" Grid.ColumnSpan="4" Margin="12,157,9,0" VerticalAlignment="Top" Grid.Row="1">
+        <ui:CardExpander ContentPadding="0" Grid.ColumnSpan="4" Margin="9,151,12,0" VerticalAlignment="Top" Grid.Row="1">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.RowDefinitions>
