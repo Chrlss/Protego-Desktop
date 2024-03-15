@@ -40,13 +40,13 @@ namespace Protego.UserControls
             GetRAMUsage();
         }
 
-        private void GetRAMUsage()
+       private void GetRAMUsage()
         {
             double availableRamMB = ramCounter.NextValue() / 1024.0;
             double totalRamMB = GetTotalRamMB();
             double usedRamMB = totalRamMB - availableRamMB;
-            ramUsageTextBlock.Text = $"{usedRamMB.ToString("0.0", CultureInfo.InvariantCulture)}/{totalRamMB.ToString("0.0", CultureInfo.InvariantCulture)} GB";
-
+            ramUsageTextBlock.Text = $"{usedRamMB.ToString("0.0", CultureInfo.InvariantCulture)} / {totalRamMB.ToString("0.0", CultureInfo.InvariantCulture)} GB";
+            
         }
 
         private double GetTotalRamMB()
