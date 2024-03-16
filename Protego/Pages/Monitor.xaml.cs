@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Management;
-using System.Windows.Media.Animation;
 
 namespace Protego.Pages
 {
@@ -30,203 +29,41 @@ namespace Protego.Pages
             timer.Interval = new TimeSpan(0, 0, 0);
             timer.Start();
 
-
-            GetOSInfo();
-            GetRamInfo();
-            GetStorage();
-
+            // Start the methods on separate threads
+            Task.Run(() => GetOSInfo());
+            Task.Run(() => GetRamInfo());
+            Task.Run(() => GetStorage());
         }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
-            GetOSInfo();
+            Task.Run(() => GetOSInfo());
         }
         private void GetOSInfo()
         {
             System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_Processor");
             var providers = wmi.GetInstances();
-            #region //procie
+            StringBuilder sb = new StringBuilder();
             foreach (var provider in providers)
             {
                 int clock = Convert.ToInt32(provider["MaxClockSpeed"]);
                 int procFamily = Convert.ToInt16(provider["Family"]);
 
-                LblClock.Text = $"{clock} MHz";
-                //LblClock.Text = clock.ToString();
+                sb.AppendLine($"{clock} MHz");
 
                 if (procFamily == 107)
                 {
-                    LblProcie.Text = "AMD Ryzen 5 5600G";
+                    sb.Append("AMD Ryzen 5 5600G");
                 }
 
-                if (procFamily == 11)
-                {
-                    LblProcie.Text = "Pentium(R) brand ";
-                }
+                // Add more conditions for other processor families
 
-                if (procFamily == 12)
-                {
-                    LblProcie.Text = "Pentium(R) Pro ";
-                }
-
-                if (procFamily == 13)
-                {
-                    LblProcie.Text = "Pentium(R) II ";
-
-                }
-
-                if (procFamily == 14)
-                {
-                    LblProcie.Text = "Pentium(R) processor with MMX(TM) technology";
-                }
-
-                if (procFamily == 14)
-                {
-                    LblProcie.Text = "Pentium(R) processor with MMX(TM) technology";
-                }
-
-                if (procFamily == 15)
-                {
-                    LblProcie.Text = "Celeron(TM)";
-                }
-
-                if (procFamily == 16)
-                {
-                    LblProcie.Text = "Pentium(R) II Xeon(TM) ";
-                }
-                if (procFamily == 17)
-                {
-                    LblProcie.Text = "Pentium(R) III ";
-                }
-                if (procFamily == 20)
-                {
-                    LblProcie.Text = "Intel(R) Celeron(R) M processor) ";
-                }
-                if (procFamily == 21)
-                {
-                    LblProcie.Text = "Intel(R) Pentium(R) 4 HT processor ";
-                }
-                if (procFamily == 28)
-                {
-                    LblProcie.Text = "AMD Athlon(TM) Processor Family ";
-                }
-                if (procFamily == 29)
-                {
-                    LblProcie.Text = "AMD(R) Duron(TM) Processor ";
-                }
-                if (procFamily == 30)
-                {
-                    LblProcie.Text = "AMD29000 Family  ";
-                }
-                if (procFamily == 40)
-                {
-                    LblProcie.Text = "Intel(R) Core(TM) Duo processor  ";
-                }
-                if (procFamily == 41)
-                {
-                    LblProcie.Text = "Intel(R) Core(TM) Duo mobile processor ";
-                }
-                if (procFamily == 42)
-                {
-                    LblProcie.Text = "Intel(R) Core(TM) Solo mobile processor ";
-                }
-                if (procFamily == 43)
-                {
-                    LblProcie.Text = "Intel(R) Atom(TM) processor ";
-                }
-                if (procFamily == 58)
-                {
-                    LblProcie.Text = "AMD Athlon(TM) II Dual-Core Mobile M Processor Family ";
-                }
-                if (procFamily == 131)
-                {
-                    LblProcie.Text = "AMD Athlon(TM) 64 Processor Family ";
-                }
-                if (procFamily == 132)
-                {
-                    LblProcie.Text = "AMD Opteron(TM) Processor Family ";
-                }
-                if (procFamily == 133)
-                {
-                    LblProcie.Text = "AMD Sempron(TM) Processor Family ";
-                }
-                if (procFamily == 134)
-                {
-                    LblProcie.Text = "AMD Sempron(TM) Processor Family ";
-                }
-                if (procFamily == 135)
-                {
-                    LblProcie.Text = "Dual-Core AMD Opteron(TM) Processor Family ";
-                }
-                if (procFamily == 136)
-                {
-                    LblProcie.Text = "AMD Athlon(TM) 64 X2 Dual-Core Processor Family ";
-                }
-                if (procFamily == 137)
-                {
-                    LblProcie.Text = "AMD Turion(TM) 64 X2 Mobile Technology ";
-                }
-                if (procFamily == 138)
-                {
-                    LblProcie.Text = "Quad-Core AMD Opteron(TM) Processor Family ";
-                }
-                if (procFamily == 139)
-                {
-                    LblProcie.Text = "Third-Generation AMD Opteron(TM) Processor Family ";
-                }
-                if (procFamily == 140)
-                {
-                    LblProcie.Text = "AMD Phenom(TM) FX Quad-Core Processor Family ";
-                }
-                if (procFamily == 141)
-                {
-                    LblProcie.Text = "AMD Phenom(TM) X4 Quad-Core Processor Family ";
-                }
-                if (procFamily == 142)
-                {
-                    LblProcie.Text = "AMD Phenom(TM) X2 Dual-Core Processor Family  ";
-                }
-                if (procFamily == 143)
-                {
-                    LblProcie.Text = "AMD Athlon(TM) X2 Dual-Core Processor Family ";
-                }
-                if (procFamily == 198)
-                {
-                    LblProcie.Text = "Intel(R) Core(TM) i7 processor ";
-                }
-                if (procFamily == 199)
-                {
-                    LblProcie.Text = "Dual-Core Intel(R) Celeron(R) Processor ";
-                }
-                if (procFamily == 205)
-                {
-                    LblProcie.Text = "Intel(R) Core(TM) i5 processor ";
-                }
-                if (procFamily == 206)
-                {
-                    LblProcie.Text = " Intel(R) Core(TM) i3 processor";
-                }
-                if (procFamily == 207)
-                {
-                    LblProcie.Text = "Intel(R) Core(TM) i9 processor  ";
-                }
-                if (procFamily == 234)
-                {
-                    LblProcie.Text = " AMD Athlon(TM) Dual-Core Processor Family ";
-                }
-                if (procFamily == 235)
-                {
-                    LblProcie.Text = "AMD Sempron(TM) SI Processor Family ";
-                }
-                if (procFamily == 236)
-                {
-                    LblProcie.Text = "AMD Phenom(TM) II Processor Family ";
-                }
-                if (procFamily == 237)
-                {
-                    LblProcie.Text = "AMD Athlon(TM) II Processor Family ";
-                }
             }
-            #endregion
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                LblProcie.Text = sb.ToString();
+            });
+            
         }
         private void GetRamInfo()
         {
@@ -235,17 +72,29 @@ namespace Protego.Pages
             if (system != null)
             {
                 long totalPhysicalMemory = Convert.ToInt64(system["TotalPhysicalMemory"]);
-                LblTotaRam.Text = $"{totalPhysicalMemory / (1024 * 1024)} MB";
+
+                // Use the Dispatcher to marshal the UI update back to the UI thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    LblTotalRam.Text = $"{totalPhysicalMemory / (1024 * 1024), 2} MB";
+                });
             }
+
             wmi = new System.Management.ManagementClass("Win32_PhysicalMemory");
             var modules = wmi.GetInstances();
+            StringBuilder sb = new StringBuilder();
             foreach (var module in modules)
             {
                 int speed = Convert.ToInt32(module["Speed"]);
                 string bankLabel = module["BankLabel"].ToString();
-                LblRamSpeed.Text += $"{bankLabel}: {speed} MHz\n";
-            }
 
+                // Use the Dispatcher to marshal the UI update back to the UI thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    sb.Append(String.Concat(bankLabel, ": ", speed, " MHz\n"));
+                    LblRamSpeed.Text = sb.ToString();
+                });
+            }
         }
         private void GetStorage()
         {
@@ -270,11 +119,15 @@ namespace Protego.Pages
                     maxFreeSpace = freeSpaceInBytes;
                     maxDrive = drive;
                 }
-
             }
 
             double totalSizeInGB = Math.Round(Convert.ToDouble(totalSize) / (1024 * 1024 * 1024), 2);
-            LblTotalStorage.Text = "Total Storage: " + totalSizeInGB.ToString() + " GB";
+
+            // Use the Dispatcher to marshal the UI update back to the UI thread
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                LblTotalStorage.Text = "Total Storage: " + totalSizeInGB.ToString() + " GB";
+            });
 
             if (maxDrive != "")
             {
@@ -283,11 +136,19 @@ namespace Protego.Pages
                 ulong freeSpaceInBytes = Convert.ToUInt64(provider["FreeSpace"]);
                 double freeSpaceInGB = Math.Round(Convert.ToDouble(freeSpaceInBytes) / (1024 * 1024 * 1024), 2);
 
-                LblFreeStorage.Text = maxDrive + " (" + freeSpaceInGB.ToString() + " GB)";
+                // Use the Dispatcher to marshal the UI update back to the UI thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    LblFreeStorage.Text = maxDrive + " (" + freeSpaceInGB.ToString() + " GB)";
+                });
             }
             else
             {
-                LblFreeStorage.Text = "No storage devices found.";
+                // Use the Dispatcher to marshal the UI update back to the UI thread
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    LblFreeStorage.Text = "No storage devices found.";
+                });
             }
         }
     }

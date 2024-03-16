@@ -111,7 +111,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBlock
-                        x:Name="LblTotaRam"
+                        x:Name="LblTotalRam"
                         Grid.Column="0" Grid.ColumnSpan="2" Margin="519,-10,-519,10"/>
                     <TextBlock
                         Foreground="White"
