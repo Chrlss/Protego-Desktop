@@ -41,29 +41,76 @@ namespace Protego.Pages
         }
         private void GetOSInfo()
         {
+            if (LblProcie == null || LblClock == null)
+            {
+                // Initialize LblProcie and LblClock if they are null
+                LblProcie = new TextBlock();
+                LblClock = new TextBlock();
+            }
+
             System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_Processor");
             var providers = wmi.GetInstances();
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sbFamily = new StringBuilder();
+            StringBuilder sbClock = new StringBuilder();
             foreach (var provider in providers)
             {
                 int clock = Convert.ToInt32(provider["MaxClockSpeed"]);
                 int procFamily = Convert.ToInt16(provider["Family"]);
 
-                sb.AppendLine($"{clock} MHz");
+                sbClock.AppendLine($"{clock} MHz");
 
                 if (procFamily == 107)
                 {
-                    sb.Append("AMD Ryzen 5 5600G");
+                    sbFamily.Append("AMD Ryzen 5 5600G");
                 }
 
+                if (procFamily == 11)
+                {
+                    sbFamily.Append("Pentium(R) brand");
+                }
+
+                if (procFamily == 12)
+                {
+                    sbFamily.Append("Pentium(R) Pro");
+                }
+
+                if (procFamily == 13)
+                {
+                    sbFamily.Append("Pentium(R) II");
+                }
+
+                if (procFamily == 14)
+                {
+                    sbFamily.Append("Pentium(R) processor with MMX(TM) technology");
+                }
+
+                if (procFamily == 15)
+                {
+                    sbFamily.Append("Celeron(TM)");
+                }
+
+                if (procFamily == 16)
+                {
+                    sbFamily.Append("Pentium(R) II Xeon(TM)");
+                }
+
+                if (procFamily == 17)
+                {
+                    sbFamily.Append("Pentium(R) III");
+                }
+
+                if (procFamily == 20)
+                {
+                    sbFamily.Append("Intel(R) Celeron(R) M processor");
+                }
                 // Add more conditions for other processor families
 
             }
             Application.Current.Dispatcher.Invoke(() =>
             {
-                LblProcie.Text = sb.ToString();
+                LblProcie.Text = sbFamily.ToString();
+                LblClock.Text = sbClock.ToString();
             });
-            
         }
         private void GetRamInfo()
         {
