@@ -150,26 +150,38 @@ namespace Protego.Pages
         }
         private void GetStorage()
         {
-            System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_LogicalDisk");
-            var providers = wmi.GetInstances();
+            ManagementObjectSearcher diskDriveSearcher = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive");
+            ManagementObjectCollection diskDrives = diskDriveSearcher.Get();
 
-            ulong maxFreeSpace = 0;
             ulong totalSize = 0;
+            ulong maxFreeSpace = 0;
             string maxDrive = "";
 
-            foreach (var provider in providers)
+            foreach (ManagementObject diskDrive in diskDrives)
             {
-                string drive = provider["DeviceID"].ToString();
-                string type = provider["DriveType"].ToString();
-                ulong sizeInBytes = Convert.ToUInt64(provider["Size"]);
-                ulong freeSpaceInBytes = Convert.ToUInt64(provider["FreeSpace"]);
+                string deviceId = diskDrive["DeviceID"].ToString();
+                ManagementObjectSearcher partitionSearcher = new ManagementObjectSearcher("ASSOCIATORS OF {Win32_DiskDrive.DeviceID='" + deviceId + "'} WHERE AssocClass = Win32_DiskDriveToDiskPartition");
+                ManagementObjectCollection partitions = partitionSearcher.Get();
 
-                totalSize += sizeInBytes;
-
-                if (freeSpaceInBytes > maxFreeSpace)
+                foreach (ManagementObject partition in partitions)
                 {
-                    maxFreeSpace = freeSpaceInBytes;
-                    maxDrive = drive;
+                    string partitionDeviceId = partition["DeviceID"].ToString();
+                    ManagementObjectSearcher logicalDiskSearcher = new ManagementObjectSearcher("ASSOCIATORS OF {Win32_DiskPartition.DeviceID='" + partitionDeviceId + "'} WHERE AssocClass = Win32_LogicalDiskToPartition");
+                    ManagementObjectCollection logicalDisks = logicalDiskSearcher.Get();
+
+                    foreach (ManagementObject logicalDisk in logicalDisks)
+                    {
+                        ulong sizeInBytes = Convert.ToUInt64(logicalDisk["Size"]);
+                        ulong freeSpaceInBytes = Convert.ToUInt64(logicalDisk["FreeSpace"]);
+
+                        totalSize += sizeInBytes;
+
+                        if (freeSpaceInBytes > maxFreeSpace)
+                        {
+                            maxFreeSpace = freeSpaceInBytes;
+                            maxDrive = logicalDisk["DeviceID"].ToString();
+                        }
+                    }
                 }
             }
 
@@ -200,8 +212,10 @@ namespace Protego.Pages
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     LblFreeStorage.Text = "No storage devices found.";
-                });
+                }
+                );
             }
         }
     }
+    
 }

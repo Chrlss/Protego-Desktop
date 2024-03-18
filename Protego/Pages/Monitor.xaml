@@ -37,9 +37,9 @@
             </Grid>
         </ui:CardAction>
 
-        <ui:CardExpander ContentPadding="0" Grid.ColumnSpan="4" Margin="10,20,11,0" VerticalAlignment="Top" Grid.Row="1">
+        <ui:CardExpander Padding="20" ContentPadding="0" Grid.ColumnSpan="4" Margin="10,20,11,0" VerticalAlignment="Top" Grid.Row="1">
             <ui:CardExpander.Header>
-                <Grid Height="25" Width="736">
+                <Grid Height="auto" Width="auto">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -48,13 +48,13 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <ui:TextBlock
+                    <ui:TextBlock 
                     Grid.Row="1"
                     Grid.Column="0"
                     FontTypography="Body"
-                    Text="Processor" Margin="0,6,0,0" 
+                    Text="Processor" 
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top"/>
+                    VerticalAlignment="Top" Width="712" Height="25"/>
                 </Grid>
             </ui:CardExpander.Header>
             <StackPanel>
@@ -92,7 +92,7 @@
                 </ui:Anchor>
             </StackPanel>
         </ui:CardExpander>
-        <ui:CardExpander ContentPadding="0" Grid.ColumnSpan="4" Margin="9,0,11,0" VerticalAlignment="Top" Grid.Row="2">
+        <ui:CardExpander Padding="20" ContentPadding="0" Grid.ColumnSpan="4" Margin="9,0,11,0" VerticalAlignment="Top" Grid.Row="2">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -149,7 +149,7 @@
                 </ui:Anchor>
             </StackPanel>
         </ui:CardExpander>
-        <ui:CardExpander ContentPadding="0" Grid.ColumnSpan="4" Margin="9,0,12,0" VerticalAlignment="Top" Grid.Row="3">
+        <ui:CardExpander Padding="20" ContentPadding="0" Grid.ColumnSpan="4" Margin="9,0,12,0" VerticalAlignment="Top" Grid.Row="3">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -175,8 +175,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBlock
-                        x:Name="LblTotalStorage"
-                        Grid.Column="0" Grid.ColumnSpan="2" Margin="519,-10,-519,10"/>
+                        x:Name="LblTotalStorage" Margin="520,0,-187,0" Grid.ColumnSpan="2"/>
                     <TextBlock
                         Foreground="White"
                         Text="Total Storage" Margin="0,0,591,0" />
@@ -197,7 +196,7 @@
 
                         <TextBlock
                             x:Name="LblFreeStorage"
-                            Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Grid.ColumnSpan="2" Margin="489,2,-489,-1"/>
+                            Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Margin="560,2,0,1"/>
 
                     </Grid>
                 </ui:Anchor>
