@@ -31,13 +31,15 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Name="tempTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="tempTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
                 <TextBlock Grid.Row="1" x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="0,54,0,0"/>
                 <userControl:CpuSpeedProgressBar Margin="-10,-35,10,46"  />
                 <userControl:CPUSample Margin="122,-27,-122,30" />
                 <TextBlock x:Name="ramTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
                 <TextBlock Text="CPU Speed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="2,12,0,0" />
-
+                <TextBlock Text="Temperature" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="1,54,0,0" />
+                <userControl:SampleTemp Margin="-115,41,-95,40" />
+                <userControl:TempText Margin="127,13,-127,79" Grid.RowSpan="2" />
             </Grid>
         </ui:CardAction>
         <ui:CardAction Grid.ColumnSpan="2" Height="200" VerticalContentAlignment="Top" IsChevronVisible="False" Width="480">

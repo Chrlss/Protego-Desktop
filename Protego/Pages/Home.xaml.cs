@@ -28,7 +28,7 @@ namespace Protego.Pages
 
             //GetOSInfo();
             Task.Run(() => ProcessorFamily());
-            DisplayCpuTemp();
+            
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -44,15 +44,7 @@ namespace Protego.Pages
             logIn.Show();
         }
 
-        private void DisplayCpuTemp()
-        {
-            ManagementObjectSearcher mos = new ManagementObjectSearcher("root\\WMI", "SELECT * FROM MSAcpi_ThermalZoneTemperature");
-            foreach (ManagementObject mo in mos.Get())
-            {
-                int temp = Convert.ToInt32(mo["CurrentTemperature"].ToString()) / 10 - 2731; // Convert from millidegrees to degrees Celsius
-                tempTextBlock.Text = $"CPU Temperature: {temp} °C";
-            }
-        }
+        
 
 
 
@@ -86,7 +78,7 @@ namespace Protego.Pages
                 
                 if (ProcFamily == 198)
                 {
-                    sbFamily.Append("Intel(R) Core(TM) i7 processor");
+                    sbFamily.Append("Intel(R) Core(TM) i7");
                 }
                 if (ProcFamily == 107)
                 {
