@@ -32,8 +32,11 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="0,54,0,0"/>
-                <userControl:CpuSpeedProgressBar HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="62" Width="370" Margin="0,0,0,56"/>
-                <userControl:CPUSample Margin="290,10,50,64" />
+                <ProgressBar x:Name="ramProgressBar" Margin="50,0,50,50" VerticalAlignment="Top" Height="20">
+                    <ProgressBar.Value>
+                        <Binding Path="totalRam" />
+                    </ProgressBar.Value>
+                </ProgressBar>
                 <TextBlock x:Name="ramTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
                 <TextBlock Text="CPU Speed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="2,12,0,0" />
 
