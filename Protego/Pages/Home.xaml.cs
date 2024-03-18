@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Management;
 using System.Windows;
 using System.Windows.Controls;
+using LibreHardwareMonitor.Hardware;
 
 namespace Protego.Pages
 {
@@ -22,9 +23,11 @@ namespace Protego.Pages
             timer.Interval = new TimeSpan(0, 0, 0, 1);
             timer.Start();
 
+
+
             //GetOSInfo();
             ProcessorFamily();
-            GetTotalRam();
+            
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -38,32 +41,7 @@ namespace Protego.Pages
             LogInWindow logIn = new LogInWindow();
             logIn.Show();
         }
-        private void GetTotalRam()
-        {
-            try
-            {
-                // Get total RAM using WMI
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\cimv2", "SELECT Capacity FROM Win32_PhysicalMemory");
-                ulong totalRam = 0;
-                foreach (ManagementObject queryObj in searcher.Get())
-                {
-                    totalRam += (ulong)queryObj["Capacity"];
-                }
-
-                // Convert to GB for display (cast to double for accurate division)
-                double ramInGb = Math.Round((double)totalRam / (1024 * 1024 * 1024), 2);
-
-                // Update progress bar value (assuming maximum RAM is 16 GB)
-                ramProgressBar.Maximum = 16384; // Adjust based on your expected maximum RAM
-                ramProgressBar.Value = ramInGb;
-
-                ramTextBlock.Text = $"Total RAM: {ramInGb} GB";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error retrieving RAM information: {ex.Message}");
-            }
-        }
+        
 
 
         /*
