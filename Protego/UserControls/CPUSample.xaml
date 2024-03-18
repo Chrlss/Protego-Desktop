@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock x:Name="CPUpercent" Text="CPU" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Foreground="White"/>
+        <TextBlock x:Name="CPUpercent" Text="CPU" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Foreground="White"/>
         
     </Grid>
 </UserControl>
