@@ -32,9 +32,11 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="0,54,0,0"/>
-                <userControl:CPUSample Margin="286,10,54,64" />
                 <userControl:CpuSpeedProgressBar HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="62" Width="370" Margin="0,0,0,56"/>
+                <userControl:CPUSample Margin="289,10,51,64" />
                 <TextBlock x:Name="ramTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+                <TextBlock Text="CPU Speed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="2,12,0,0" />
+
             </Grid>
         </ui:CardAction>
         <ui:CardAction Grid.ColumnSpan="2" Height="200" VerticalContentAlignment="Top" IsChevronVisible="False" Width="480">
