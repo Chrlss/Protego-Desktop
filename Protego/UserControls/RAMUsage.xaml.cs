@@ -15,6 +15,7 @@ namespace Protego.UserControls
         public RAMUsage()
         {
             InitializeComponent();
+
             ramCounter = new PerformanceCounter("Memory", "Available MBytes");
             GetRAMUsage();
             DispatcherTimer timer = new DispatcherTimer();
