@@ -61,6 +61,7 @@ namespace Protego.Pages
                  }
              }
          } */
+
         private void ProcessorFamily()
         {
             System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_Processor");
