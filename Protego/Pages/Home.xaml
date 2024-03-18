@@ -33,7 +33,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="0,54,0,0"/>
                 <userControl:CpuSpeedProgressBar HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="62" Width="370" Margin="0,0,0,56"/>
-                <userControl:CPUSample Margin="289,10,51,64" />
+                <userControl:CPUSample Margin="290,10,50,64" />
                 <TextBlock x:Name="ramTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
                 <TextBlock Text="CPU Speed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="2,12,0,0" />
 
@@ -69,8 +69,8 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Scan by using py script" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
-                <ui:Button Content="Scan" Width="150" CornerRadius="6" HorizontalAlignment="Center" VerticalContentAlignment="Bottom" Background="#1D84B5" MouseOverBackground="#1D84B5" Grid.Row="1" Margin="0,45,0,0" VerticalAlignment="Top"/>
+                <TextBlock Text="URL Analalysis" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
+                <ui:Button Content="Analyze" Width="150" CornerRadius="6" HorizontalAlignment="Center" VerticalContentAlignment="Bottom" Background="#1D84B5" MouseOverBackground="#1D84B5" Grid.Row="1" Margin="0,45,0,0" VerticalAlignment="Top"/>
             </Grid>
         </ui:CardAction>
     </Grid>
