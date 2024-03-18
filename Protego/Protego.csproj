@@ -13,6 +13,7 @@
     <None Remove="Assets\cloud-100.png" />
     <None Remove="Assets\flashdrive.png" />
     <None Remove="Assets\GoogleSignIn.png" />
+    <None Remove="Assets\link.png" />
     <None Remove="Assets\LogInBg..jpg" />
     <None Remove="Assets\LogInBg.jpg" />
     <None Remove="Assets\Protego_logo.png" />
@@ -46,6 +47,7 @@
 
   <ItemGroup>
     <Resource Include="Assets\GoogleSignIn.png" />
+    <Resource Include="Assets\link.png" />
     <Resource Include="Assets\LogInBg..jpg" />
     <Resource Include="Assets\Protego_logo.ico" />
   </ItemGroup>

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Management;
+using System.Diagnostics;
 
 namespace Protego.Pages
 {
@@ -21,22 +22,26 @@ namespace Protego.Pages
     /// </summary>
     public partial class Monitor : Page
     {
+        PerformanceCounter perfRAM = new PerformanceCounter("Memory", "% Committed Bytes In Use");
         System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
         public Monitor()
         {
             InitializeComponent();
             timer.Tick += new EventHandler(Timer_Tick);
-            timer.Interval = new TimeSpan(0, 0, 0);
+            timer.Interval = new TimeSpan(0, 0, 0, 1);
             timer.Start();
 
             // Start the methods on separate threads
             Task.Run(() => GetOSInfo());
             Task.Run(() => GetRamInfo());
             Task.Run(() => GetStorage());
+
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            RAM.Value = (int)perfRAM.NextValue();
+            RAMpercent.Text = RAM.Value.ToString() + "%";
             Task.Run(() => GetOSInfo());
         }
         private void GetOSInfo()

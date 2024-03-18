@@ -17,12 +17,7 @@
         </Grid.ColumnDefinitions>
         <ContentControl x:Name="MainContent" Grid.Column="0" Grid.ColumnSpan="3"/>
 
-        <ui:Button Grid.Column="0" Width="200" Height="55" Margin="16,32,16,0" VerticalAlignment="Top" MouseOverBackground="#1D84B5" HorizontalAlignment="Center" Click="Button_Click">
-            <Grid>
-                <TextBlock Text="Scan" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-16,0,0,0"/>
-                <Image Source="\Assets\scan-64.png" Width="30" Height="30" Margin="41,3,-18,0" />
-            </Grid>
-        </ui:Button>
+        
 
         <ui:Button Grid.Column="1" Width="200"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center">
             <Grid>
@@ -31,7 +26,7 @@
             </Grid>
         </ui:Button>
 
-        <ui:Button Grid.Column="2" Width="200"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center">
+        <ui:Button Grid.Column="0" Width="210"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center">
             <Grid>
                 <TextBlock Text="Flashdrive Baiting" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-20,0,0,0"/>
                 <Image Source="\Assets\usb-64.png" Width="30" Height="30" Margin="135,0,-26,0" />
