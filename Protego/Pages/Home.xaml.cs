@@ -84,6 +84,10 @@ namespace Protego.Pages
                 {
                     sbFamily.Append("AMD Ryzen 5 5600G");
                 }
+                if (ProcFamily == 11)
+                {
+                    sbFamily.Append("Pentium(R) brand");
+                }
             }
 
             Application.Current.Dispatcher.Invoke(() =>

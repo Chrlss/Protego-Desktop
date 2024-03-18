@@ -28,16 +28,15 @@
         </Grid.RowDefinitions>
 
         <ui:CardAction Grid.Column="0" Grid.ColumnSpan="2" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="12,15,80,0" VerticalAlignment="Top">
-            <Grid Height="210"  >            
-                <userControl:CpuSpeedProgressBar Margin="0,3,0,197" Height="10" />
-                <userControl:CPUSample Margin="103,-85,-103,85" />
-                <TextBlock Text="CPU Speed" Margin="1,13,139,170" FontSize="10" />
-                <userControl:SampleTemp Height="10" Margin="0,50,0,150"/>
-                <TextBlock Text="Temperature" FontSize="10" Margin="1,59,132,134" />
-                <userControl:TempText Height="10" Margin="101,62,-101,138"/>
+            <Grid Height="210" Width="auto">
+                <userControl:SampleTemp Margin="0,-40,0,40"/>
+                <userControl:TempText Margin="110,-28,-110,28" />
+                <userControl:CpuSpeedProgressBar Margin="0,-91,0,91" Height="10" />
+                <TextBlock Text="CPU Speed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="0,22,0,0" />
+                <userControl:CPUSample Margin="105,-78,-105,78" />
+                <TextBlock x:Name="TempCel" Text="Temperature" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Foreground="White" Margin="0,76,0,0"/>
+                <TextBlock x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="0,161,0,0"/>
             </Grid>
-            
-
         </ui:CardAction>
         <ui:CardAction Grid.Column="1" Grid.ColumnSpan="2" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="120,15,0,0" VerticalAlignment="Top"/>
         <ui:CardAction Grid.Column="3" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="10,15,10,0" VerticalAlignment="Top">
