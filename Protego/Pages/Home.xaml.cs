@@ -1,24 +1,8 @@
-﻿using LibreHardwareMonitor.Hardware;
-using System;
-using System.Collections.Generic;
+﻿using Protego.UserControls;
 using System.Diagnostics;
-using System.Linq;
 using System.Management;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
-using Protego.Class;
-using System.Timers;
-using Protego.UserControls;
 
 namespace Protego.Pages
 {
@@ -27,25 +11,26 @@ namespace Protego.Pages
     /// </summary>
     public partial class Home : Page
     {
-        PerformanceCounter perfCPU = new PerformanceCounter("Processor Information", "% Processor Time", "_Total");
+        PerformanceCounter perfRAM = new PerformanceCounter("Memory", "% Committed Bytes In Use");
         System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
         
         public Home()
         {
             InitializeComponent();
+            
             timer.Tick += new EventHandler(Timer_Tick);
             timer.Interval = new TimeSpan(0, 0, 0, 1);
             timer.Start();
 
             //GetOSInfo();
             ProcessorFamily();
-            
+            GetTotalRam();
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            CPU.Value = (int) perfCPU.NextValue();
-            CPUpercent.Text = "CPU : " + " " + CPU.Value.ToString() + " " + "%";
+            RAM.Value = (int)perfRAM.NextValue();
+            RAMpercent.Text = RAM.Value.ToString() + "%";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -53,26 +38,51 @@ namespace Protego.Pages
             LogInWindow logIn = new LogInWindow();
             logIn.Show();
         }
-       
-
-
-       /*
-       private void GetOSInfo()
+        private void GetTotalRam()
         {
-            System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_Processor");
-            var providers = wmi.GetInstances();
-
-            foreach (var provider in providers)
+            try
             {
-                int systemSku = Convert.ToInt16(provider["Family"]);
-                LblSystemSku.Text = "System Sku :" + " " + systemSku.ToString();
-
-                if (systemSku == 198)
+                // Get total RAM using WMI
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\cimv2", "SELECT Capacity FROM Win32_PhysicalMemory");
+                ulong totalRam = 0;
+                foreach (ManagementObject queryObj in searcher.Get())
                 {
-                    LblProcFamily.Text = "Family :" + " " + "Intel(R) Core(TM) i7 processor";
+                    totalRam += (ulong)queryObj["Capacity"];
                 }
+
+                // Convert to GB for display (cast to double for accurate division)
+                double ramInGb = Math.Round((double)totalRam / (1024 * 1024 * 1024), 2);
+
+                // Update progress bar value (assuming maximum RAM is 16 GB)
+                ramProgressBar.Maximum = 16384; // Adjust based on your expected maximum RAM
+                ramProgressBar.Value = ramInGb;
+
+                ramTextBlock.Text = $"Total RAM: {ramInGb} GB";
             }
-        } */
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error retrieving RAM information: {ex.Message}");
+            }
+        }
+
+
+        /*
+        private void GetOSInfo()
+         {
+             System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_Processor");
+             var providers = wmi.GetInstances();
+
+             foreach (var provider in providers)
+             {
+                 int systemSku = Convert.ToInt16(provider["Family"]);
+                 LblSystemSku.Text = "System Sku :" + " " + systemSku.ToString();
+
+                 if (systemSku == 198)
+                 {
+                     LblProcFamily.Text = "Family :" + " " + "Intel(R) Core(TM) i7 processor";
+                 }
+             }
+         } */
         private void ProcessorFamily()
         {
             System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_Processor");

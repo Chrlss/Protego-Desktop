@@ -32,7 +32,12 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="0,54,0,0"/>
-                <ProgressBar x:Name="progressBar" HorizontalAlignment="Left" Height="23" Margin="132,110,0,0" VerticalAlignment="Top" Width="345" />
+                <ProgressBar x:Name="ramProgressBar" Margin="50,0,50,50" VerticalAlignment="Top" Height="20">
+                    <ProgressBar.Value>
+                        <Binding Path="totalRam" />
+                    </ProgressBar.Value>
+                </ProgressBar>
+                <TextBlock x:Name="ramTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
             </Grid>
         </ui:CardAction>
         <ui:CardAction Grid.ColumnSpan="2" Height="200" VerticalContentAlignment="Top" IsChevronVisible="False" Width="480">
@@ -52,8 +57,8 @@
         </ui:CardAction>
         <ui:CardAction Grid.Column="1" Grid.Row="1" IsChevronVisible="False" Height="200" Grid.ColumnSpan="2" Margin="133,0,178,0" Command="{Binding CardActionCommand}">
             <Grid>
-                <userControl:CPU x:Name="CPU" Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Top" IndicatorBrush="#1D84B5" Margin="0,-26,0,0" />
-                <TextBlock x:Name="CPUpercent"  Text="CPU%" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,35,0,0" />
+                <userControl:CPU x:Name="RAM" Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Top" IndicatorBrush="#1D84B5" Margin="0,-26,0,0" />
+                <TextBlock x:Name="RAMpercent"  Text="RAM%" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,35,0,0" />
                 <userControl:RAMUsage Margin="25,114,25,-32"/>
             </Grid>
         </ui:CardAction>
