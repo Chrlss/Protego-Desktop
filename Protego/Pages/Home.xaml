@@ -32,12 +32,14 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="0,54,0,0"/>
-                <ProgressBar x:Name="ramProgressBar" Margin="10,10,90,0" VerticalAlignment="Top" Height="20">
+                <ProgressBar x:Name="ramProgressBar" Margin="50,0,50,50" VerticalAlignment="Top" Height="20">
                     <ProgressBar.Value>
                         <Binding Path="totalRam" />
                     </ProgressBar.Value>
                 </ProgressBar>
                 <TextBlock x:Name="ramTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+                <TextBlock Text="CPU Speed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="2,12,0,0" />
+
             </Grid>
         </ui:CardAction>
         <ui:CardAction Grid.ColumnSpan="2" Height="200" VerticalContentAlignment="Top" IsChevronVisible="False" Width="480">
@@ -70,8 +72,8 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Scan by using py script" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
-                <ui:Button Content="Scan" Width="150" CornerRadius="6" HorizontalAlignment="Center" VerticalContentAlignment="Bottom" Background="#1D84B5" MouseOverBackground="#1D84B5" Grid.Row="1" Margin="0,45,0,0" VerticalAlignment="Top"/>
+                <TextBlock Text="URL Analalysis" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
+                <ui:Button Content="Analyze" Width="150" CornerRadius="6" HorizontalAlignment="Center" VerticalContentAlignment="Bottom" Background="#1D84B5" MouseOverBackground="#1D84B5" Grid.Row="1" Margin="0,45,0,0" VerticalAlignment="Top"/>
             </Grid>
         </ui:CardAction>
     </Grid>
