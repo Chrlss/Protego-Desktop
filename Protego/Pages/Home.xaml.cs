@@ -27,7 +27,7 @@ namespace Protego.Pages
 
 
             //GetOSInfo();
-            ProcessorFamily();
+            Task.Run(() => ProcessorFamily());
             GetTotalRam();
         }
 
