@@ -19,14 +19,9 @@ using System.Windows.Threading;
 
 namespace Protego.Pages
 {
-    /// <summary>
-    /// Interaction logic for Protection.xaml
-    /// </summary>
     public partial class Protection : Page
     {
-        
         public ObservableCollection<string> FileList { get; set; }
-
 
         public Protection()
         {
@@ -37,17 +32,33 @@ namespace Protego.Pages
 
         private void ScanButton_Click(object sender, RoutedEventArgs e)
         {
-            FileList.Clear(); // Clear the previous list
-            string directoryPath = @"d:";
+            // Clear previous file list
+            FileList.Clear();
 
-            if (Directory.Exists(directoryPath))
+            // Automatically scan the flash drive directory
+            string flashDriveDirectory = GetFlashDriveDirectory();
+            if (!string.IsNullOrEmpty(flashDriveDirectory))
             {
-                ScanDirectory(directoryPath);
+                ScanDirectory(flashDriveDirectory);
             }
             else
             {
-                MessageBox.Show("Directory does not exist!");
+                MessageBox.Show("Flash drive not found!");
             }
+        }
+
+        private string GetFlashDriveDirectory()
+        {
+            // Check all drives to find the flash drive
+            DriveInfo[] drives = DriveInfo.GetDrives();
+            foreach (DriveInfo drive in drives)
+            {
+                if (drive.DriveType == DriveType.Removable)
+                {
+                    return drive.RootDirectory.FullName;
+                }
+            }
+            return null;
         }
 
         private void ScanDirectory(string directory)
@@ -73,8 +84,5 @@ namespace Protego.Pages
                 MessageBox.Show($"Error scanning directory: {ex.Message}");
             }
         }
-
-
-
     }
 }
