@@ -38,7 +38,9 @@ namespace Protego.Pages
         private void ScanButton_Click(object sender, RoutedEventArgs e)
         {
             FileList.Clear(); // Clear the previous list
-            string directoryPath = @"d:";
+            string directoryPath = @"f:";
+
+        
 
             if (Directory.Exists(directoryPath))
             {

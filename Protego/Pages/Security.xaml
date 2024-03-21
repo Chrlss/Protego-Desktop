@@ -24,10 +24,10 @@
         </ui:Button>
 
         <ui:Button Margin="0,371,0,0" Grid.Column="2" Width="150"   Height="40" Background="#1D84B5" MouseOverBackground="#1D84B5"  VerticalAlignment="Center" HorizontalAlignment="Center" Content="Logs"/>
-    
+
 
 
 
     </Grid>
-        
+
 </Page>

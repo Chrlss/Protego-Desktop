@@ -17,7 +17,7 @@ namespace Protego.UserControls
             InitializeComponent();
 
             ramCounter = new PerformanceCounter("Memory", "Available MBytes");
-            GetRAMUsage();
+            Task.Run(() => GetRAMUsage());
             DispatcherTimer timer = new DispatcherTimer();
             timer.Tick += new EventHandler(timer_Tick);
             timer.Interval = new TimeSpan(0, 0, 1); // 1 second
@@ -25,7 +25,7 @@ namespace Protego.UserControls
         }
         private void timer_Tick(object sender, EventArgs e)
         {
-            GetRAMUsage();
+            Task.Run(() => GetRAMUsage());
         }
 
        private void GetRAMUsage()
@@ -33,8 +33,11 @@ namespace Protego.UserControls
             double availableRamMB = ramCounter.NextValue() / 1024.0;
             double totalRamMB = GetTotalRamMB();
             double usedRamMB = totalRamMB - availableRamMB;
-            ramUsageTextBlock.Text = $"{usedRamMB.ToString("0.0", CultureInfo.InvariantCulture)} / {totalRamMB.ToString("0.0", CultureInfo.InvariantCulture)} GB";
-            
+            Dispatcher.Invoke(() =>
+            {
+                ramUsageTextBlock.Text = $"{usedRamMB.ToString("0.0", CultureInfo.InvariantCulture)} / {totalRamMB.ToString("0.0", CultureInfo.InvariantCulture)} GB";
+            });
+
         }
 
         private double GetTotalRamMB()
