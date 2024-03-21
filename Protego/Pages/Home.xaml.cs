@@ -44,28 +44,6 @@ namespace Protego.Pages
             logIn.Show();
         }
 
-        
-
-
-
-        /*
-        private void GetOSInfo()
-         {
-             System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_Processor");
-             var providers = wmi.GetInstances();
-
-             foreach (var provider in providers)
-             {
-                 int systemSku = Convert.ToInt16(provider["Family"]);
-                 LblSystemSku.Text = "System Sku :" + " " + systemSku.ToString();
-
-                 if (systemSku == 198)
-                 {
-                     LblProcFamily.Text = "Family :" + " " + "Intel(R) Core(TM) i7 processor";
-                 }
-             }
-         } */
-
         private void ProcessorFamily()
         {
             System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_Processor");
