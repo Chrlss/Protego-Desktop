@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Protego.Pages
 {
@@ -21,15 +24,57 @@ namespace Protego.Pages
     /// </summary>
     public partial class Protection : Page
     {
+        
+        public ObservableCollection<string> FileList { get; set; }
+
+
         public Protection()
         {
             InitializeComponent();
-            MainContent.Content = new Sample();
+            FileList = new ObservableCollection<string>();
+            DataContext = this;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ScanButton_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new Sample2();
+            FileList.Clear(); // Clear the previous list
+            string directoryPath = @"d:";
+
+            if (Directory.Exists(directoryPath))
+            {
+                ScanDirectory(directoryPath);
+            }
+            else
+            {
+                MessageBox.Show("Directory does not exist!");
+            }
         }
+
+        private void ScanDirectory(string directory)
+        {
+            try
+            {
+                // Get all files in the directory and add them to the list
+                string[] files = Directory.GetFiles(directory);
+                foreach (string file in files)
+                {
+                    FileList.Add(file);
+                }
+
+                // Recursively scan subdirectories
+                string[] subDirectories = Directory.GetDirectories(directory);
+                foreach (string subDir in subDirectories)
+                {
+                    ScanDirectory(subDir);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error scanning directory: {ex.Message}");
+            }
+        }
+
+
+
     }
 }

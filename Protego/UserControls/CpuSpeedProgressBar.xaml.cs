@@ -29,13 +29,13 @@ namespace Protego.UserControls
             InitializeComponent();
             
             cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            Task.Run(() => InitializeCounter());
+            
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
 
-
+            Task.Run(() => InitializeCounter());
         }
         private async void InitializeCounter()
         {
