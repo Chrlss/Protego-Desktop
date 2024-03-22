@@ -26,7 +26,7 @@
         -->
 
 
-        <ui:Button Grid.Column="0" Width="210"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center">
+        <ui:Button Name="ScanWithVirusTotalButton" Grid.Column="0" Width="210"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center" >
             <Grid>
 
                 <TextBlock x:Name="DirectoryTextBox" Text="Flashdrive Baiting" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-20,0,0,0"/>
@@ -34,7 +34,7 @@
             </Grid>
         </ui:Button>
         <TextBox x:Name="LogTextBox" Foreground="White" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" IsReadOnly="True" Margin="20,113,21,27" FontSize="12"/>
-        <Button Name="ScanWithVirusTotalButton" Content="Scan with VirusTotal" Margin="0,368,0,0" Height="35" Width="200" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden"/>
+        
         <Button x:Name="ScanAndCleanFlashDriveButton"
         Content="Scan and Clean Flash Drive"
         IsEnabled="{Binding IsFlashDriveDetected}"
