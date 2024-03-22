@@ -16,24 +16,31 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <ContentControl x:Name="MainContent" Grid.Column="0" Grid.ColumnSpan="3"/>
-
+        <!--
         <ui:Button Grid.Column="1" Width="200"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center">
-            <Grid>
-                <TextBlock Text="Backup" FontSize="25" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-31,-2,0,0"/>
-                <Image Source="\Assets\cloud-100.png" Width="30" Height="30" Margin="54,1,-35,0"/>
-            </Grid>
-        </ui:Button>
+    <Grid>
+        <TextBlock Text="Backup" FontSize="25" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-31,-2,0,0"/>
+        <Image Source="\Assets\cloud-100.png" Width="30" Height="30" Margin="54,1,-35,0"/>
+    </Grid>
+</ui:Button>
+        -->
 
-        <ui:Button Grid.Column="0" Width="210"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center" Click="ScanButton_Click">
+
+        <ui:Button Grid.Column="0" Width="210"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center">
             <Grid>
-                
+
                 <TextBlock x:Name="DirectoryTextBox" Text="Flashdrive Baiting" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-20,0,0,0"/>
                 <Image Source="\Assets\usb-64.png" Width="30" Height="30" Margin="135,0,-26,0" />
             </Grid>
         </ui:Button>
+        <TextBox x:Name="LogTextBox" Foreground="White" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" IsReadOnly="True" Margin="20,113,21,27" FontSize="12"/>
+        <Button Name="ScanWithVirusTotalButton" Content="Scan with VirusTotal" Margin="0,368,0,0" Height="35" Width="200" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Hidden"/>
+        <Button x:Name="ScanAndCleanFlashDriveButton"
+        Content="Scan and Clean Flash Drive"
+        IsEnabled="{Binding IsFlashDriveDetected}"
+        Click="ScanAndCleanFlashDrive_Click" Height="20" Width="200" Margin="10,205,0,0" Grid.Column="1" VerticalAlignment="Top" Visibility="Hidden" />
 
-        
-       
+
 
         <ListBox ItemsSource="{Binding FileList}" Margin="10,10,10,10" Grid.Column="2"/>
 

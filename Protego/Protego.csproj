@@ -79,6 +79,7 @@
     <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="8.0.0" />
     <PackageReference Include="System.Management" Version="8.0.0" />
     <PackageReference Include="Unnoficial.Microsoft.Expression.Drawing" Version="1.0.0" />
+    <PackageReference Include="VirusTotalNet" Version="2.2.0" />
     <PackageReference Include="WPF-UI" Version="3.0.1" />
   </ItemGroup>
 
