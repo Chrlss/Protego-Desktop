@@ -1,2 +1,2 @@
 Protego lulubog lilitaw  <br>
-Mga 15% or 19% progress
+Mga 60% or 75% progress
