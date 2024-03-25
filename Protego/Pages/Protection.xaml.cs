@@ -1,491 +1,424 @@
-﻿using System.Windows.Controls;
-using System.ComponentModel;
-using System.IO;
+﻿using System.IO;
+using System.Net.Http;
 using System.Security.Cryptography;
+using System.Text.Json;
 using System.Windows;
+using System.Windows.Controls;
+using System.Security.AccessControl;
+using System.Security.Principal;
+using System.Management;
 using System.Diagnostics;
+using System.Windows.Threading;
 
 namespace Protego.Pages
 {
     public partial class Protection : Page
     {
-        public static class MessageBoxButtonCustom
-        {
-            public static MessageBoxButton YesNoCancel(string yesContent, string noContent, string cancelContent)
-            {
-                return new MessageBoxButton
-                {
-                    Yes = new MessageBoxCustomButton(yesContent, MessageBoxResult.Yes),
-                    No = new MessageBoxCustomButton(noContent, MessageBoxResult.No),
-                    Cancel = new MessageBoxCustomButton(cancelContent, MessageBoxResult.Cancel)
-                };
-            }
-        }
+        private readonly HttpClient _httpClient = new HttpClient();
+        private Button ScanButton;
+        private ProgressBar ProgressBar;
+        private TextBox StatusTextBlock; // Reference the RichTextBox control
 
-        public class MessageBoxButton
-        {
-            public MessageBoxCustomButton Yes { get; set; }
-            public MessageBoxCustomButton No { get; set; }
-            public MessageBoxCustomButton Cancel { get; set; }
-        }
+        private readonly string quarantineFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Quarantine");
 
-        public class MessageBoxCustomButton
-        {
-            public string Content { get; set; }
-            public MessageBoxResult Result { get; set; }
+        private string quarantineFolderPath = @"C:\Quarantine"; // Specify the path to the quarantine folder
 
-            public MessageBoxCustomButton(string content, MessageBoxResult result)
-            {
-                Content = content;
-                Result = result;
-            }
-        }
+        private ManagementEventWatcher watcher;
 
+        private List<string> processedFiles = new List<string>(); // List to store processed file names
 
-
-        private class RemovableDriveInfo
-        {
-            public string DriveLetter { get; set; }
-            public bool IsRemoved { get; set; }
-        }
-
-        private List<string> _suspiciousFiles;
-        private string _driveLetter;
-        private StreamWriter _logWriter;
-        private string _logFilePath = Path.Combine(Path.GetTempPath(), "scan_log.txt");
-        private List<RemovableDriveInfo> _removableDrives = new List<RemovableDriveInfo>();
-
-        private const string VirusTotalApiKey = "00fc286349bdbca1e47b6e78a07cc4791195a230d4f64a44421c6726a5126354";
-
-
+        private DispatcherTimer logTimer;
 
         public Protection()
         {
             InitializeComponent();
 
-            ScanWithVirusTotalButton.Click += ScanWithVirusTotal_Click;
+            EnsureQuarantineFolderExists();
+            LogQuarantinedFiles();
 
-            // Disable the "Scan and Clean Flash Drive" button by default
-            ScanAndCleanFlashDriveButton.IsEnabled = false;
+            ScanButton = FindName("ScanButtonn") as Button;
+            ProgressBar = FindName("ProgressBarr") as ProgressBar;
+            StatusTextBox = FindName("StatusTextBox") as TextBox;
+            LogTextBox = FindName("LogTextBox") as TextBox;
+            ClearLogButton = FindName("ClearLogButton") as Button;
 
-            // Initialize log file
-            _logWriter = new StreamWriter(_logFilePath, append: true);
-            Log("Application started");
+            ClearLogButton.IsEnabled = false; // Initially disable clear button
 
-            // Start a thread to periodically check for removable drives
-            var driveDetectionThread = new Thread(() =>
+            LogConnectedRemovableDrives();
+
+            watcher = new ManagementEventWatcher();
+            watcher.Query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 OR EventType = 3");
+            watcher.EventArrived += (sender, e) =>
             {
-                while (true)
+                string driveName = e.NewEvent.GetPropertyValue("DriveName").ToString();
+                string eventType = e.NewEvent.GetPropertyValue("EventType").ToString();
+
+                Dispatcher.Invoke(() =>
                 {
-                    // Get the list of drives on the system
-                    var drives = DriveInfo.GetDrives();
-
-                    // Check if any of the drives are removable drives
-                    var removableDrives = drives.Where(d => d.DriveType == DriveType.Removable).ToList();
-                    // Check for newly detected removable drives
-                    foreach (var drive in removableDrives)
+                    if (eventType == "2")
                     {
-                        if (!_removableDrives.Any(d => d.DriveLetter == drive.Name))
-                        {
-                            // Log the detection of a removable drive
-                            Log($"USB flashdrive detected");
-
-                            // Add the drive to the list of removable drives
-                            _removableDrives.Add(new RemovableDriveInfo { DriveLetter = drive.Name, IsRemoved = false });
-
-                            // Automatically start the scan
-                            Dispatcher.Invoke(() => ScanAndCleanFlashDrive_Click(this, new RoutedEventArgs()));
-                        }
+                        LogTextBox.AppendText($"Drive inserted: {driveName}\n");
+                        Button_Click(this, new RoutedEventArgs()); // Run malware scan for the inserted drive
                     }
-
-                    // Check for removed removable drives
-                    foreach (var drive in _removableDrives.ToList())
+                    else if (eventType == "3")
                     {
-                        if (!removableDrives.Any(d => d.Name == drive.DriveLetter))
-                        {
-                            // Log the removal of a removable drive
-                            Log($"USB flashdrive removed");
-
-                            // Remove the drive from the list of removable drives
-                            _removableDrives.Remove(drive);
-                        }
+                        LogTextBox.AppendText($"Drive removed: {driveName}\n");
+                        // Add your code here to handle drive removal
                     }
+                });
+            };
+            watcher.Start();
 
-                    // Wait for 5 seconds before checking again
-                    Thread.Sleep(5000);
-                }
-            });
-
-            driveDetectionThread.IsBackground = true;
-            driveDetectionThread.Start();
+            
         }
 
-        private async void ScanWithVirusTotal_Click(object sender, RoutedEventArgs e)
+        private void LogConnectedRemovableDrives()
         {
-            foreach (var file in _suspiciousFiles)
+            var drives = DriveInfo.GetDrives().Where(drive => drive.DriveType == DriveType.Removable);
+            foreach (var drive in drives)
             {
-                try
+                string driveInfo = $"Drive detected: {drive.Name}\n";
+
+                Dispatcher.Invoke(() =>
                 {
-                    // Initialize the VirusTotal API client
-                    var client = new VirusTotalNet.VirusTotal(VirusTotalApiKey);
+                    LogTextBox.AppendText($"{driveInfo}\n");
+                });
 
-                    // Get the file hash
-                    var fileStream = await HashFile(file);
-
-                    // Scan the file with VirusTotal
-                    var scanResult = await client.ScanFileAsync(fileStream, Path.GetFileName(file));
-                    var isMalware = scanResult.ResponseCode > 0;
-
-                    // Log the result
-                    if (isMalware)
-                    {
-                        Log($"File {file} is malware according to VirusTotal");
-                        var result = MessageBox.Show($"The file '{file}' is flagged as malware. Do you want to clean it?", "Malware Detected", System.Windows.MessageBoxButton.YesNo);
-                        if (result == MessageBoxResult.Yes)
-                        {
-                            // Clean the file (implementation depends on your chosen method)
-                            // You can call a separate function to handle cleaning logic
-                            CleanFile(file);
-                            Log($"File {file} cleaned");
-                        }
-                    }
-                    else
-                    {
-                        Log($"File {file} is not detected as malware by VirusTotal");
-                    }
-
-                    // Close the file stream
-                    fileStream.Close();
-                }
-                catch (Exception ex)
+                // Run malware scan for each connected removable drive
+                Dispatcher.Invoke(() =>
                 {
-                    // Log the exception
-                    Log($"Error scanning file {file}: {ex.Message}");
-                }
+                    Button_Click(this, new RoutedEventArgs());
+                });
+            }
+        }
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            if (watcher != null)
+            {
+                watcher.Stop();
+                watcher.Dispose();
+            }
+        }
+        private void EnsureQuarantineFolderExists()
+        {
+            if (!Directory.Exists(quarantineFolderPath))
+            {
+                Directory.CreateDirectory(quarantineFolderPath);
+
+                // Make the folder hidden
+                DirectoryInfo directoryInfo = new DirectoryInfo(quarantineFolderPath);
+                directoryInfo.Attributes |= FileAttributes.Hidden;
+
+                // Remove read and execute permissions
+                DirectorySecurity directorySecurity = directoryInfo.GetAccessControl();
+                directorySecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                directoryInfo.SetAccessControl(directorySecurity);
             }
         }
 
-        private void CleanFile(string filePath)
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Attempt to delete the file
-                File.Delete(filePath);
-                Log($"File {filePath} deleted");
+                // Replace with your actual API key
+                string apiKey = "00fc286349bdbca1e47b6e78a07cc4791195a230d4f64a44421c6726a5126354";
+
+                // Scan for removable drives
+                var drives = DriveInfo.GetDrives().Where(drive => drive.DriveType == DriveType.Removable);
+
+                StatusTextBox.Text = "Scanning flash drive...";
+                ProgressBar.Visibility = Visibility.Visible;
+
+                int totalFilesScanned = 0;
+                int totalFiles = drives.Sum(drive => Directory.GetFiles(drive.Name, "*.*", SearchOption.AllDirectories).Length);
+
+                foreach (var drive in drives)
+                {
+                    string driveLetter = drive.Name;
+                    var files = Directory.EnumerateFiles(driveLetter, "*.*", SearchOption.AllDirectories);
+
+                    foreach (var file in files)
+                    {
+                        totalFilesScanned++;
+
+                        string fileHash = GetFileHash(file);
+                        bool isSuspicious = await CheckFileHash(apiKey, fileHash, file); // Pass the file path here
+
+                        Dispatcher.Invoke(() =>
+                        {
+                            LogTextBox.AppendText($"{file}: {(isSuspicious ? "Suspicious" : "Clean")}\n");
+
+                            // Update progress bar
+                            double progress = (double)totalFilesScanned / totalFiles * 100;
+                            ProgressBar.Value = progress;
+                        });
+                    }
+                }
+
+                Dispatcher.Invoke(() =>
+                {
+                    ProgressBar.Visibility = Visibility.Collapsed;
+                    StatusTextBox.Text = $"Scan complete. Scanned {totalFilesScanned} files.";
+
+                    // Enable clear button only if there are log entries
+                    ClearLogButton.IsEnabled = LogTextBox.Text.Length > 0;
+                });
             }
             catch (Exception ex)
             {
-                // Log the error message if deletion fails
-                Log($"Error deleting file {filePath}: {ex.Message}");
-            }
-        }
-
-        private async Task<Stream> HashFile(string file)
-        {
-            using (var stream = File.OpenRead(file))
-            {
-                using (var md5 = MD5.Create())
+                Dispatcher.Invoke(() =>
                 {
-                    // Calculate the MD5 hash of the file
-                    byte[] hashBytes = await md5.ComputeHashAsync(stream);
-
-                    // Reset the position of the stream to the beginning
-                    stream.Seek(0, SeekOrigin.Begin);
-
-                    // Return a MemoryStream containing the hash bytes
-                    return new MemoryStream(hashBytes);
-                }
+                    StatusTextBox.Text = $"Error: {ex.Message}";
+                    MessageBox.Show($"Error occurred during scan: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                });
             }
         }
 
 
-        public List<string> ScanFlashDrive(string driveLetter)
+        private void ClearLogButton_Click(object sender, RoutedEventArgs e)
         {
-            var suspiciousFiles = new List<string>();
-
-            // Get the root directory of the flash drive
-            var rootDirectory = new DirectoryInfo(driveLetter + ":\\");
-
-            // Recursively scan all directories and subdirectories
-            ScanDirectory(rootDirectory, suspiciousFiles);
-
-            return suspiciousFiles;
+            ClearLog();
         }
-
-        private void Log(string message)
+        private void ClearLog()
         {
-            string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            string logMessage = $"[{timestamp}] {message}\n";
-
-            // Update the LogTextBox on the UI thread
             Dispatcher.Invoke(() =>
             {
-                // Append the new log message to the TextBox
-                LogTextBox.AppendText(logMessage);
-                LogTextBox.ScrollToEnd(); // Scroll to the end to show the latest log message
+                if (LogTextBox.Text.Length > 0 && ClearLogButton.IsEnabled)
+                {
+                    LogTextBox.Clear();
+                    StatusTextBox.Text = "Ready to scan.";
+                    ClearLogButton.IsEnabled = false; // Disable clear button after clearing
+                }
             });
         }
 
-        private void ScanDirectory(DirectoryInfo directory, List<string> suspiciousFiles)
+
+        private string GetFileHash(string filePath)
         {
-            // Scan all files in the current directory
-            foreach (var file in directory.GetFiles())
+            using (var stream = File.OpenRead(filePath))
             {
-                // Check if the file extension is suspicious
-                if (IsSuspiciousFileExtension(file.Extension))
-                {
-                    suspiciousFiles.Add(file.FullName);
-                }
-            }
-
-            // Recursively scan all subdirectories
-            foreach (var subdirectory in directory.GetDirectories())
-            {
-                ScanDirectory(subdirectory, suspiciousFiles);
-            }
-        }
-        private bool IsSuspiciousFileExtension(string extension)
-        {
-            // Define a list of suspicious file extensions
-            var suspiciousExtensions = new List<string> { ".exe", ".bat", ".vbs", ".js", ".lnk", ".bmp", ".etl" };
-
-            // Check if the file extension is in the list of suspicious extensions
-            return suspiciousExtensions.Contains(extension.ToLower());
-        }
-
-        public void CleanFlashDrive(string driveLetter)
-        {
-            // Get the root directory of the flash drive
-            var rootDirectory = new DirectoryInfo(driveLetter + ":\\");
-
-            // Recursively scan all directories and subdirectories
-            CleanDirectory(rootDirectory);
-
-
-        }
-        private void CleanDirectory(DirectoryInfo directory)
-        {
-            // Delete all suspicious files in the current directory
-            foreach (var file in directory.GetFiles())
-            {
-                if (IsSuspiciousFile(file))
-                {
-                    try
-                    {
-                        file.Delete();
-                    }
-                    catch (Exception ex)
-                    {
-                        // Log the exception
-                        // ...
-
-                        // Display a message to the user
-                        MessageBox.Show($"Error deleting file {file.Name}:{ex.Message}", "Error", System.Windows.MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-            }
-
-            // Recursively delete all suspicious files in the subdirectories
-            foreach (var subdirectory in directory.GetDirectories())
-            {
-                CleanDirectory(subdirectory);
-            }
-
-            // Delete the directory if it is empty
-            if (directory.GetFiles().Length == 0 && directory.GetDirectories().Length == 0)
-            {
-                try
-                {
-                    directory.Delete();
-                }
-                catch (Exception ex)
-                {
-                    // Log the exception
-                    // ...
-
-                    // Display a message to the user
-                    MessageBox.Show($"Error deleting directory {directory.Name}: {ex.Message}", "Error", System.Windows.MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                var sha256 = SHA256.Create();
+                var hashBytes = sha256.ComputeHash(stream);
+                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
             }
         }
 
-        private bool IsSuspiciousFile(FileInfo file)
+        private async Task<bool> CheckFileHash(string apiKey, string fileHash, string filePath)
         {
-            // Check if the file extension is suspicious
-            if (IsSuspiciousFileExtension(file.Extension))
+            string extension = Path.GetExtension(filePath);
+            if (extension.Equals(".bat", StringComparison.OrdinalIgnoreCase) ||
+                extension.Equals(".cpl", StringComparison.OrdinalIgnoreCase) ||
+                extension.Equals(".crt", StringComparison.OrdinalIgnoreCase) ||
+                extension.Equals(".ins", StringComparison.OrdinalIgnoreCase) ||
+                extension.Equals(".isp", StringComparison.OrdinalIgnoreCase) ||
+                extension.Equals(".ps1", StringComparison.OrdinalIgnoreCase) ||
+                extension.Equals(".rtf", StringComparison.OrdinalIgnoreCase) ||
+                extension.Equals(".crt", StringComparison.OrdinalIgnoreCase))
             {
+                // Mark specified file extensions as suspicious without checking with VirusTotal
+                QuarantineFile(filePath);
                 return true;
             }
 
-            // Check if the file name is suspicious
-            if (IsSuspiciousFileName(file.Name))
+            string url = $"https://www.virustotal.com/api/v3/files/{fileHash}";
+
+            using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                return true;
+                request.Headers.Add("x-apikey", apiKey);
+
+                using (var response = await _httpClient.SendAsync(request))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string content = await response.Content.ReadAsStringAsync();
+                        var data = JsonSerializer.Deserialize<Dictionary<string, object>>(content);
+
+                        if (data.ContainsKey("positives"))
+                        {
+                            int positives = Convert.ToInt32(data["positives"]);
+                            if (positives > 0)
+                            {
+                                QuarantineFile(filePath);
+                                return true;
+                            }
+                        }
+                    }
+                }
             }
 
             return false;
         }
-
-        private bool IsSuspiciousFileName(string fileName)
+        private void QuarantineFile(string filePath)
         {
-            // Define a list of suspicious file names
-            var suspiciousFileNames = new List<string> { "autorun.inf", "thumbs.db", "boot.ini", "ntldr" };
+            string fileName = Path.GetFileName(filePath); // Get only the file name without the path
 
-            // Check if the file name is in the list of suspicious file names
-            return suspiciousFileNames.Contains(fileName.ToLower());
-        }
-
-        private async void ScanAndCleanFlashDrive_Click(object sender, RoutedEventArgs e)
-        {
-            string driveLetter = "F"; // Set this to the letter of the flash drive
-            Log($"Scanning flash drive {driveLetter} started");
-            _suspiciousFiles = ScanFlashDrive(driveLetter);
-            if (_suspiciousFiles.Count > 0)
+            if (processedFiles.Contains(fileName)) // Check if the file has already been processed
             {
-                Log($"Suspicious files found: {_suspiciousFiles.Count}");
-                Log($"The following suspicious files were found:\n\n{string.Join("\n", _suspiciousFiles)}");
-                await ScanWithVirusTotalAsync(); // Call the ScanWithVirusTotal_Click method asynchronously
-            }
-            else
-            {
-                Log("No suspicious files found on the flash drive.");
-                Log("No suspicious files were found on the flash drive.");
-            }
-        }
-
-        private async Task ScanWithVirusTotalAsync()
-        {
-            List<string> detectedMalware = new List<string>();
-
-            foreach (var file in _suspiciousFiles)
-            {
-                try
-                {
-                    // Initialize the VirusTotal API client
-                    var client = new VirusTotalNet.VirusTotal(VirusTotalApiKey);
-
-                    // Get the file hash
-                    var fileStream = await HashFile(file);
-
-                    // Scan the file with VirusTotal
-                    var scanResult = await client.ScanFileAsync(fileStream, Path.GetFileName(file));
-                    var isMalware = scanResult.ResponseCode > 0;
-
-                    // Log the result
-                    if (isMalware)
-                    {
-                        detectedMalware.Add(file); // Add the detected malware file to the list
-
-                        // No need to prompt here, we'll do it after scanning all files
-                    }
-                    else
-                    {
-                        Log($"File {file} is not detected as malware by VirusTotal");
-                    }
-
-                    // Close the file stream
-                    fileStream.Close();
-                }
-                catch (Exception ex)
-                {
-                    // Log the exception
-                    Log($"Error scanning file {file}: {ex.Message}");
-                }
+                return; // Skip processing if the file is already in the list
             }
 
-            // Display the list of detected malware files with an option to clean them all or reformat the flash drive
-            if (detectedMalware.Any())
-            {
-                string message = $"The following files are flagged as malware:\n\n{string.Join("\n", detectedMalware)}\n\nDo you want to clean them all or reformat the flash drive?";
-                var result = MessageBox.Show(message, "Malware Detected", System.Windows.MessageBoxButton.YesNoCancel);
-                if (result == MessageBoxResult.Yes)
-                {
-                    foreach (var file in detectedMalware)
-                    {
-                        CleanFile(file);
-                        Log($"File {file} cleaned");
-                    }
-                }
-                else if (result == MessageBoxResult.Cancel)
-                {
-                    // Reformat the flash drive
-                    ReformatFlashDrive();
-                    Log($"Flash drive reformatted");
-                }
-            }
-            else
-            {
-                MessageBox.Show("No malware detected.", "Malware Detected", System.Windows.MessageBoxButton.OK);
-            }
-        }
+            processedFiles.Add(fileName); // Add the file to the list of processed files
 
+            string quarantineFilePath = Path.Combine(quarantineFolder, fileName);
 
-
-
-        private void ReformatFlashDrive()
-        {
             try
             {
-                string driveLetter = "F"; // Replace with the appropriate drive letter
-
-                // Check if the drive is ready
-                DriveInfo driveInfo = new DriveInfo(driveLetter);
-                if (driveInfo.IsReady)
+                if (!Directory.Exists(quarantineFolder))
                 {
-                    // Delete all files and directories on the drive
-                    DirectoryInfo directoryInfo = new DirectoryInfo(driveInfo.RootDirectory.FullName);
-                    foreach (FileInfo file in directoryInfo.GetFiles())
-                    {
-                        file.Delete();
-                    }
-                    foreach (DirectoryInfo dir in directoryInfo.GetDirectories())
-                    {
-                        dir.Delete(true);
-                    }
-
-                    // Format the drive as FAT32
-                    string command = $"format {driveLetter}: /FS:FAT32 /Q /X";
-
-                    // Start a new process to execute the command
-                    ProcessStartInfo psi = new ProcessStartInfo("cmd.exe")
-                    {
-                        UseShellExecute = false,
-                        RedirectStandardInput = true,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        CreateNoWindow = true
-                    };
-
-                    Process process = Process.Start(psi);
-                    process.StandardInput.WriteLine(command);
-                    process.StandardInput.Flush();
-                    process.StandardInput.Close();
-                    process.WaitForExit();
-
-                    // Check the exit code to determine if the format was successful
-                    if (process.ExitCode == 0)
-                    {
-                        Log($"Flash drive formatted successfully");
-                    }
-                    else
-                    {
-                        Log($"Error formatting flash drive");
-                    }
+                    Directory.CreateDirectory(quarantineFolder);
                 }
-                else
+
+                if (File.Exists(quarantineFilePath))
                 {
-                    Log($"Drive {driveLetter} is not ready");
+                    // File with the same name already exists in the quarantine folder
+                    string newFileName = $"{Path.GetFileNameWithoutExtension(fileName)}_{DateTime.Now:yyyyMMddHHmmss}{Path.GetExtension(fileName)}";
+                    quarantineFilePath = Path.Combine(quarantineFolder, newFileName);
                 }
+
+                // Log suspicious file before moving it to quarantine
+                LogTextBox.Dispatcher.Invoke(() =>
+                {
+                    LogTextBox.AppendText($"{fileName}: Suspicious\n");
+                });
+
+                // Move the file to the quarantine folder
+                File.Move(filePath, quarantineFilePath);
+
+                // Set the file attributes to hidden
+                File.SetAttributes(quarantineFilePath, File.GetAttributes(quarantineFilePath) | FileAttributes.Hidden);
+
+                // Remove read and execute permissions
+                var fileInfo = new FileInfo(quarantineFilePath);
+                var fileSecurity = fileInfo.GetAccessControl();
+                fileSecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                fileInfo.SetAccessControl(fileSecurity);
+
+                LogTextBox.Dispatcher.Invoke(() =>
+                {
+                    LogTextBox.AppendText($"Quarantined suspicious file: {Path.GetFileName(quarantineFilePath)}\n");
+                });
+
+                // Append quarantined file name to QuarantineTextBox
+                QuarantineTextBox.Dispatcher.Invoke(() =>
+                {
+                    QuarantineTextBox.AppendText($"Quarantined: {Path.GetFileName(quarantineFilePath)}\n");
+                });
             }
             catch (Exception ex)
             {
-                // Log the exception
-                Log($"Error formatting flash drive: {ex.Message}");
-                // Display a message to the user
-                MessageBox.Show($"Error formatting flash drive: {ex.Message}", "Error", System.Windows.MessageBoxButton.OK, MessageBoxImage.Error);
+                LogTextBox.Dispatcher.Invoke(() =>
+                {
+                    LogTextBox.AppendText($"Error quarantining file {fileName}: {ex.Message}\n");
+                });
             }
         }
 
+
+
+
+        private void DeleteFile(string filePath)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                try
+                {
+                    string fileName = Path.GetFileName(filePath); // Get only the file name without the path
+                    File.Delete(filePath);
+                    LogTextBox.AppendText($"Deleted suspicious file: {fileName}\n");
+                }
+                catch (Exception ex)
+                {
+                    LogTextBox.AppendText($"Error deleting file {filePath}: {ex.Message}\n");
+                }
+            });
+        }
+
+
+        private void CleanButton_Click(object sender, RoutedEventArgs e)
+        {
+            string[] quarantinedFiles = QuarantineTextBox.Text.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+            if (quarantinedFiles.Length == 0)
+            {
+                MessageBox.Show("There are no files to clean.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to clean all quarantined files?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                foreach (string quarantinedFile in quarantinedFiles)
+                {
+                    string fileName = quarantinedFile.Substring("Quarantined: ".Length).Trim(); // Trim to remove leading and trailing whitespaces
+                    string filePath = Path.Combine(quarantineFolder, fileName);
+                    DeleteFile(filePath);
+                }
+                QuarantineTextBox.Clear(); // Clear all entries from QuarantineTextBox
+            }
+        }
+
+
+        public void LogQuarantinedFiles()
+        {
+            if (Directory.Exists(quarantineFolder))
+            {
+                var files = Directory.GetFiles(quarantineFolder);
+                foreach (var file in files)
+                {
+                    string fileName = Path.GetFileName(file);
+                    QuarantineTextBox.AppendText($"Quarantined: {fileName}\n");
+                }
+            }
+        }
+
+
+        private void KeepButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to keep all quarantined files for 7 days?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                string[] quarantinedFiles = QuarantineTextBox.Text.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+                foreach (string quarantinedFile in quarantinedFiles)
+                {
+                    string filePath = quarantinedFile.Substring("Quarantined: ".Length).Trim(); // Trim to remove leading and trailing whitespaces
+                    KeepFileFor7Days(filePath);
+                }
+                QuarantineTextBox.Clear(); // Clear all entries from QuarantineTextBox
+            }
+        }
+        private async void KeepFileFor7Days(string filePath)
+        {
+            try
+            {
+                string quarantineFilePath = Path.Combine(quarantineFolder, Path.GetFileName(filePath));
+
+                // Move the file to the quarantine folder if it's not already there
+                if (!File.Exists(quarantineFilePath))
+                {
+                    File.Move(filePath, quarantineFilePath);
+                }
+
+                // Calculate the date 7 days from now
+                DateTime deletionDate = DateTime.Now.AddDays(7);
+
+                // Write the deletion date to a file in the quarantine folder
+                string deletionDateFilePath = Path.Combine(quarantineFolder, $"{Path.GetFileNameWithoutExtension(filePath)}.delete");
+                await File.WriteAllTextAsync(deletionDateFilePath, deletionDate.ToString());
+
+                LogTextBox.Dispatcher.Invoke(() =>
+                {
+                    LogTextBox.AppendText($"File {Path.GetFileName(filePath)} will be deleted on {deletionDate}\n");
+                });
+            }
+            catch (Exception ex)
+            {
+                LogTextBox.Dispatcher.Invoke(() =>
+                {
+                    LogTextBox.AppendText($"Error keeping file {Path.GetFileName(filePath)}: {ex.Message}\n");
+                });
+            }
+        }
+
+       
     }
     
 }

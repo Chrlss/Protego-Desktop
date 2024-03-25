@@ -76,6 +76,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="17.9.37000" />
     <PackageReference Include="OpenHardwareMonitor" Version="0.9.6" />
     <PackageReference Include="Python.Runtime" Version="2.7.9" />
+    <PackageReference Include="RestSharp" Version="110.2.0" />
     <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="8.0.0" />
     <PackageReference Include="System.Management" Version="8.0.0" />
     <PackageReference Include="Unnoficial.Microsoft.Expression.Drawing" Version="1.0.0" />
