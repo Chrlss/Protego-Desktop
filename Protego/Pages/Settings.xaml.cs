@@ -24,5 +24,15 @@ namespace Protego.Pages
         {
             InitializeComponent();
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void CardAction_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

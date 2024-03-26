@@ -23,19 +23,20 @@
         <Grid Grid.ColumnSpan="2" Margin="0,0,266,0" Grid.RowSpan="2">
             <TextBlock Text="Settings" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26,10,0,0" Foreground="White" />
 
+
         </Grid>
-
-        <ui:CardExpander Height="393" Margin="12,0,10,0" Grid.ColumnSpan="3" RenderTransformOrigin="0.506,0.101" Header="" Grid.Row="1">
-
-            <StackPanel>
-                <TextBlock Text="settings" Foreground="White" Height="30"/>
-            </StackPanel>
-        </ui:CardExpander>
-        <ui:CardExpander Height="394" Margin="12,145,10,0" VerticalAlignment="Top" Grid.ColumnSpan="3" RenderTransformOrigin="0.506,0.101" Grid.Row="1">
-            <StackPanel>
-                <TextBlock Text="settings" Foreground="White" Height="30"/>
-            </StackPanel>
-        </ui:CardExpander>
+        <ui:ToggleSwitch OffContent="Off" OnContent="On" Grid.Column="2" Margin="108,58,0,0" Grid.RowSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="96" Width="201">
+            <ui:ToggleSwitch.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.159"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ui:ToggleSwitch.RenderTransform>
+        </ui:ToggleSwitch>
+        <ui:CardAction Content="General settings and alerts" TextBlock.FontFamily="20" Click="CardAction_Click" Grid.ColumnSpan="3" Margin="10,83,50,0" Grid.RowSpan="2" VerticalAlignment="Top"/>
+        
 
     </Grid>
 </Page>

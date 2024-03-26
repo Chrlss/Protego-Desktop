@@ -11,6 +11,8 @@ using System.Diagnostics;
 using System.Windows.Threading;
 using System.Text.Json.Nodes;
 using CsvHelper;
+using Microsoft.ServiceHub.Resources;
+using System.Data;
 
 namespace Protego.Pages
 {
@@ -35,9 +37,7 @@ namespace Protego.Pages
         public Protection()
         {
             InitializeComponent();
-
-            
-            string hashDatasetFilePath = @"E:\source\repos\Protego\Dataset\full_sha256.txt";
+            string hashDatasetFilePath = @"C:\Users\navar\source\repos\Protego-Desktop\Protego\Dataset\full_sha256.txt";
             hashList = LoadHashDataset(hashDatasetFilePath);
 
             EnsureQuarantineFolderExists();
