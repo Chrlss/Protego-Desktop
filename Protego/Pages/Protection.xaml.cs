@@ -19,15 +19,15 @@ namespace Protego.Pages
         private readonly HttpClient _httpClient = new HttpClient();
         private Button ScanButton;
         private ProgressBar ProgressBar;
-        private TextBox StatusTextBlock; // Reference the RichTextBox control
+        private TextBox StatusTextBlock;
 
         private readonly string quarantineFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Quarantine");
 
-        private string quarantineFolderPath = @"C:\Quarantine"; // Specify the path to the quarantine folder
+        private string quarantineFolderPath = @"C:\Quarantine"; 
 
         private ManagementEventWatcher watcher;
 
-        private List<string> processedFiles = new List<string>(); // List to store processed file names
+        private List<string> processedFiles = new List<string>(); 
 
         private List<string> hashList = new List<string>();
 
@@ -36,7 +36,7 @@ namespace Protego.Pages
         {
             InitializeComponent();
 
-            // Load hash dataset from the .txt file
+            
             string hashDatasetFilePath = @"E:\source\repos\Protego\Dataset\full_sha256.txt";
             hashList = LoadHashDataset(hashDatasetFilePath);
 
@@ -49,7 +49,7 @@ namespace Protego.Pages
             LogTextBox = FindName("LogTextBox") as TextBox;
             ClearLogButton = FindName("ClearLogButton") as Button;
 
-            ClearLogButton.IsEnabled = false; // Initially disable clear button
+            ClearLogButton.IsEnabled = false; 
 
             LogConnectedRemovableDrives();
 
@@ -65,12 +65,12 @@ namespace Protego.Pages
                     if (eventType == "2")
                     {
                         LogTextBox.AppendText($"Drive inserted: {driveName}\n");
-                        Button_Click(this, new RoutedEventArgs()); // Run malware scan for the inserted drive
+                        Button_Click(this, new RoutedEventArgs()); 
                     }
                     else if (eventType == "3")
                     {
                         LogTextBox.AppendText($"Drive removed: {driveName}\n");
-                        // Add your code here to handle drive removal
+                        
                     }
                 });
             };
@@ -110,7 +110,7 @@ namespace Protego.Pages
                     LogTextBox.AppendText($"{driveInfo}\n");
                 });
 
-                // Run malware scan for each connected removable drive
+                
                 Dispatcher.Invoke(() =>
                 {
                     Button_Click(this, new RoutedEventArgs());
@@ -131,11 +131,11 @@ namespace Protego.Pages
             {
                 Directory.CreateDirectory(quarantineFolderPath);
 
-                // Make the folder hidden
+                
                 DirectoryInfo directoryInfo = new DirectoryInfo(quarantineFolderPath);
                 directoryInfo.Attributes |= FileAttributes.Hidden;
 
-                // Remove read and execute permissions
+                
                 DirectorySecurity directorySecurity = directoryInfo.GetAccessControl();
                 directorySecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
                 directoryInfo.SetAccessControl(directorySecurity);
@@ -147,10 +147,10 @@ namespace Protego.Pages
         {
             try
             {
-                // Replace with your actual API key
+                
                 string apiKey = "00fc286349bdbca1e47b6e78a07cc4791195a230d4f64a44421c6726a5126354";
 
-                // Scan for removable drives
+                
                 var drives = DriveInfo.GetDrives().Where(drive => drive.DriveType == DriveType.Removable);
 
                 StatusTextBox.Text = "Scanning flash drive...";
@@ -171,13 +171,13 @@ namespace Protego.Pages
                             totalFilesScanned++;
 
                             var hashValues = GetFileHash(file);
-                            bool isSuspicious = CheckFileHash(apiKey, hashValues, file); // Pass the hashValues dictionary here
+                            bool isSuspicious = CheckFileHash(apiKey, hashValues, file); 
 
                             Dispatcher.Invoke(() =>
                             {
                                 LogTextBox.AppendText($"{file}: {(isSuspicious ? "Suspicious" : "Clean")}\n");
 
-                                // Update progress bar
+                                
                                 double progress = (double)totalFilesScanned / totalFiles * 100;
                                 ProgressBar.Value = progress;
                             });
@@ -190,7 +190,7 @@ namespace Protego.Pages
                     ProgressBar.Visibility = Visibility.Collapsed;
                     StatusTextBox.Text = $"Scan complete. Scanned {totalFilesScanned} files.";
 
-                    // Enable clear button only if there are log entries
+                    
                     ClearLogButton.IsEnabled = LogTextBox.Text.Length > 0;
                 });
             }
@@ -219,7 +219,7 @@ namespace Protego.Pages
                 {
                     LogTextBox.Clear();
                     StatusTextBox.Text = "Ready to scan.";
-                    ClearLogButton.IsEnabled = false; // Disable clear button after clearing
+                    ClearLogButton.IsEnabled = false; 
                 }
             });
         }
@@ -240,12 +240,12 @@ namespace Protego.Pages
                 var sha512HashBytes = sha512.ComputeHash(stream);
 
                 var hashValues = new Dictionary<string, string>
-        {
-            { "MD5", BitConverter.ToString(md5HashBytes).Replace("-", "").ToLower() },
-            { "SHA-1", BitConverter.ToString(sha1HashBytes).Replace("-", "").ToLower() },
-            { "SHA-256", BitConverter.ToString(sha256HashBytes).Replace("-", "").ToLower() },
-            { "SHA-512", BitConverter.ToString(sha512HashBytes).Replace("-", "").ToLower() }
-        };
+                {
+                    { "MD5", BitConverter.ToString(md5HashBytes).Replace("-", "").ToLower() },
+                    { "SHA-1", BitConverter.ToString(sha1HashBytes).Replace("-", "").ToLower() },
+                    { "SHA-256", BitConverter.ToString(sha256HashBytes).Replace("-", "").ToLower() },
+                    { "SHA-512", BitConverter.ToString(sha512HashBytes).Replace("-", "").ToLower() }
+                };
 
                 return hashValues;
             }
@@ -273,11 +273,11 @@ namespace Protego.Pages
         {
             try
             {
-                string fileHash = hashValues["SHA-256"]; // Assuming you want to use the SHA-256 hash for the API request
+                string fileHash = hashValues["SHA-256"]; 
 
                 if (hashList.Contains(fileHash.ToLower()))
                 {
-                    // Mark the file as suspicious and quarantine it
+                    
                     QuarantineFile(filePath);
                     return true;
                 }
@@ -285,7 +285,7 @@ namespace Protego.Pages
                 string extension = Path.GetExtension(filePath);
                 if (IsSuspiciousExtension(extension))
                 {
-                    // Mark specified file extensions as suspicious without checking with VirusTotal
+                    
                     QuarantineFile(filePath);
                     return true;
                 }
@@ -360,14 +360,14 @@ namespace Protego.Pages
 
         private void QuarantineFile(string filePath)
         {
-            string fileName = Path.GetFileName(filePath); // Get only the file name without the path
+            string fileName = Path.GetFileName(filePath); 
 
-            if (processedFiles.Contains(fileName)) // Check if the file has already been processed
+            if (processedFiles.Contains(fileName)) 
             {
-                return; // Skip processing if the file is already in the list
+                return; 
             }
 
-            processedFiles.Add(fileName); // Add the file to the list of processed files
+            processedFiles.Add(fileName); 
 
             string quarantineFilePath = Path.Combine(quarantineFolder, fileName);
 
@@ -380,24 +380,24 @@ namespace Protego.Pages
 
                 if (File.Exists(quarantineFilePath))
                 {
-                    // File with the same name already exists in the quarantine folder
+                    
                     string newFileName = $"{Path.GetFileNameWithoutExtension(fileName)}_{DateTime.Now:yyyyMMddHHmmss}{Path.GetExtension(fileName)}";
                     quarantineFilePath = Path.Combine(quarantineFolder, newFileName);
                 }
 
-                // Log suspicious file before moving it to quarantine
+                
                 LogTextBox.Dispatcher.Invoke(() =>
                 {
                     LogTextBox.AppendText($"{fileName}: Suspicious\n");
                 });
 
-                // Move the file to the quarantine folder
+                
                 File.Move(filePath, quarantineFilePath);
 
-                // Set the file attributes to hidden
+                
                 File.SetAttributes(quarantineFilePath, File.GetAttributes(quarantineFilePath) | FileAttributes.Hidden);
 
-                // Remove read and execute permissions
+                
                 var fileInfo = new FileInfo(quarantineFilePath);
                 var fileSecurity = fileInfo.GetAccessControl();
                 fileSecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
@@ -408,7 +408,7 @@ namespace Protego.Pages
                     LogTextBox.AppendText($"Quarantined suspicious file: {Path.GetFileName(quarantineFilePath)}\n");
                 });
 
-                // Append quarantined file name to QuarantineTextBox
+                
                 QuarantineTextBox.Dispatcher.Invoke(() =>
                 {
                     QuarantineTextBox.AppendText($"Quarantined: {Path.GetFileName(quarantineFilePath)}\n");
@@ -432,7 +432,7 @@ namespace Protego.Pages
             {
                 try
                 {
-                    string fileName = Path.GetFileName(filePath); // Get only the file name without the path
+                    string fileName = Path.GetFileName(filePath);
                     File.Delete(filePath);
                     LogTextBox.AppendText($"Deleted suspicious file: {fileName}\n");
                 }
@@ -458,11 +458,11 @@ namespace Protego.Pages
             {
                 foreach (string quarantinedFile in quarantinedFiles)
                 {
-                    string fileName = quarantinedFile.Substring("Quarantined: ".Length).Trim(); // Trim to remove leading and trailing whitespaces
+                    string fileName = quarantinedFile.Substring("Quarantined: ".Length).Trim(); 
                     string filePath = Path.Combine(quarantineFolder, fileName);
                     DeleteFile(filePath);
                 }
-                QuarantineTextBox.Clear(); // Clear all entries from QuarantineTextBox
+                QuarantineTextBox.Clear(); 
             }
         }
 
@@ -495,10 +495,10 @@ namespace Protego.Pages
             {
                 foreach (string quarantinedFile in quarantinedFiles)
                 {
-                    string filePath = quarantinedFile.Substring("Quarantined: ".Length).Trim(); // Trim to remove leading and trailing whitespaces
+                    string filePath = quarantinedFile.Substring("Quarantined: ".Length).Trim(); 
                     KeepFileFor7Days(filePath);
                 }
-                QuarantineTextBox.Clear(); // Clear all entries from QuarantineTextBox
+                QuarantineTextBox.Clear(); 
             }
         }
 
@@ -508,16 +508,16 @@ namespace Protego.Pages
             {
                 string quarantineFilePath = Path.Combine(quarantineFolder, Path.GetFileName(filePath));
 
-                // Move the file to the quarantine folder if it's not already there
+                
                 if (!File.Exists(quarantineFilePath))
                 {
                     File.Move(filePath, quarantineFilePath);
                 }
 
-                // Calculate the date 7 days from now
+                
                 DateTime deletionDate = DateTime.Now.AddDays(7);
 
-                // Write the deletion date to a file in the quarantine folder
+                
                 string deletionDateFilePath = Path.Combine(quarantineFolder, $"{Path.GetFileNameWithoutExtension(filePath)}.delete");
                 await File.WriteAllTextAsync(deletionDateFilePath, deletionDate.ToString());
 
