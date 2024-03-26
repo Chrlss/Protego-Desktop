@@ -9,6 +9,8 @@ using System.Security.Principal;
 using System.Management;
 using System.Diagnostics;
 using System.Windows.Threading;
+using System.Text.Json.Nodes;
+using CsvHelper;
 
 namespace Protego.Pages
 {
@@ -27,10 +29,16 @@ namespace Protego.Pages
 
         private List<string> processedFiles = new List<string>(); // List to store processed file names
 
-        
+        private List<string> hashList = new List<string>();
+
+
         public Protection()
         {
             InitializeComponent();
+
+            // Load hash dataset from the .txt file
+            string hashDatasetFilePath = @"E:\source\repos\Protego\Dataset\full_sha256.txt";
+            hashList = LoadHashDataset(hashDatasetFilePath);
 
             EnsureQuarantineFolderExists();
             LogQuarantinedFiles();
@@ -72,7 +80,24 @@ namespace Protego.Pages
 
         }
 
-        
+        private List<string> LoadHashDataset(string filePath)
+        {
+            List<string> hashDataset = new List<string>();
+
+            try
+            {
+                string[] lines = File.ReadAllLines(filePath);
+                hashDataset.AddRange(lines.Select(line => line.Trim().ToLower()));
+            }
+            catch (Exception ex)
+            {
+                LogTextBox.AppendText($"Error loading hash dataset: {ex.Message}\n");
+            }
+
+            return hashDataset;
+        }
+
+
         private void LogConnectedRemovableDrives()
         {
             var drives = DriveInfo.GetDrives().Where(drive => drive.DriveType == DriveType.Removable);
@@ -139,22 +164,25 @@ namespace Protego.Pages
                     string driveLetter = drive.Name;
                     var files = Directory.EnumerateFiles(driveLetter, "*.*", SearchOption.AllDirectories);
 
-                    foreach (var file in files)
+                    await Task.Run(() =>
                     {
-                        totalFilesScanned++;
-
-                        string fileHash = GetFileHash(file);
-                        bool isSuspicious = await CheckFileHash(apiKey, fileHash, file); // Pass the file path here
-
-                        Dispatcher.Invoke(() =>
+                        foreach (var file in files)
                         {
-                            LogTextBox.AppendText($"{file}: {(isSuspicious ? "Suspicious" : "Clean")}\n");
+                            totalFilesScanned++;
 
-                            // Update progress bar
-                            double progress = (double)totalFilesScanned / totalFiles * 100;
-                            ProgressBar.Value = progress;
-                        });
-                    }
+                            var hashValues = GetFileHash(file);
+                            bool isSuspicious = CheckFileHash(apiKey, hashValues, file); // Pass the hashValues dictionary here
+
+                            Dispatcher.Invoke(() =>
+                            {
+                                LogTextBox.AppendText($"{file}: {(isSuspicious ? "Suspicious" : "Clean")}\n");
+
+                                // Update progress bar
+                                double progress = (double)totalFilesScanned / totalFiles * 100;
+                                ProgressBar.Value = progress;
+                            });
+                        }
+                    });
                 }
 
                 Dispatcher.Invoke(() =>
@@ -177,6 +205,8 @@ namespace Protego.Pages
         }
 
 
+
+
         private void ClearLogButton_Click(object sender, RoutedEventArgs e)
         {
             ClearLog();
@@ -195,61 +225,139 @@ namespace Protego.Pages
         }
 
 
-        private string GetFileHash(string filePath)
+        private Dictionary<string, string> GetFileHash(string filePath)
         {
             using (var stream = File.OpenRead(filePath))
             {
+                var md5 = MD5.Create();
+                var sha1 = SHA1.Create();
                 var sha256 = SHA256.Create();
-                var hashBytes = sha256.ComputeHash(stream);
-                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+                var sha512 = SHA512.Create();
+
+                var md5HashBytes = md5.ComputeHash(stream);
+                var sha1HashBytes = sha1.ComputeHash(stream);
+                var sha256HashBytes = sha256.ComputeHash(stream);
+                var sha512HashBytes = sha512.ComputeHash(stream);
+
+                var hashValues = new Dictionary<string, string>
+        {
+            { "MD5", BitConverter.ToString(md5HashBytes).Replace("-", "").ToLower() },
+            { "SHA-1", BitConverter.ToString(sha1HashBytes).Replace("-", "").ToLower() },
+            { "SHA-256", BitConverter.ToString(sha256HashBytes).Replace("-", "").ToLower() },
+            { "SHA-512", BitConverter.ToString(sha512HashBytes).Replace("-", "").ToLower() }
+        };
+
+                return hashValues;
             }
         }
 
-        private async Task<bool> CheckFileHash(string apiKey, string fileHash, string filePath)
+
+        private List<string> LoadAdditionalHashList(string filePath)
         {
-            string extension = Path.GetExtension(filePath);
-            if (extension.Equals(".bat", StringComparison.OrdinalIgnoreCase) ||
-                extension.Equals(".cpl", StringComparison.OrdinalIgnoreCase) ||
-                extension.Equals(".crt", StringComparison.OrdinalIgnoreCase) ||
-                extension.Equals(".ins", StringComparison.OrdinalIgnoreCase) ||
-                extension.Equals(".isp", StringComparison.OrdinalIgnoreCase) ||
-                extension.Equals(".ps1", StringComparison.OrdinalIgnoreCase) ||
-                extension.Equals(".rtf", StringComparison.OrdinalIgnoreCase) ||
-                extension.Equals(".crt", StringComparison.OrdinalIgnoreCase))
+            List<string> additionalHashList = new List<string>();
+
+            try
             {
-                // Mark specified file extensions as suspicious without checking with VirusTotal
-                QuarantineFile(filePath);
-                return true;
+                string[] lines = File.ReadAllLines(filePath);
+                additionalHashList.AddRange(lines.Select(line => line.Trim().ToLower()));
+            }
+            catch (Exception ex)
+            {
+                LogTextBox.AppendText($"Error loading additional hash list: {ex.Message}\n");
             }
 
-            string url = $"https://www.virustotal.com/api/v3/files/{fileHash}";
+            return additionalHashList;
+        }
 
-            using (var request = new HttpRequestMessage(HttpMethod.Get, url))
+        private bool CheckFileHash(string apiKey, Dictionary<string, string> hashValues, string filePath)
+        {
+            try
             {
-                request.Headers.Add("x-apikey", apiKey);
+                string fileHash = hashValues["SHA-256"]; // Assuming you want to use the SHA-256 hash for the API request
 
-                using (var response = await _httpClient.SendAsync(request))
+                if (hashList.Contains(fileHash.ToLower()))
                 {
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string content = await response.Content.ReadAsStringAsync();
-                        var data = JsonSerializer.Deserialize<Dictionary<string, object>>(content);
+                    // Mark the file as suspicious and quarantine it
+                    QuarantineFile(filePath);
+                    return true;
+                }
 
-                        if (data.ContainsKey("positives"))
+                string extension = Path.GetExtension(filePath);
+                if (IsSuspiciousExtension(extension))
+                {
+                    // Mark specified file extensions as suspicious without checking with VirusTotal
+                    QuarantineFile(filePath);
+                    return true;
+                }
+
+                string url = $"https://www.virustotal.com/api/v3/files/{fileHash}";
+
+                using (var request = new HttpRequestMessage(HttpMethod.Get, url))
+                {
+                    request.Headers.Add("x-apikey", apiKey);
+
+                    foreach (var hash in hashValues)
+                    {
+                        request.Headers.Add($"hash.{hash.Key}", hash.Value);
+                    }
+
+                    using (var response = _httpClient.SendAsync(request).Result)
+                    {
+                        if (response.IsSuccessStatusCode)
                         {
-                            int positives = Convert.ToInt32(data["positives"]);
-                            if (positives > 0)
+                            string content = response.Content.ReadAsStringAsync().Result;
+                            var data = JsonSerializer.Deserialize<JsonElement>(content);
+
+                            if (data.TryGetProperty("data", out var dataArray))
                             {
-                                QuarantineFile(filePath);
-                                return true;
+                                if (dataArray.ValueKind == JsonValueKind.Array)
+                                {
+                                    foreach (var item in dataArray.EnumerateArray())
+                                    {
+                                        var attributes = item.GetProperty("attributes");
+                                        var lastAnalysisStats = attributes.GetProperty("last_analysis_stats");
+                                        int positives = lastAnalysisStats.GetProperty("malicious").GetInt32();
+                                        if (positives > 0)
+                                        {
+                                            QuarantineFile(filePath);
+                                            return true;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    var attributes = dataArray.GetProperty("attributes");
+                                    var lastAnalysisStats = attributes.GetProperty("last_analysis_stats");
+                                    int positives = lastAnalysisStats.GetProperty("malicious").GetInt32();
+                                    if (positives > 0)
+                                    {
+                                        QuarantineFile(filePath);
+                                        return true;
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    LogTextBox.AppendText($"Error checking file hash: {ex.Message}\n");
+                });
+
+            }
 
             return false;
         }
+
+        private bool IsSuspiciousExtension(string extension)
+        {
+            string[] suspiciousExtensions = { ".bat", ".cpl", ".crt", ".ins", ".isp", ".ps1", ".rtf", ".crt" };
+            return suspiciousExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase);
+        }
+
         private void QuarantineFile(string filePath)
         {
             string fileName = Path.GetFileName(filePath); // Get only the file name without the path
@@ -383,7 +491,7 @@ namespace Protego.Pages
                 return;
             }
 
-            if (MessageBox.Show("Are you sure you want to keep all quarantined files for 7 days?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure you want to keep all quarantined files? Quarantined files will be deleted in 7 days.", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 foreach (string quarantinedFile in quarantinedFiles)
                 {
