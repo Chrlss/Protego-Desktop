@@ -82,7 +82,7 @@
             <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent" >
                 <ui:NavigationView.MenuItems>
                     <ui:NavigationViewItem x:Name="Home" Content="Home" Tag="Home" Icon="{ui:SymbolIcon Home20}" TargetPageType="{x:Type pages:Home}"/>
-                    <ui:NavigationViewItem Content="Protect" Tag="Protection" Icon="{ui:SymbolIcon Shield20}" TargetPageType="{x:Type pages:Protection}" />
+                    <ui:NavigationViewItem Content="Protect" Tag="Protection" Icon="{ui:SymbolIcon UsbStick20}" TargetPageType="{x:Type pages:Protection}" />
                     <ui:NavigationViewItem Content="Security" Tag="Security" Icon="{ui:SymbolIcon LockClosed20}" TargetPageType="{x:Type pages:Security}" />
                     <ui:NavigationViewItem x:Name="Monitor" Content="Monitor" Tag="Monitor" Icon="{ui:SymbolIcon DataHistogram20}" TargetPageType="{x:Type pages:Monitor}" />
                 </ui:NavigationView.MenuItems>

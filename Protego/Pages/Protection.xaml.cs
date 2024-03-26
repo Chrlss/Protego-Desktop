@@ -27,8 +27,7 @@ namespace Protego.Pages
 
         private List<string> processedFiles = new List<string>(); // List to store processed file names
 
-        private DispatcherTimer logTimer;
-
+        
         public Protection()
         {
             InitializeComponent();
@@ -70,8 +69,10 @@ namespace Protego.Pages
             watcher.Start();
 
             
+
         }
 
+        
         private void LogConnectedRemovableDrives()
         {
             var drives = DriveInfo.GetDrives().Where(drive => drive.DriveType == DriveType.Removable);
@@ -374,9 +375,16 @@ namespace Protego.Pages
 
         private void KeepButton_Click(object sender, RoutedEventArgs e)
         {
+            string[] quarantinedFiles = QuarantineTextBox.Text.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+            if (quarantinedFiles.Length == 0)
+            {
+                MessageBox.Show("There are no quarantined files to keep.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             if (MessageBox.Show("Are you sure you want to keep all quarantined files for 7 days?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                string[] quarantinedFiles = QuarantineTextBox.Text.Split('\n', StringSplitOptions.RemoveEmptyEntries);
                 foreach (string quarantinedFile in quarantinedFiles)
                 {
                     string filePath = quarantinedFile.Substring("Quarantined: ".Length).Trim(); // Trim to remove leading and trailing whitespaces
@@ -385,6 +393,7 @@ namespace Protego.Pages
                 QuarantineTextBox.Clear(); // Clear all entries from QuarantineTextBox
             }
         }
+
         private async void KeepFileFor7Days(string filePath)
         {
             try
