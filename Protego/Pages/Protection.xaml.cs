@@ -37,7 +37,7 @@ namespace Protego.Pages
             InitializeComponent();
 
             
-            string hashDatasetFilePath = @"E:\source\repos\Protego\Dataset\full_sha256.txt";
+            string hashDatasetFilePath = @"C:\Users\princess ann rotia\source\repos\Protego-Desktop\Protego\Dataset\full_sha256.txt";
             hashList = LoadHashDataset(hashDatasetFilePath);
 
             EnsureQuarantineFolderExists();
@@ -168,22 +168,33 @@ namespace Protego.Pages
                     {
                         foreach (var file in files)
                         {
+                            // Check the file size
+                            FileInfo fileInfo = new FileInfo(file);
+                            if (fileInfo.Length > 500 * 1024 * 1024) // 500 MB in bytes
+                            {
+                                Dispatcher.Invoke(() =>
+                                {
+                                    LogTextBox.AppendText($" ");
+                                });
+                                continue; // Skip processing this file
+                            }
+
                             totalFilesScanned++;
 
                             var hashValues = GetFileHash(file);
-                            bool isSuspicious = CheckFileHash(apiKey, hashValues, file); 
+                            bool isSuspicious = CheckFileHash(apiKey, hashValues, file);
 
                             Dispatcher.Invoke(() =>
                             {
                                 LogTextBox.AppendText($"{file}: {(isSuspicious ? "Suspicious" : "Clean")}\n");
 
-                                
                                 double progress = (double)totalFilesScanned / totalFiles * 100;
                                 ProgressBar.Value = progress;
                             });
                         }
                     });
                 }
+                
 
                 Dispatcher.Invoke(() =>
                 {
