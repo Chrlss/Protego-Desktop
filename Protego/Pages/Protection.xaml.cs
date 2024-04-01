@@ -10,9 +10,7 @@ using System.Management;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.Text.Json.Nodes;
-using CsvHelper;
-using Microsoft.ServiceHub.Resources;
-using System.Data;
+
 
 namespace Protego.Pages
 {
@@ -38,8 +36,9 @@ namespace Protego.Pages
         {
             InitializeComponent();
 
-            
-            string hashDatasetFilePath = @"C:\Users\princess ann rotia\source\repos\Protego-Desktop\Protego\Dataset\full_sha256.txt";
+
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string hashDatasetFilePath = Path.Combine(baseDirectory, "Dataset", "full_sha256.txt");
             hashList = LoadHashDataset(hashDatasetFilePath);
 
             EnsureQuarantineFolderExists();
@@ -81,6 +80,8 @@ namespace Protego.Pages
             
 
         }
+
+
 
         private List<string> LoadHashDataset(string filePath)
         {
@@ -170,7 +171,7 @@ namespace Protego.Pages
                     {
                         foreach (var file in files)
                         {
-                            // Check the file size
+                            // C    heck the file size
                             FileInfo fileInfo = new FileInfo(file);
                             if (fileInfo.Length > 500 * 1024 * 1024) // 500 MB in bytes
                             {
