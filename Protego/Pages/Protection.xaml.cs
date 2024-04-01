@@ -10,7 +10,7 @@ using System.Management;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.Text.Json.Nodes;
-using CsvHelper;
+
 
 namespace Protego.Pages
 {
@@ -36,8 +36,9 @@ namespace Protego.Pages
         {
             InitializeComponent();
 
-            
-            string hashDatasetFilePath = @"E:\source\repos\Protego\Dataset\full_sha256.txt";
+
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string hashDatasetFilePath = Path.Combine(baseDirectory, "Dataset", "full_sha256.txt");
             hashList = LoadHashDataset(hashDatasetFilePath);
 
             EnsureQuarantineFolderExists();
@@ -79,6 +80,8 @@ namespace Protego.Pages
             
 
         }
+
+
 
         private List<string> LoadHashDataset(string filePath)
         {
