@@ -171,7 +171,7 @@ namespace Protego.Pages
                     {
                         foreach (var file in files)
                         {
-                            // Check the file size
+                            // C    heck the file size
                             FileInfo fileInfo = new FileInfo(file);
                             if (fileInfo.Length > 500 * 1024 * 1024) // 500 MB in bytes
                             {
