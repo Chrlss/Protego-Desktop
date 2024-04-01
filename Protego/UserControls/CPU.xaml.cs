@@ -21,47 +21,67 @@ namespace Protego.UserControls
     /// </summary>
     public partial class CPU : UserControl
     {
-        public static readonly DependencyProperty IndicatorBrushProperty = DependencyProperty.Register("IndicatorBrush", typeof(Brush), typeof(CPU));
+        public static readonly DependencyProperty IndicatorBrushProperty = DependencyProperty.Register("IndicatorBrush", typeof(Brush), typeof(CPU), new PropertyMetadata(Brushes.Green));
         public Brush IndicatorBrush
         {
             get { return (Brush)this.GetValue(IndicatorBrushProperty); }
-            set {  this.SetValue(IndicatorBrushProperty, value);}
+            set { this.SetValue(IndicatorBrushProperty, value); }
         }
-        public static readonly DependencyProperty BackgroundBrushProperty = DependencyProperty.Register("BackgroundBrush", typeof(Brush), typeof(CPU));
-        public Brush BackgroundBrush   
+
+        public static readonly DependencyProperty BackgroundBrushProperty = DependencyProperty.Register("BackgroundBrush", typeof(Brush), typeof(CPU), new PropertyMetadata(Brushes.LightGray));
+        public Brush BackgroundBrush
         {
             get { return (Brush)this.GetValue(BackgroundBrushProperty); }
             set { this.SetValue(BackgroundBrushProperty, value); }
         }
-        public static readonly DependencyProperty ProgressBorderBrushProperty = DependencyProperty.Register("ProgressBorderBrush", typeof(Brush), typeof(CPU));
+
+        public static readonly DependencyProperty ProgressBorderBrushProperty = DependencyProperty.Register("ProgressBorderBrush", typeof(Brush), typeof(CPU), new PropertyMetadata(Brushes.Gray));
         public Brush ProgressBorderBrush
         {
             get { return (Brush)this.GetValue(ProgressBorderBrushProperty); }
             set { this.SetValue(ProgressBorderBrushProperty, value); }
         }
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(int), typeof(CPU));
+
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(int), typeof(CPU), new PropertyMetadata(0));
         public int Value
         {
             get { return (int)this.GetValue(ValueProperty); }
             set { this.SetValue(ValueProperty, value); }
         }
+
         public CPU()
         {
             InitializeComponent();
         }
-
     }
+
     [ValueConversion(typeof(int), typeof(double))]
-    public class ValueToAngle : IValueConverter 
-   {
+    public class ValueToAngle : IValueConverter
+    {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (double)(((int)value * 0.01) * 360);
+            if (value is int intValue)
+            {
+                return (double)(intValue * 0.01) * 360;
+            }
+            else
+            {
+                // Handle invalid input gracefully
+                return 0.0;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (int)((double)value / 360) * 100;
+            if (value is double doubleValue)
+            {
+                return (int)(doubleValue / 360 * 100);
+            }
+            else
+            {
+                // Handle invalid input gracefully
+                return 0;
+            }
         }
     }
 }

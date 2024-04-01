@@ -36,10 +36,14 @@ namespace Protego.Pages
         {
             InitializeComponent();
 
+            InitializeProtectionAsync();
+        }
 
+        private async void InitializeProtectionAsync()
+        {
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string hashDatasetFilePath = Path.Combine(baseDirectory, "Dataset", "full_sha256.txt");
-            hashList = LoadHashDataset(hashDatasetFilePath);
+            hashList = await Task.Run(() => LoadHashDataset(hashDatasetFilePath));
 
             EnsureQuarantineFolderExists();
             LogQuarantinedFiles();
@@ -50,7 +54,7 @@ namespace Protego.Pages
             LogTextBox = FindName("LogTextBox") as TextBox;
             ClearLogButton = FindName("ClearLogButton") as Button;
 
-            ClearLogButton.IsEnabled = false; 
+            ClearLogButton.IsEnabled = false;
 
             LogConnectedRemovableDrives();
 
@@ -66,20 +70,17 @@ namespace Protego.Pages
                     if (eventType == "2")
                     {
                         LogTextBox.AppendText($"Drive inserted: {driveName}\n");
-                        Button_Click(this, new RoutedEventArgs()); 
+                        Button_Click(this, new RoutedEventArgs());
                     }
                     else if (eventType == "3")
                     {
                         LogTextBox.AppendText($"Drive removed: {driveName}\n");
-                        
                     }
                 });
             };
             watcher.Start();
-
-            
-
         }
+
 
 
 
@@ -150,10 +151,8 @@ namespace Protego.Pages
         {
             try
             {
-                
                 string apiKey = "00fc286349bdbca1e47b6e78a07cc4791195a230d4f64a44421c6726a5126354";
 
-                
                 var drives = DriveInfo.GetDrives().Where(drive => drive.DriveType == DriveType.Removable);
 
                 StatusTextBox.Text = "Scanning flash drive...";
@@ -167,19 +166,15 @@ namespace Protego.Pages
                     string driveLetter = drive.Name;
                     var files = Directory.EnumerateFiles(driveLetter, "*.*", SearchOption.AllDirectories);
 
-                    await Task.Run(() =>
+                    foreach (var file in files)
                     {
-                        foreach (var file in files)
+                        await Task.Run(() =>
                         {
-                            // C    heck the file size
+                            // Check the file size
                             FileInfo fileInfo = new FileInfo(file);
                             if (fileInfo.Length > 500 * 1024 * 1024) // 500 MB in bytes
                             {
-                                Dispatcher.Invoke(() =>
-                                {
-                                    LogTextBox.AppendText($" ");
-                                });
-                                continue; // Skip processing this file
+                                return; // Skip processing this file
                             }
 
                             totalFilesScanned++;
@@ -194,32 +189,21 @@ namespace Protego.Pages
                                 double progress = (double)totalFilesScanned / totalFiles * 100;
                                 ProgressBar.Value = progress;
                             });
-                        }
-                    });
+                        });
+                    }
                 }
-                
 
-                Dispatcher.Invoke(() =>
-                {
-                    ProgressBar.Visibility = Visibility.Collapsed;
-                    StatusTextBox.Text = $"Scan complete. Scanned {totalFilesScanned} files.";
+                ProgressBar.Visibility = Visibility.Collapsed;
+                StatusTextBox.Text = $"Scan complete. Scanned {totalFilesScanned} files.";
 
-                    
-                    ClearLogButton.IsEnabled = LogTextBox.Text.Length > 0;
-                });
+                ClearLogButton.IsEnabled = LogTextBox.Text.Length > 0;
             }
             catch (Exception ex)
             {
-                Dispatcher.Invoke(() =>
-                {
-                    StatusTextBox.Text = $"Error: {ex.Message}";
-                    MessageBox.Show($"Error occurred during scan: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                });
+                StatusTextBox.Text = $"Error: {ex.Message}";
+                MessageBox.Show($"Error occurred during scan: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
-
 
         private void ClearLogButton_Click(object sender, RoutedEventArgs e)
         {
@@ -374,55 +358,39 @@ namespace Protego.Pages
 
         private void QuarantineFile(string filePath)
         {
-            string fileName = Path.GetFileName(filePath); 
+            string fileName = Path.GetFileName(filePath);
 
-            if (processedFiles.Contains(fileName)) 
+            if (processedFiles.Contains(fileName))
             {
-                return; 
+                return;
             }
 
-            processedFiles.Add(fileName); 
+            processedFiles.Add(fileName);
 
             string quarantineFilePath = Path.Combine(quarantineFolder, fileName);
 
             try
             {
-                if (!Directory.Exists(quarantineFolder))
-                {
-                    Directory.CreateDirectory(quarantineFolder);
-                }
-
                 if (File.Exists(quarantineFilePath))
                 {
-                    
                     string newFileName = $"{Path.GetFileNameWithoutExtension(fileName)}_{DateTime.Now:yyyyMMddHHmmss}{Path.GetExtension(fileName)}";
                     quarantineFilePath = Path.Combine(quarantineFolder, newFileName);
                 }
 
-                
                 LogTextBox.Dispatcher.Invoke(() =>
                 {
                     LogTextBox.AppendText($"{fileName}: Suspicious\n");
+                    LogTextBox.AppendText($"Quarantined suspicious file: {Path.GetFileName(quarantineFilePath)}\n");
                 });
 
-                
                 File.Move(filePath, quarantineFilePath);
-
-                
                 File.SetAttributes(quarantineFilePath, File.GetAttributes(quarantineFilePath) | FileAttributes.Hidden);
 
-                
                 var fileInfo = new FileInfo(quarantineFilePath);
                 var fileSecurity = fileInfo.GetAccessControl();
                 fileSecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
                 fileInfo.SetAccessControl(fileSecurity);
 
-                LogTextBox.Dispatcher.Invoke(() =>
-                {
-                    LogTextBox.AppendText($"Quarantined suspicious file: {Path.GetFileName(quarantineFilePath)}\n");
-                });
-
-                
                 QuarantineTextBox.Dispatcher.Invoke(() =>
                 {
                     QuarantineTextBox.AppendText($"Quarantined: {Path.GetFileName(quarantineFilePath)}\n");
@@ -436,6 +404,7 @@ namespace Protego.Pages
                 });
             }
         }
+
 
 
 
