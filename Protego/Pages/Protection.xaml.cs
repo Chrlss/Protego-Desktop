@@ -33,11 +33,15 @@ namespace Protego.Pages
 
         private bool isFlashDriveDetected = false;
 
+        private DispatcherTimer timer;
 
         public Protection()
         {
             InitializeComponent();
 
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(2); // 2 second delay
+            timer.Tick += Timer_Tick;
 
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string hashDatasetFilePath = Path.Combine(baseDirectory, "Dataset", "full_sha256.txt");
@@ -62,6 +66,8 @@ namespace Protego.Pages
             QuarantineTextBox.Visibility = Visibility.Hidden;
             CleanQButton.Visibility = Visibility.Hidden;
             KeepButton.Visibility = Visibility.Hidden;
+            InsertDriveText.Visibility = Visibility.Visible;
+            ProgressBarr.Visibility = Visibility.Hidden;
 
             StartMonitoringForFlashDrive();
 
@@ -94,6 +100,29 @@ namespace Protego.Pages
 
         }
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            timer.Stop();
+            if (isFlashDriveDetected)
+            {
+                ShowUI();
+            }
+            else
+            {
+                HideUI();
+            }
+        }
+        private void StartFlashDriveDetectedTimer()
+        {
+            timer.Start();
+        }
+
+        private void StopFlashDriveDetectedTimer()
+        {
+            timer.Stop();
+        }
+
+
         private void StartMonitoringForFlashDrive()
         {
             watcher = new ManagementEventWatcher();
@@ -109,18 +138,21 @@ namespace Protego.Pages
                     {
                         LogTextBox.AppendText($"Drive inserted: {driveName}\n");
                         isFlashDriveDetected = true;
-                        ShowUI();
+                        ShowUI(); // Show the UI elements when flash drive is inserted
+                        StartFlashDriveDetectedTimer(); // Start the timer when flash drive is inserted
                     }
                     else if (eventType == "3")
                     {
                         LogTextBox.AppendText($"Drive removed: {driveName}\n");
                         isFlashDriveDetected = false;
-                        HideUI();
+                        HideUI(); // Hide the UI elements when flash drive is removed
+                        StopFlashDriveDetectedTimer(); // Stop the timer when flash drive is removed
                     }
                 });
             };
             watcher.Start();
         }
+
 
         private void ShowUI()
         {
@@ -132,10 +164,16 @@ namespace Protego.Pages
             QuarantineTextBox.Visibility = Visibility.Visible;
             CleanQButton.Visibility = Visibility.Visible;
             KeepButton.Visibility = Visibility.Visible;
+
+            // Hide the "Insert a flash drive" text
+            InsertDriveText.Visibility = Visibility.Collapsed;
+
+            
         }
 
         private void HideUI()
         {
+
             ScanButton.Visibility = Visibility.Hidden;
             ProgressBar.Visibility = Visibility.Hidden;
             StatusTextBox.Visibility = Visibility.Hidden;
@@ -144,6 +182,11 @@ namespace Protego.Pages
             QuarantineTextBox.Visibility = Visibility.Hidden;
             CleanQButton.Visibility = Visibility.Hidden;
             KeepButton.Visibility = Visibility.Hidden;
+
+            // Show the "Insert a flash drive" text
+            InsertDriveText.Visibility = Visibility.Visible;
+
+            
         }
 
         private List<string> LoadHashDataset(string filePath)
@@ -213,10 +256,8 @@ namespace Protego.Pages
         {
             try
             {
-                
                 string apiKey = "00fc286349bdbca1e47b6e78a07cc4791195a230d4f64a44421c6726a5126354";
 
-                
                 var drives = DriveInfo.GetDrives().Where(drive => drive.DriveType == DriveType.Removable);
 
                 StatusTextBox.Text = "Scanning flash drive...";
@@ -227,6 +268,14 @@ namespace Protego.Pages
 
                 foreach (var drive in drives)
                 {
+                    // Check if the flash drive is still connected
+                    if (!DriveInfo.GetDrives().Any(d => d.Name == drive.Name))
+                    {
+                        StatusTextBox.Text = "Flash drive removed during scanning.";
+                        ProgressBar.Visibility = Visibility.Collapsed;
+                        return;
+                    }
+
                     string driveLetter = drive.Name;
                     var files = Directory.EnumerateFiles(driveLetter, "*.*", SearchOption.AllDirectories);
 
@@ -234,7 +283,15 @@ namespace Protego.Pages
                     {
                         foreach (var file in files)
                         {
-                            // C    heck the file size
+                            // Check if the flash drive is still connected
+                            if (!DriveInfo.GetDrives().Any(d => d.Name == drive.Name))
+                            {
+                                StatusTextBox.Text = "Flash drive removed during scanning.";
+                                ProgressBar.Visibility = Visibility.Collapsed;
+                                return;
+                            }
+
+                            // Continue processing the file
                             FileInfo fileInfo = new FileInfo(file);
                             if (fileInfo.Length > 500 * 1024 * 1024) // 500 MB in bytes
                             {
@@ -260,14 +317,12 @@ namespace Protego.Pages
                         }
                     });
                 }
-                
 
                 Dispatcher.Invoke(() =>
                 {
                     ProgressBar.Visibility = Visibility.Collapsed;
                     StatusTextBox.Text = $"Scan complete. Scanned {totalFilesScanned} files.";
 
-                    
                     ClearLogButton.IsEnabled = LogTextBox.Text.Length > 0;
                 });
             }
@@ -280,6 +335,7 @@ namespace Protego.Pages
                 });
             }
         }
+
 
 
 
