@@ -31,6 +31,8 @@ namespace Protego.Pages
 
         private List<string> hashList = new List<string>();
 
+        private bool isFlashDriveDetected = false;
+
 
         public Protection()
         {
@@ -50,7 +52,18 @@ namespace Protego.Pages
             LogTextBox = FindName("LogTextBox") as TextBox;
             ClearLogButton = FindName("ClearLogButton") as Button;
 
-            ClearLogButton.IsEnabled = false; 
+            ClearLogButton.IsEnabled = false;
+
+            ScanButton.Visibility = Visibility.Hidden;
+            ProgressBar.Visibility = Visibility.Hidden;
+            StatusTextBox.Visibility = Visibility.Hidden;
+            LogTextBox.Visibility = Visibility.Hidden;
+            ClearLogButton.Visibility = Visibility.Hidden;
+            QuarantineTextBox.Visibility = Visibility.Hidden;
+            CleanQButton.Visibility = Visibility.Hidden;
+            KeepButton.Visibility = Visibility.Hidden;
+
+            StartMonitoringForFlashDrive();
 
             LogConnectedRemovableDrives();
 
@@ -81,7 +94,57 @@ namespace Protego.Pages
 
         }
 
+        private void StartMonitoringForFlashDrive()
+        {
+            watcher = new ManagementEventWatcher();
+            watcher.Query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 OR EventType = 3");
+            watcher.EventArrived += (sender, e) =>
+            {
+                string driveName = e.NewEvent.GetPropertyValue("DriveName").ToString();
+                string eventType = e.NewEvent.GetPropertyValue("EventType").ToString();
 
+                Dispatcher.Invoke(() =>
+                {
+                    if (eventType == "2")
+                    {
+                        LogTextBox.AppendText($"Drive inserted: {driveName}\n");
+                        isFlashDriveDetected = true;
+                        ShowUI();
+                    }
+                    else if (eventType == "3")
+                    {
+                        LogTextBox.AppendText($"Drive removed: {driveName}\n");
+                        isFlashDriveDetected = false;
+                        HideUI();
+                    }
+                });
+            };
+            watcher.Start();
+        }
+
+        private void ShowUI()
+        {
+            ScanButton.Visibility = Visibility.Hidden;
+            ProgressBar.Visibility = Visibility.Visible;
+            StatusTextBox.Visibility = Visibility.Visible;
+            LogTextBox.Visibility = Visibility.Visible;
+            ClearLogButton.Visibility = Visibility.Visible;
+            QuarantineTextBox.Visibility = Visibility.Visible;
+            CleanQButton.Visibility = Visibility.Visible;
+            KeepButton.Visibility = Visibility.Visible;
+        }
+
+        private void HideUI()
+        {
+            ScanButton.Visibility = Visibility.Hidden;
+            ProgressBar.Visibility = Visibility.Hidden;
+            StatusTextBox.Visibility = Visibility.Hidden;
+            LogTextBox.Visibility = Visibility.Hidden;
+            ClearLogButton.Visibility = Visibility.Hidden;
+            QuarantineTextBox.Visibility = Visibility.Hidden;
+            CleanQButton.Visibility = Visibility.Hidden;
+            KeepButton.Visibility = Visibility.Hidden;
+        }
 
         private List<string> LoadHashDataset(string filePath)
         {
