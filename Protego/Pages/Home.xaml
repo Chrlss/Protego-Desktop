@@ -25,6 +25,17 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
+
+
+        <Border CornerRadius="12" Grid.ColumnSpan="2" Margin="0,10,0,13" Height="200" HorizontalAlignment="Center" Width="488" VerticalAlignment="Top">
+            <Border.Background>
+                <ImageBrush Stretch="UniformToFill" ImageSource="\Assets\LogInBg..jpg" Opacity=".4" />
+            </Border.Background>
+
+        </Border>
+
+
+
         <ui:CardAction Grid.Column="0" Grid.Row="1" IsChevronVisible="False" Height="200" Grid.ColumnSpan="2" Margin="5,0,119,0">
             <Grid Height="183" Width="390">
                 <Grid.RowDefinitions>
@@ -49,6 +60,8 @@
                 <TextBlock FontSize="30" Text="Stay Safe" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White"/>
                 <TextBlock FontSize="30" Text="No Room for Scams and Fraud" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="White"/>
             </StackPanel>
+
+
         </ui:CardAction>
         <ui:CardAction Grid.Column="2" Width="235" IsChevronVisible="False" Height="200">
             <StackPanel>

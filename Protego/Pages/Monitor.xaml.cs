@@ -217,7 +217,10 @@ namespace Protego.Pages
             }
         }
 
-        
+        private void CardAction_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
     
 }

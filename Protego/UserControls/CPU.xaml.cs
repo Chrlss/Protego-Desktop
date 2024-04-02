@@ -25,10 +25,10 @@ namespace Protego.UserControls
         public Brush IndicatorBrush
         {
             get { return (Brush)this.GetValue(IndicatorBrushProperty); }
-            set {  this.SetValue(IndicatorBrushProperty, value);}
+            set { this.SetValue(IndicatorBrushProperty, value); }
         }
         public static readonly DependencyProperty BackgroundBrushProperty = DependencyProperty.Register("BackgroundBrush", typeof(Brush), typeof(CPU));
-        public Brush BackgroundBrush   
+        public Brush BackgroundBrush
         {
             get { return (Brush)this.GetValue(BackgroundBrushProperty); }
             set { this.SetValue(BackgroundBrushProperty, value); }
@@ -52,8 +52,8 @@ namespace Protego.UserControls
 
     }
     [ValueConversion(typeof(int), typeof(double))]
-    public class ValueToAngle : IValueConverter 
-   {
+    public class ValueToAngle : IValueConverter
+    {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return (double)(((int)value * 0.01) * 360);

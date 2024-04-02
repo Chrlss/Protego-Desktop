@@ -28,7 +28,7 @@ namespace Protego.UserControls
             Task.Run(() => GetRAMUsage());
         }
 
-       private void GetRAMUsage()
+        private void GetRAMUsage()
         {
             double availableRamMB = ramCounter.NextValue() / 1024.0;
             double totalRamMB = GetTotalRamMB();
