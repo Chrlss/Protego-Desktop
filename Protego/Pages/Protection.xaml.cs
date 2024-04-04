@@ -318,7 +318,7 @@ namespace Protego.Pages
                 }
                 Dispatcher.Invoke(() =>
                 {
-                    StatusTextBox.Text = "Scan complete.";
+                    StatusTextBox.Text = $"Scan complete. Scanned {totalFilesScanned} files.";
                 });
             }
             catch (Exception ex)
