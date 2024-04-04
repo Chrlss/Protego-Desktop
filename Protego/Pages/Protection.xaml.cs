@@ -252,19 +252,24 @@ namespace Protego.Pages
         }
 
 
+        private CancellationTokenSource cancellationTokenSource;
+
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 string apiKey = "00fc286349bdbca1e47b6e78a07cc4791195a230d4f64a44421c6726a5126354";
 
-                var drives = DriveInfo.GetDrives().Where(drive => drive.DriveType == DriveType.Removable);
+                var drives = DriveInfo.GetDrives().Where(drive => drive.DriveType == DriveType.Removable).ToList();
 
                 StatusTextBox.Text = "Scanning flash drive...";
                 ProgressBar.Visibility = Visibility.Visible;
 
                 int totalFilesScanned = 0;
                 int totalFiles = drives.Sum(drive => Directory.GetFiles(drive.Name, "*.*", SearchOption.AllDirectories).Length);
+
+                cancellationTokenSource = new CancellationTokenSource();
+                CancellationToken cancellationToken = cancellationTokenSource.Token;
 
                 foreach (var drive in drives)
                 {
@@ -286,8 +291,7 @@ namespace Protego.Pages
                             // Check if the flash drive is still connected
                             if (!DriveInfo.GetDrives().Any(d => d.Name == drive.Name))
                             {
-                                StatusTextBox.Text = "Flash drive removed during scanning.";
-                                ProgressBar.Visibility = Visibility.Collapsed;
+                                cancellationTokenSource.Cancel(); // Cancel the scanning process
                                 return;
                             }
 
@@ -315,25 +319,24 @@ namespace Protego.Pages
                                 ProgressBar.Value = progress;
                             });
                         }
-                    });
+                    }, cancellationToken);
                 }
-
-                Dispatcher.Invoke(() =>
-                {
-                    ProgressBar.Visibility = Visibility.Collapsed;
-                    StatusTextBox.Text = $"Scan complete. Scanned {totalFilesScanned} files.";
-
-                    ClearLogButton.IsEnabled = LogTextBox.Text.Length > 0;
-                });
             }
             catch (Exception ex)
             {
-                Dispatcher.Invoke(() =>
-                {
-                    StatusTextBox.Text = $"Error: {ex.Message}";
-                    MessageBox.Show($"Error occurred during scan: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                });
+                // Handle any exceptions
+                MessageBox.Show($"Error occurred during scan: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        // Add a method to handle cancellation of the scanning process
+        private void HandleCancellation()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                StatusTextBox.Text = "Flash drive removed during scanning.";
+                ProgressBar.Visibility = Visibility.Collapsed;
+            });
         }
 
 
