@@ -10,7 +10,7 @@ using System.Management;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.Text.Json.Nodes;
-
+using System.Linq;
 
 namespace Protego.Pages
 {
@@ -315,6 +315,10 @@ namespace Protego.Pages
                             });
                         }
                     }, cancellationToken);
+                    Dispatcher.Invoke(() =>
+                    {
+                        ClearLogButton.IsEnabled = true;
+                    });
                 }
                 Dispatcher.Invoke(() =>
                 {
