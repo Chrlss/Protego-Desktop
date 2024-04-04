@@ -55,23 +55,12 @@ namespace Protego.Pages
             StatusTextBox = FindName("StatusTextBox") as TextBox;
             LogTextBox = FindName("LogTextBox") as TextBox;
             ClearLogButton = FindName("ClearLogButton") as Button;
-
             ClearLogButton.IsEnabled = false;
-
-            ScanButton.Visibility = Visibility.Hidden;
-            ProgressBar.Visibility = Visibility.Hidden;
-            StatusTextBox.Visibility = Visibility.Hidden;
-            LogTextBox.Visibility = Visibility.Hidden;
-            ClearLogButton.Visibility = Visibility.Hidden;
-            QuarantineTextBox.Visibility = Visibility.Hidden;
-            CleanQButton.Visibility = Visibility.Hidden;
-            KeepButton.Visibility = Visibility.Hidden;
-            InsertDriveText.Visibility = Visibility.Visible;
-            ProgressBarr.Visibility = Visibility.Hidden;
-
+           
             StartMonitoringForFlashDrive();
-
             LogConnectedRemovableDrives();
+
+
 
             watcher = new ManagementEventWatcher();
             watcher.Query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 OR EventType = 3");
@@ -92,7 +81,9 @@ namespace Protego.Pages
                         LogTextBox.AppendText($"Drive removed: {driveName}\n");
                         
                     }
+                                       
                 });
+
             };
             watcher.Start();
 
@@ -102,15 +93,7 @@ namespace Protego.Pages
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            timer.Stop();
-            if (isFlashDriveDetected)
-            {
-                ShowUI();
-            }
-            else
-            {
-                HideUI();
-            }
+            timer.Stop();            
         }
         private void StartFlashDriveDetectedTimer()
         {
@@ -138,56 +121,22 @@ namespace Protego.Pages
                     {
                         LogTextBox.AppendText($"Drive inserted: {driveName}\n");
                         isFlashDriveDetected = true;
-                        ShowUI(); // Show the UI elements when flash drive is inserted
+                        
                         StartFlashDriveDetectedTimer(); // Start the timer when flash drive is inserted
                     }
                     else if (eventType == "3")
                     {
                         LogTextBox.AppendText($"Drive removed: {driveName}\n");
                         isFlashDriveDetected = false;
-                        HideUI(); // Hide the UI elements when flash drive is removed
+                       
                         StopFlashDriveDetectedTimer(); // Stop the timer when flash drive is removed
                     }
                 });
             };
             watcher.Start();
         }
-
-
-        private void ShowUI()
-        {
-            ScanButton.Visibility = Visibility.Hidden;
-            ProgressBar.Visibility = Visibility.Visible;
-            StatusTextBox.Visibility = Visibility.Visible;
-            LogTextBox.Visibility = Visibility.Visible;
-            ClearLogButton.Visibility = Visibility.Visible;
-            QuarantineTextBox.Visibility = Visibility.Visible;
-            CleanQButton.Visibility = Visibility.Visible;
-            KeepButton.Visibility = Visibility.Visible;
-
-            // Hide the "Insert a flash drive" text
-            InsertDriveText.Visibility = Visibility.Collapsed;
-
-            
-        }
-
-        private void HideUI()
-        {
-
-            ScanButton.Visibility = Visibility.Hidden;
-            ProgressBar.Visibility = Visibility.Hidden;
-            StatusTextBox.Visibility = Visibility.Hidden;
-            LogTextBox.Visibility = Visibility.Hidden;
-            ClearLogButton.Visibility = Visibility.Hidden;
-            QuarantineTextBox.Visibility = Visibility.Hidden;
-            CleanQButton.Visibility = Visibility.Hidden;
-            KeepButton.Visibility = Visibility.Hidden;
-
-            // Show the "Insert a flash drive" text
-            InsertDriveText.Visibility = Visibility.Visible;
-
-            
-        }
+           
+      
 
         private List<string> LoadHashDataset(string filePath)
         {
@@ -314,15 +263,13 @@ namespace Protego.Pages
                                 ProgressBar.Value = progress;
                             });
                         }
-                    }, cancellationToken);
-                    Dispatcher.Invoke(() =>
-                    {
-                        ClearLogButton.IsEnabled = true;
-                    });
+                    }, cancellationToken);                    
                 }
                 Dispatcher.Invoke(() =>
                 {
                     StatusTextBox.Text = $"Scan complete. Scanned {totalFilesScanned} files.";
+                    ClearLogButton.IsEnabled = true;
+                    ProgressBar.Visibility = Visibility.Collapsed;
                 });
             }
             catch (Exception ex)

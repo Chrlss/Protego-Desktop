@@ -1,10 +1,12 @@
-﻿using Protego.UserControls;
+﻿using System;
 using System.Diagnostics;
 using System.Management;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using LibreHardwareMonitor.Hardware;
+using System.Windows.Threading;
+using Protego.UserControls;
 
 namespace Protego.Pages
 {
@@ -13,29 +15,69 @@ namespace Protego.Pages
     /// </summary>
     public partial class Home : Page
     {
-        PerformanceCounter perfRAM = new PerformanceCounter("Memory", "% Committed Bytes In Use");
-        System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
-        
+        private readonly PerformanceCounter perfRAM = new PerformanceCounter("Memory", "% Committed Bytes In Use");
+        private readonly DispatcherTimer timer = new DispatcherTimer();
+
         public Home()
         {
             InitializeComponent();
-            
-            timer.Tick += new EventHandler(Timer_Tick);
-            timer.Interval = new TimeSpan(0, 0, 0, 1);
-            timer.Start();
-
-
-
-            //GetOSInfo();
-            Task.Run(() => ProcessorFamily());
-            
+            InitializeTimer();
+            LoadProcessorFamilyAsync();
         }
 
-        private void Timer_Tick(object? sender, EventArgs e)
+        private void InitializeTimer()
+        {
+            timer.Tick += Timer_Tick;
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Start();
+        }
+
+        private async void LoadProcessorFamilyAsync()
+        {
+            try
+            {
+                string processorFamily = await Task.Run(() => GetProcessorFamily());
+                Application.Current.Dispatcher.Invoke(() => LblProcFamily.Text = processorFamily);
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately, such as logging or displaying an error message.
+                MessageBox.Show($"An error occurred while loading processor family: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private string GetProcessorFamily()
+        {
+            ManagementClass wmi = new ManagementClass("Win32_Processor");
+            var providers = wmi.GetInstances();
+            StringBuilder sbFamily = new StringBuilder();
+
+            foreach (var provider in providers)
+            {
+                int procFamily = Convert.ToInt16(provider["Family"]);
+
+                if (procFamily == 198)
+                {
+                    sbFamily.Append("Intel(R) Core(TM) i7");
+                }
+                else if (procFamily == 107)
+                {
+                    sbFamily.Append("AMD Ryzen 5 5600G");
+                }
+                else if (procFamily == 11)
+                {
+                    sbFamily.Append("Pentium(R) brand");
+                }
+            }
+
+            return sbFamily.ToString();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
         {
             RAM.Value = (int)perfRAM.NextValue();
-            RAMpercent.Text = RAM.Value.ToString() + "%";
-            Task.Run(() => ProcessorFamily());
+            RAMpercent.Text = $"{RAM.Value}%";
+            LoadProcessorFamilyAsync();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -43,38 +85,5 @@ namespace Protego.Pages
             LogInWindow logIn = new LogInWindow();
             logIn.Show();
         }
-
-        private void ProcessorFamily()
-        {
-            System.Management.ManagementClass wmi = new System.Management.ManagementClass("Win32_Processor");
-            var providers = wmi.GetInstances();
-            StringBuilder sbFamily = new StringBuilder();
-
-            foreach (var provider in providers)
-            {
-                int ProcFamily = Convert.ToInt16(provider["Family"]);
-                
-                if (ProcFamily == 198)
-                {
-                    sbFamily.Append("Intel(R) Core(TM) i7");
-                }
-                if (ProcFamily == 107)
-                {
-                    sbFamily.Append("AMD Ryzen 5 5600G");
-                }
-                if (ProcFamily == 11)
-                {
-                    sbFamily.Append("Pentium(R) brand");
-                }
-            }
-
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                LblProcFamily.Text = sbFamily.ToString();
-            });
-
-        }
-
-        
     }
 }
