@@ -213,15 +213,10 @@ namespace Protego.Pages
             foreach (var drive in drives)
             {
                 string driveInfo = $"Drive detected: {drive.Name}\n";
-
-                Dispatcher.Invoke(() =>
-                {
-                    LogTextBox.AppendText($"{driveInfo}\n");
-                });
-
                 
                 Dispatcher.Invoke(() =>
                 {
+                    LogTextBox.AppendText($"{driveInfo}\n");
                     Button_Click(this, new RoutedEventArgs());
                 });
             }
@@ -321,6 +316,10 @@ namespace Protego.Pages
                         }
                     }, cancellationToken);
                 }
+                Dispatcher.Invoke(() =>
+                {
+                    StatusTextBox.Text = "Scan complete.";
+                });
             }
             catch (Exception ex)
             {
@@ -338,10 +337,6 @@ namespace Protego.Pages
                 ProgressBar.Visibility = Visibility.Collapsed;
             });
         }
-
-
-
-
 
         private void ClearLogButton_Click(object sender, RoutedEventArgs e)
         {
