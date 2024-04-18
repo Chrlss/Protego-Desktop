@@ -618,7 +618,4 @@ namespace Protego.Pages
         }
 
        
-    }
-    
-}
 
