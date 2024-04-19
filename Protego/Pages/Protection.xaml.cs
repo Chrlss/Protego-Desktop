@@ -23,11 +23,11 @@ namespace Protego.Pages
 
         private readonly string quarantineFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Quarantine");
 
-        private string quarantineFolderPath = @"C:\Quarantine"; 
+        private string quarantineFolderPath = @"C:\Quarantine";
 
         private ManagementEventWatcher watcher;
 
-        private List<string> processedFiles = new List<string>(); 
+        private List<string> processedFiles = new List<string>();
 
         private List<string> hashList = new List<string>();
 
@@ -56,7 +56,7 @@ namespace Protego.Pages
             LogTextBox = FindName("LogTextBox") as TextBox;
             ClearLogButton = FindName("ClearLogButton") as Button;
             ClearLogButton.IsEnabled = false;
-           
+
             StartMonitoringForFlashDrive();
             LogConnectedRemovableDrives();
 
@@ -74,26 +74,26 @@ namespace Protego.Pages
                     if (eventType == "2")
                     {
                         LogTextBox.AppendText($"Drive inserted: {driveName}\n");
-                        Button_Click(this, new RoutedEventArgs()); 
+                        Button_Click(this, new RoutedEventArgs());
                     }
                     else if (eventType == "3")
                     {
                         LogTextBox.AppendText($"Drive removed: {driveName}\n");
-                        
+
                     }
-                                       
+
                 });
 
             };
             watcher.Start();
 
-            
+
 
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            timer.Stop();            
+            timer.Stop();
         }
         private void StartFlashDriveDetectedTimer()
         {
@@ -121,22 +121,22 @@ namespace Protego.Pages
                     {
                         LogTextBox.AppendText($"Drive inserted: {driveName}\n");
                         isFlashDriveDetected = true;
-                        
+
                         StartFlashDriveDetectedTimer(); // Start the timer when flash drive is inserted
                     }
                     else if (eventType == "3")
                     {
                         LogTextBox.AppendText($"Drive removed: {driveName}\n");
                         isFlashDriveDetected = false;
-                       
+
                         StopFlashDriveDetectedTimer(); // Stop the timer when flash drive is removed
                     }
                 });
             };
             watcher.Start();
         }
-           
-      
+
+
 
         private List<string> LoadHashDataset(string filePath)
         {
@@ -162,7 +162,7 @@ namespace Protego.Pages
             foreach (var drive in drives)
             {
                 string driveInfo = $"Drive detected: {drive.Name}\n";
-                
+
                 Dispatcher.Invoke(() =>
                 {
                     LogTextBox.AppendText($"{driveInfo}\n");
@@ -184,11 +184,11 @@ namespace Protego.Pages
             {
                 Directory.CreateDirectory(quarantineFolderPath);
 
-                
+
                 DirectoryInfo directoryInfo = new DirectoryInfo(quarantineFolderPath);
                 directoryInfo.Attributes |= FileAttributes.Hidden;
 
-                
+
                 DirectorySecurity directorySecurity = directoryInfo.GetAccessControl();
                 directorySecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
                 directoryInfo.SetAccessControl(directorySecurity);
@@ -197,9 +197,15 @@ namespace Protego.Pages
 
 
         private CancellationTokenSource cancellationTokenSource;
+        private bool isScanning = false;
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (isScanning)
+            {
+                return;
+            }
+
             try
             {
                 string apiKey = "00fc286349bdbca1e47b6e78a07cc4791195a230d4f64a44421c6726a5126354";
@@ -214,6 +220,8 @@ namespace Protego.Pages
 
                 cancellationTokenSource = new CancellationTokenSource();
                 CancellationToken cancellationToken = cancellationTokenSource.Token;
+
+                isScanning = true;
 
                 foreach (var drive in drives)
                 {
@@ -263,8 +271,11 @@ namespace Protego.Pages
                                 ProgressBar.Value = progress;
                             });
                         }
-                    }, cancellationToken);                    
+                    }, cancellationToken);
                 }
+
+                isScanning = false;
+
                 Dispatcher.Invoke(() =>
                 {
                     StatusTextBox.Text = $"Scan complete. Scanned {totalFilesScanned} files.";
@@ -277,17 +288,36 @@ namespace Protego.Pages
                 // Handle any exceptions
                 MessageBox.Show($"Error occurred during scan: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            finally
+            {
+                cancellationTokenSource.Dispose();
+            }
         }
 
-        // Add a method to handle cancellation of the scanning process
         private void HandleCancellation()
         {
+            isScanning = false;
             Dispatcher.Invoke(() =>
             {
                 StatusTextBox.Text = "Flash drive removed during scanning.";
                 ProgressBar.Visibility = Visibility.Collapsed;
             });
+            cancellationTokenSource.Dispose ();
         }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            HandleCancellation();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            isScanning = false;
+        }
+
+
+
+        // Add a method to handle cancellation of the scanning process
 
         private void ClearLogButton_Click(object sender, RoutedEventArgs e)
         {
@@ -301,7 +331,7 @@ namespace Protego.Pages
                 {
                     LogTextBox.Clear();
                     StatusTextBox.Text = "Ready to scan.";
-                    ClearLogButton.IsEnabled = false; 
+                    ClearLogButton.IsEnabled = false;
                 }
             });
         }
@@ -355,11 +385,11 @@ namespace Protego.Pages
         {
             try
             {
-                string fileHash = hashValues["SHA-256"]; 
+                string fileHash = hashValues["SHA-256"];
 
                 if (hashList.Contains(fileHash.ToLower()))
                 {
-                    
+
                     QuarantineFile(filePath);
                     return true;
                 }
@@ -367,7 +397,7 @@ namespace Protego.Pages
                 string extension = Path.GetExtension(filePath);
                 if (IsSuspiciousExtension(extension))
                 {
-                    
+
                     QuarantineFile(filePath);
                     return true;
                 }
@@ -442,14 +472,14 @@ namespace Protego.Pages
 
         private void QuarantineFile(string filePath)
         {
-            string fileName = Path.GetFileName(filePath); 
+            string fileName = Path.GetFileName(filePath);
 
-            if (processedFiles.Contains(fileName)) 
+            if (processedFiles.Contains(fileName))
             {
-                return; 
+                return;
             }
 
-            processedFiles.Add(fileName); 
+            processedFiles.Add(fileName);
 
             string quarantineFilePath = Path.Combine(quarantineFolder, fileName);
 
@@ -462,24 +492,24 @@ namespace Protego.Pages
 
                 if (File.Exists(quarantineFilePath))
                 {
-                    
+
                     string newFileName = $"{Path.GetFileNameWithoutExtension(fileName)}_{DateTime.Now:yyyyMMddHHmmss}{Path.GetExtension(fileName)}";
                     quarantineFilePath = Path.Combine(quarantineFolder, newFileName);
                 }
 
-                
+
                 LogTextBox.Dispatcher.Invoke(() =>
                 {
                     LogTextBox.AppendText($"{fileName}: Suspicious\n");
                 });
 
-                
+
                 File.Move(filePath, quarantineFilePath);
 
-                
+
                 File.SetAttributes(quarantineFilePath, File.GetAttributes(quarantineFilePath) | FileAttributes.Hidden);
 
-                
+
                 var fileInfo = new FileInfo(quarantineFilePath);
                 var fileSecurity = fileInfo.GetAccessControl();
                 fileSecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
@@ -490,7 +520,7 @@ namespace Protego.Pages
                     LogTextBox.AppendText($"Quarantined suspicious file: {Path.GetFileName(quarantineFilePath)}\n");
                 });
 
-                
+
                 QuarantineTextBox.Dispatcher.Invoke(() =>
                 {
                     QuarantineTextBox.AppendText($"Quarantined: {Path.GetFileName(quarantineFilePath)}\n");
@@ -540,11 +570,11 @@ namespace Protego.Pages
             {
                 foreach (string quarantinedFile in quarantinedFiles)
                 {
-                    string fileName = quarantinedFile.Substring("Quarantined: ".Length).Trim(); 
+                    string fileName = quarantinedFile.Substring("Quarantined: ".Length).Trim();
                     string filePath = Path.Combine(quarantineFolder, fileName);
                     DeleteFile(filePath);
                 }
-                QuarantineTextBox.Clear(); 
+                QuarantineTextBox.Clear();
             }
         }
 
@@ -577,45 +607,46 @@ namespace Protego.Pages
             {
                 foreach (string quarantinedFile in quarantinedFiles)
                 {
-                    string filePath = quarantinedFile.Substring("Quarantined: ".Length).Trim(); 
+                    string filePath = quarantinedFile.Substring("Quarantined: ".Length).Trim();
                     KeepFileFor7Days(filePath);
                 }
-                QuarantineTextBox.Clear(); 
+                QuarantineTextBox.Clear();
             }
         }
 
-        private async void KeepFileFor7Days(string filePath)
+        private async Task KeepFileFor7Days(string filePath)
         {
             try
             {
                 string quarantineFilePath = Path.Combine(quarantineFolder, Path.GetFileName(filePath));
-
-                
-                if (!File.Exists(quarantineFilePath))
-                {
-                    File.Move(filePath, quarantineFilePath);
-                }
-
-                
                 DateTime deletionDate = DateTime.Now.AddDays(7);
 
-                
-                string deletionDateFilePath = Path.Combine(quarantineFolder, $"{Path.GetFileNameWithoutExtension(filePath)}.delete");
-                await File.WriteAllTextAsync(deletionDateFilePath, deletionDate.ToString());
-
-                LogTextBox.Dispatcher.Invoke(() =>
+                await Task.Run(() =>
                 {
-                    LogTextBox.AppendText($"File {Path.GetFileName(filePath)} will be deleted on {deletionDate}\n");
+                    File.Move(filePath, quarantineFilePath);
+                    string deletionDateFilePath = Path.Combine(quarantineFolder, $"{Path.GetFileNameWithoutExtension(filePath)}.delete");
+                    File.WriteAllText(deletionDateFilePath, deletionDate.ToString());
                 });
+
+                LogMessage($"File {Path.GetFileName(filePath)} will be deleted on {deletionDate}");
             }
             catch (Exception ex)
             {
-                LogTextBox.Dispatcher.Invoke(() =>
-                {
-                    LogTextBox.AppendText($"Error keeping file {Path.GetFileName(filePath)}: {ex.Message}\n");
-                });
+                LogMessage($"Error keeping file {Path.GetFileName(filePath)}: {ex.Message}");
             }
         }
 
-       
+        private void LogMessage(string message)
+        {
+            // Use Dispatcher to update UI elements
+            LogTextBox.Dispatcher.Invoke(() =>
+            {
+                LogTextBox.AppendText($"{message}\n");
+            });
+        }
+
+    }
+}
+
+
 

@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Management;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
@@ -12,32 +14,38 @@ namespace Protego.UserControls
     public partial class RAMUsage : UserControl
     {
         private PerformanceCounter ramCounter;
+
         public RAMUsage()
         {
             InitializeComponent();
 
             ramCounter = new PerformanceCounter("Memory", "Available MBytes");
-            Task.Run(() => GetRAMUsage());
+
+            // Start the timer to update RAM usage periodically
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Tick += new EventHandler(timer_Tick);
-            timer.Interval = new TimeSpan(0, 0, 1); // 1 second
+            timer.Tick += Timer_Tick;
+            timer.Interval = TimeSpan.FromSeconds(1); // Update every second
             timer.Start();
-        }
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            Task.Run(() => GetRAMUsage());
+
+            // Initial update of RAM usage
+            UpdateRAMUsage();
         }
 
-        private void GetRAMUsage()
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            Task.Run(() => UpdateRAMUsage());
+        }
+
+        private void UpdateRAMUsage()
         {
             double availableRamMB = ramCounter.NextValue() / 1024.0;
             double totalRamMB = GetTotalRamMB();
             double usedRamMB = totalRamMB - availableRamMB;
+
             Dispatcher.Invoke(() =>
             {
                 ramUsageTextBlock.Text = $"{usedRamMB.ToString("0.0", CultureInfo.InvariantCulture)} / {totalRamMB.ToString("0.0", CultureInfo.InvariantCulture)} GB";
             });
-
         }
 
         private double GetTotalRamMB()
@@ -47,11 +55,10 @@ namespace Protego.UserControls
                 foreach (var item in searcher.Get())
                 {
                     var totalPhysicalMemory = Convert.ToDouble(item["TotalPhysicalMemory"]);
-                    return totalPhysicalMemory / 1024.0 / 1024.0 / 1024.0; // Convert bytes to MB
+                    return totalPhysicalMemory / (1024.0 * 1024.0 * 1024.0); // Convert bytes to GB directly
                 }
             }
             return 0;
         }
-
     }
 }
