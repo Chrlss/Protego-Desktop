@@ -22,72 +22,74 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,10,0">
-                <Image Source="\Assets\UserProfile.png" Width="22" Height="22" MouseLeftButtonDown="Image_MouseLeftButtonDown"  />
+            <Border x:Name="StatusbarBorder" Grid.ColumnSpan="2">
 
-                <ui:Button x:Name="btnMinimize" Content="_" Width="20" Height="20" BorderBrush="Transparent" Background="Transparent" Click="btnMinimize_Click" Margin="0,0,0,0">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="DarkGray"/>
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="#1D84B5"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </ui:Button>
-                <ui:Button x:Name="btnMaximize" Content="🗖" Width="20" Height="20" BorderBrush="Transparent" Background="Transparent" Click="btnMaximize_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" Margin="0,0,0,0">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="DarkGray"/>
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="#1D84B5"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </ui:Button>
-                <ui:Button x:Name="btnClose" Content="X" Width="20" Height="20" BorderBrush="Transparent" Background="Transparent" Click="btnClose_Click" Margin="0,0,0,0">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="red"/>
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="border" Property="Background" Value="#1D84B5"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </ui:Button>
-            </StackPanel>
-            
+                <StackPanel x:Name="StatusBar" Height="30" Width="auto" VerticalAlignment="Top" >
+                    <Grid VerticalAlignment="Top" Height="30" MouseLeftButtonDown="StatusBar_MouseLeftButtonDown" Background="Transparent" Width="auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid>
+                            <TextBlock VerticalAlignment="Center" FontSize="12" Foreground="White" Margin="33,0,723,0" ><Run Text="Protego"/></TextBlock>
+                            <Image Source="\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
+                        </Grid>
+
+                        <!-- Minimize Button -->
+                        <Button  Content="_" Foreground="White" Height="22" Width="22" BorderBrush="Transparent" Background="Transparent" Click="MinimizeButton_Click" Margin="745,0,0,0" >
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="DarkGray"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#1D84B5"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+
+                        <!-- Close Button -->
+                        <Button Content="X" Foreground="White" Height="22" Width="22" BorderBrush="Transparent" Background="Transparent" Click="CloseButton_Click" Margin="767,0,0,0" >
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="red"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#1D84B5"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
 
             <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent" >
                 <ui:NavigationView.MenuItems>
                     <ui:NavigationViewItem x:Name="Home" Content="Home" Tag="Home" Icon="{ui:SymbolIcon Home20}" TargetPageType="{x:Type pages:Home}"/>
                     <ui:NavigationViewItem Content="Protect" Tag="Protection" Icon="{ui:SymbolIcon UsbStick20}" TargetPageType="{x:Type pages:Protection}" />
-                    <ui:NavigationViewItem Content="Security" Tag="Security" Icon="{ui:SymbolIcon LockClosed20}" TargetPageType="{x:Type pages:Security}" />
+                    <ui:NavigationViewItem Content="Backup" Tag="Security" Icon="{ui:SymbolIcon CloudArrowUp20}" TargetPageType="{x:Type pages:Security}" />
                     <ui:NavigationViewItem x:Name="Monitor" Content="Monitor" Tag="Monitor" Icon="{ui:SymbolIcon DataHistogram20}" TargetPageType="{x:Type pages:Monitor}" />
                 </ui:NavigationView.MenuItems>
                 <ui:NavigationView.FooterMenuItems>
-                    <ui:NavigationViewItem Content="Help" Tag="Help" Icon="{ui:SymbolIcon QuestionCircle20}" TargetPageType="{x:Type pages:Help}" />
+                    <ui:NavigationViewItem Content="About" Tag="Help" Icon="{ui:SymbolIcon ChatWarning20}" TargetPageType="{x:Type pages:Help}" />
                     <ui:NavigationViewItem Content="Settings" Tag="Settings" Icon="{ui:SymbolIcon Settings20}" TargetPageType="{x:Type pages:Settings}" />
                 </ui:NavigationView.FooterMenuItems>
                 <ui:NavigationView.ContentOverlay>
@@ -96,10 +98,14 @@
                     </Grid>
                 </ui:NavigationView.ContentOverlay>
             </ui:NavigationView>
-            <StackPanel Orientation="Horizontal" MouseLeftButtonDown="StackPanel_MouseDown" MouseMove="StackPanel_MouseMove" MouseLeftButtonUp="StackPanel_MouseUp" Width="800">
-                <Image Source="\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
-                <TextBlock VerticalAlignment="Center" FontSize="12" Grid.Row="0" Foreground="White" Margin="0,0,0,0" ><Run Text="Protego"/></TextBlock>
-            </StackPanel>
+            <!--
+            <Grid MouseLeftButtonDown="StackPanel_MouseDown" MouseMove="StackPanel_MouseMove" MouseLeftButtonUp="StackPanel_MouseUp" Width="800">
+    <Image Source="\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
+    <TextBlock VerticalAlignment="Center" FontSize="12" Grid.Row="0" Foreground="White" Margin="0,0,0,0" ><Run Text="Protego"/></TextBlock>
+</Grid>
+            -->
+
+
         </Grid>
     </Border>
 

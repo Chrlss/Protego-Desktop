@@ -11,11 +11,15 @@ using System.Diagnostics;
 using System.Windows.Threading;
 using System.Text.Json.Nodes;
 using System.Linq;
+using Protego.Properties;
+
 
 namespace Protego.Pages
 {
     public partial class Protection : Page
     {
+
+
         private readonly HttpClient _httpClient = new HttpClient();
         private Button ScanButton;
         private ProgressBar ProgressBar;
@@ -35,9 +39,14 @@ namespace Protego.Pages
 
         private DispatcherTimer timer;
 
+        private int flashDriveScanCount = 0;
+
         public Protection()
         {
             InitializeComponent();
+
+            LoadScanCountFromSettings();
+            UpdateDashboardReport();
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(2); // 2 second delay
@@ -292,7 +301,36 @@ namespace Protego.Pages
             {
                 cancellationTokenSource.Dispose();
             }
+
+            // Increment the scan count
+            flashDriveScanCount++;
+            SaveScanCountToSettings();
+
+            // Update the dashboard report
+            UpdateDashboardReport();
+            SaveScanCountToSettings();
         }
+
+        private void LoadScanCountFromSettings()
+        {
+            flashDriveScanCount = Properties.Settings.Default.FlashDriveScanCount;
+        }
+
+        private void SaveScanCountToSettings()
+        {
+            Properties.Settings.Default.FlashDriveScanCount = flashDriveScanCount;
+            Properties.Settings.Default.Save();
+        }
+
+        private void UpdateDashboardReport()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                FlashDriveScanCountLabel.Content = $"Flash Drive Scans: {flashDriveScanCount}";
+            });
+        }
+
+        
 
         private void HandleCancellation()
         {

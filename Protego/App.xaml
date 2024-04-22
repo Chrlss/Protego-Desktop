@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
+                <ResourceDictionary Source="ResourceDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="CustomFont">
@@ -28,5 +29,7 @@
             </Storyboard>
         </ResourceDictionary>
  
+        
+        
     </Application.Resources>
 </Application>

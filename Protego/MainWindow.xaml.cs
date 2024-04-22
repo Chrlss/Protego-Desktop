@@ -39,52 +39,19 @@ namespace Protego
 
         }
 
-        
-        private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
-            isDragging = true;
-            initialMousePosition = e.GetPosition(this);
+            this.WindowState = WindowState.Minimized;
         }
 
-        private void StackPanel_MouseMove(object sender, MouseEventArgs e)
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (isDragging)
-            {
-                Vector offset = e.GetPosition(this) - initialMousePosition;
-                this.Left += offset.X;
-                this.Top += offset.Y;
-            }
+            this.Close();
+        }
+        private void StatusBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
 
-        private void StackPanel_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            isDragging = false;
-        }
-
-
-        private void btnMinimize_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-
-        private void btnMaximize_Click(object sender, RoutedEventArgs e)
-        {
-           if (WindowState == WindowState.Maximized)
-                WindowState = WindowState.Normal;
-           else WindowState = WindowState.Maximized;
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            LogInWindow logIn = new LogInWindow();
-            logIn.Show();
-        }
-
-        
     }
 }
