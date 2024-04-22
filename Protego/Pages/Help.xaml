@@ -13,15 +13,15 @@
 
 
     <Grid>
-        <TextBlock Foreground="White" FontSize="40" Height="50" Width="170" Margin="10,10,620,390">
+        <TextBlock Foreground="White" FontSize="40" Margin="10,10,243,375">
             About Us
         </TextBlock>
 
-       
 
 
 
-       
+
+
 
     </Grid>
 </Page>

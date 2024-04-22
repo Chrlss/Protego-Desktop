@@ -16,15 +16,6 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <ui:Button Grid.Column="0" Width="200"  Height="55" Margin="16,32,16,0" VerticalAlignment="Top" HorizontalAlignment="Center">
-            <Grid>
-                <TextBlock Text="NAS Backup" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-20,0,0,0"/>
-                <Image Source="\Assets\link.png" Width="30" Height="30" Margin="96,2,13,-2" />
-            </Grid>
-        </ui:Button>
-
-        <ui:Button Margin="0,378,0,0" Grid.Column="2" Width="150"   Height="40" Background="#1D84B5" MouseOverBackground="#1D84B5"  VerticalAlignment="Top" HorizontalAlignment="Center" Content="Logs"/>
-
 
 
 
