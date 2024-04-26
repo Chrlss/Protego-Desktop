@@ -66,8 +66,7 @@
         <ui:CardAction Grid.Column="2" Width="235" IsChevronVisible="False" Height="200">
             <StackPanel>
                 <Image Source="\Assets\usb-64.png" Width="100" Height="100" />
-                <Label Style="{StaticResource FlashDriveScanCountLabelStyle}" />
-
+                <TextBlock Text="Protect yourself from Flashdrive baiting" FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
 
             </StackPanel>
         </ui:CardAction>
@@ -86,7 +85,8 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Backup" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" Margin="0,62,0,62" Grid.RowSpan="2"/>
+                <TextBlock Text="Backup" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
+                
             </Grid>
         </ui:CardAction>
     </Grid>
