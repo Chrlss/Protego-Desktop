@@ -70,24 +70,13 @@
 
             </StackPanel>
         </ui:CardAction>
-        <ui:CardAction Grid.Column="1" Grid.Row="1" IsChevronVisible="False" Height="200" Grid.ColumnSpan="2" Margin="133,0,178,0" Command="{Binding CardActionCommand}">
+        <ui:CardAction Grid.Column="1" Grid.Row="1" IsChevronVisible="False" Height="200" Grid.ColumnSpan="2" Margin="129,0,4,0" Command="{Binding CardActionCommand}">
             <Grid>
                 <userControl:CPU x:Name="RAM" Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Top" IndicatorBrush="#1D84B5" Margin="0,-26,0,0" />
                 <TextBlock x:Name="RAMpercent"  Text="RAM%" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,35,0,0" />
                 <userControl:RAMUsage Margin="25,114,25,-32"/>
             </Grid>
         </ui:CardAction>
-        <ui:CardAction Grid.Column="2" Grid.Row="1" IsChevronVisible="False" Height="200" Margin="74,0,4,0">
 
-            <Grid Height="164">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-
-                <TextBlock Text="Backup" FontSize="25" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
-                
-            </Grid>
-        </ui:CardAction>
     </Grid>
 </Page>

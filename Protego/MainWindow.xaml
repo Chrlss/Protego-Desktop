@@ -90,7 +90,7 @@
                 </ui:NavigationView.MenuItems>
                 <ui:NavigationView.FooterMenuItems>
                     <ui:NavigationViewItem Content="About" Tag="Help" Icon="{ui:SymbolIcon ChatWarning20}" TargetPageType="{x:Type pages:Help}" />
-                    <ui:NavigationViewItem Content="Settings" Tag="Settings" Icon="{ui:SymbolIcon Settings20}" TargetPageType="{x:Type pages:Settings}" />
+                    
                 </ui:NavigationView.FooterMenuItems>
                 <ui:NavigationView.ContentOverlay>
                     <Grid>
