@@ -25,15 +25,15 @@
             <RowDefinition Height="58*"/>
             <RowDefinition Height="225*" />
         </Grid.RowDefinitions>
-        <Border CornerRadius="10" Height="205" Grid.ColumnSpan="2" Grid.RowSpan="2" Opacity=".4" BorderBrush="Transparent" VerticalAlignment="Center" Margin="10,0,5,0">
+        <Border CornerRadius="10" Height="205" Grid.ColumnSpan="2" Grid.RowSpan="2" Opacity=".4" BorderBrush="Transparent" VerticalAlignment="Top" Margin="10,13,5,0">
             <Border.Background>
                 <ImageBrush ImageSource="\Assets\LogInBg.jpg" Stretch="UniformToFill"/>
             </Border.Background>
         </Border>
-        <TextBlock Text="Dashboard" Foreground="White" FontSize="30" Margin="14,7,74,113"/>
-        <TextBlock Text="Stay Sharp" Foreground="White" FontSize="25" Margin="21,62,92,68" />
-        <TextBlock Text="Stay Safe" Foreground="White" FontSize="23" Margin="21,91,121,39" />
-        <TextBlock Text="No Room for Scams and Fraud!" Foreground="White" FontSize="25" Margin="21,120,88,10" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" >
+        <TextBlock Text="Dashboard" Foreground="White" Opacity=".8" FontSize="30" Margin="29,22,59,98"/>
+        <TextBlock Text="Stay Sharp" Foreground="White" Opacity=".8" FontSize="25" Margin="29,65,73,65" />
+        <TextBlock Text="Stay Safe" Foreground="White" FontSize="23" Opacity=".8" Margin="29,93,102,37" />
+        <TextBlock Text="No Room for Scams and Fraud!" Foreground="White" Opacity=".8" FontSize="25" Margin="29,119,69,11" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" >
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -44,13 +44,13 @@
             </TextBlock.RenderTransform>
         </TextBlock>
 
-        <ui:CardAction Grid.Column="2" Grid.RowSpan="2" IsChevronVisible="False" IsEnabled="False" Height="205" Margin="5,0,10,0">
+        <ui:CardAction Grid.Column="2" Grid.RowSpan="2" IsChevronVisible="False" IsEnabled="False" Height="205" Margin="5,13,10,0" VerticalAlignment="Top">
             <TextBlock Text="FD"/>
         </ui:CardAction>
-        <ui:CardAction Grid.Column="0" Grid.Row="2" IsChevronVisible="False" IsEnabled="False" Grid.ColumnSpan="2" Margin="10,0,5,0" Height="175" VerticalAlignment="Top"/>
-        <ui:CardAction Grid.Column="2" Grid.Row="2" IsChevronVisible="False" IsEnabled="False" Margin="5,0,10,0" Height="175" VerticalAlignment="Top"/>
-        <ui:CardAction Grid.Column="2" IsChevronVisible="False" IsEnabled="False" Margin="5,140,10,0" Height="35" VerticalAlignment="Top" Grid.Row="2" BorderBrush="Transparent"/>
-        <ui:CardAction IsChevronVisible="False" IsEnabled="False" Margin="10,140,0,0" Height="35" VerticalAlignment="Top" Grid.Row="2" BorderBrush="Transparent" Grid.ColumnSpan="2"/>
-        <ui:CardAction Grid.Column="2" IsChevronVisible="False" IsEnabled="False" Margin="5,14,10,0" Height="34" Grid.Row="1" BorderBrush="Transparent" VerticalAlignment="Top"/>
+        <ui:CardAction Grid.Column="0" Grid.Row="2" IsChevronVisible="False" IsEnabled="False" Grid.ColumnSpan="2" Margin="10,13,5,0" Height="175" VerticalAlignment="Top"/>
+        <ui:CardAction Grid.Column="2" Grid.Row="2" IsChevronVisible="False" IsEnabled="False" Margin="5,13,10,0" Height="175" VerticalAlignment="Top"/>
+        <ui:CardAction Grid.Column="2" IsChevronVisible="False" IsEnabled="False" Margin="5,153,10,0" Height="35" VerticalAlignment="Top" Grid.Row="2" BorderBrush="Transparent"/>
+        <ui:CardAction IsChevronVisible="False" IsEnabled="False" Margin="10,153,5,0" Height="35" VerticalAlignment="Top" Grid.Row="2" BorderBrush="Transparent" Grid.ColumnSpan="2"/>
+        <ui:CardAction Grid.Column="2" IsChevronVisible="False" IsEnabled="False" Margin="5,20,10,0" Height="34" Grid.Row="1" BorderBrush="Transparent" VerticalAlignment="Top"/>
     </Grid>
 </Page>
