@@ -9,26 +9,38 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Help">
+      Title="Help"  ScrollViewer.CanContentScroll="False">
 
-    <Border>
-        <Border.Background>
-            <ImageBrush ImageSource="\Assets\Protego_logo.png" Stretch="UniformToFill" Opacity=".3"/>
-        </Border.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
 
-            <TextBlock Text="About us" HorizontalAlignment="Left"  Foreground="White" FontSize="40" Margin="261,10,0,388" Grid.Column="1" Width="160"/>
-            <TextBlock Text="Welcome to Protego! We are a team of dedicated students who share a common goal: protecting users from phishing and flash drive baiting attacks. As cyber threats continue to evolve, our mission is to create effective solutions that shield individuals and organizations from potentially harmful attacks that could compromise sensitive information."
-                       TextWrapping="Wrap"
-                       Foreground="white" Grid.Column="1"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center" Height="202" Width="500" FontSize="20"/>
-            
-        </Grid>
-    </Border>
+        <TextBlock Grid.ColumnSpan="2" Text="About us" Foreground="White" FontSize="35" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <ui:CardAction Grid.Column="0" Grid.Row="1" IsEnabled="False" Height="290" Width="700" IsChevronVisible="False">
+            <Grid Height="300">
+                <Image Source="\Assets\Protego_logo.png" Margin="0,-2,0,192" Height="110" Width="110" HorizontalAlignment="Center"/>
+
+                <TextBlock FontSize="14" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Margin="0,111,0,0" Width="650" Height="154">
+                    We are a team of dedicated students who share a common goal: protecting users from phishing and flash drive baiting attacks. As cyber threats continue to evolve, our mission is to create effective solutions that shield individuals and organizations from potentially harmful attacks that could compromise sensitive information. Our Goal is to equip users with the resources and insights they need to guard against phishing and flash drive baiting attacks. We strive to build a secure digital environment where users can work with confidence, assured that they are safeguarded from these common but hazardous threats.
+                </TextBlock>
+            </Grid>
+        </ui:CardAction>
+
+        <TextBlock Grid.Row="2" Text="Visit our socials for more info:" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <Image Source="\Assets\Web.png" Height="50" Width="50" Grid.Row="2" HorizontalAlignment="Center" Margin="0,10,0,10" MouseLeftButtonDown="OnImageClick" Grid.RowSpan="2">
+        </Image>
+
+        <TextBlock Grid.Row="3" Text="Website" Foreground="White" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,39,0,0"/>
+    </Grid>
 </Page>

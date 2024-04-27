@@ -32,7 +32,10 @@ namespace Protego.Pages
             
 
         }
-       
+        private void OnImageClick(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer.exe", "https://saibadev.github.io/Protego-website-deploy/index.html");
+        }
 
     }
     
