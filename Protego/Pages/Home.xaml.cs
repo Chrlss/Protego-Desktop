@@ -28,22 +28,6 @@ namespace Protego.Pages
             LoadProcessorFamilyAsync();
             UpdateScanCountLabel();
 
-            try
-            {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMemory");
-                foreach (ManagementObject obj in searcher.Get())
-                {
-                    string ramName = obj["Name"]?.ToString();
-                    RamNameTextBlock.Text = $"RAM Name: {ramName}";
-                    break; // If you only want to get the name of the first RAM module, you can break the loop
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-
         }
 
         private void InitializeTimer()

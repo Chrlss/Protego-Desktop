@@ -21,9 +21,10 @@ namespace Protego.Pages
             InitializeTimer();
 
             // Start the methods on separate threads
-            Task.Run(() => GetOSInfo());
+            Task.Run(() => GetProcessorFamily());
             Task.Run(() => GetRamInfo());
             Task.Run(() => GetStorage());
+            LoadProcessorFamilyAsync();
         }
 
         private void InitializeTimer()
@@ -36,7 +37,7 @@ namespace Protego.Pages
         private void Timer_Tick(object sender, EventArgs e)
         {
             UpdateRAMInfo();
-            Task.Run(() => GetOSInfo());
+            Task.Run(() => GetProcessorFamily());
         }
 
         private void UpdateRAMInfo()
@@ -45,42 +46,45 @@ namespace Protego.Pages
             RAMpercent.Text = RAM.Value.ToString() + "%";
         }
 
-        private void GetOSInfo()
+        private async void LoadProcessorFamilyAsync()
         {
-            StringBuilder sbFamily = new StringBuilder();
-            StringBuilder sbClock = new StringBuilder();
-
-            using (ManagementClass wmi = new ManagementClass("Win32_Processor"))
+            try
             {
-                var providers = wmi.GetInstances();
-                foreach (var provider in providers)
+                string processorFamily = await Task.Run(() => GetProcessorFamily());
+                Application.Current.Dispatcher.Invoke(() => LblProcFamily.Text = processorFamily);
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately, such as logging or displaying an error message.
+                MessageBox.Show($"An error occurred while loading processor family: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private string GetProcessorFamily()
+        {
+            ManagementClass wmi = new ManagementClass("Win32_Processor");
+            var providers = wmi.GetInstances();
+            StringBuilder sbFamily = new StringBuilder();
+
+            foreach (var provider in providers)
+            {
+                int procFamily = Convert.ToInt16(provider["Family"]);
+
+                if (procFamily == 198)
                 {
-                    int clock = Convert.ToInt32(provider["MaxClockSpeed"]);
-                    int procFamily = Convert.ToInt16(provider["Family"]);
-
-                    sbClock.AppendLine($"{clock} MHz");
-
-                    switch (procFamily)
-                    {
-                        case 107:
-                            sbFamily.Append("AMD Ryzen 5 5600G");
-                            break;
-                        case 11:
-                            sbFamily.Append("Pentium(R) brand");
-                            break;
-                        case 12:
-                            sbFamily.Append("Pentium(R) Pro");
-                            break;
-                            // Add more cases for other processor families
-                    }
+                    sbFamily.Append("Intel(R) Core(TM) i7");
+                }
+                else if (procFamily == 107)
+                {
+                    sbFamily.Append("AMD Ryzen 5 5600G");
+                }
+                else if (procFamily == 11)
+                {
+                    sbFamily.Append("Pentium(R) brand");
                 }
             }
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                LblProcie.Text = sbFamily.ToString();
-                LblClock.Text = sbClock.ToString();
-            });
+            return sbFamily.ToString();
         }
 
         private void GetRamInfo()

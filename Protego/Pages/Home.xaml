@@ -63,8 +63,8 @@
         <TextBlock Grid.Row="2" x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="24,161,242,0" Grid.ColumnSpan="2" Foreground="White"/>
 
         <userControl:CpuSpeedProgressBar Margin="34,37,29,159" Grid.ColumnSpan="2" Grid.Row="2"/>
-        <TextBlock Text="CPU Speed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="34,54,0,0" Grid.Row="2" Foreground="White"/>
-        <userControl:CPUSample Margin="182,54,29,145" Grid.Row="2" Grid.Column="1" />
+        <TextBlock Text="CPU Speed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="34,52,0,0" Grid.Row="2" Foreground="White"/>
+        <userControl:CPUSample Margin="182,52,29,147" Grid.Row="2" Grid.Column="1" />
 
 
         <userControl:SampleTemp Grid.ColumnSpan="2" Margin="35,85,29,112" Grid.Row="2" />
@@ -76,6 +76,6 @@
         <userControl:RAMUsage Margin="5,163,10,31" Grid.Row="2" Grid.Column="2"/>
         <TextBlock x:Name="RAMpercent"  Text="RAM%" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,74,0,0" Grid.Column="2" Grid.Row="2" Foreground="White"/>
 
-        <TextBlock x:Name="RamNameTextBlock" Text="HAHAHA" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Margin="99,159,0,0" Width="340" Grid.ColumnSpan="2" />
+        
     </Grid>
 </Page>
