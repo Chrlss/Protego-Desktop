@@ -5,13 +5,10 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Security.AccessControl;
-using System.Security.Principal;
 using System.Management;
-using System.Diagnostics;
 using System.Windows.Threading;
-using System.Text.Json.Nodes;
-using System.Linq;
-using Protego.Properties;
+
+
 
 
 namespace Protego.Pages

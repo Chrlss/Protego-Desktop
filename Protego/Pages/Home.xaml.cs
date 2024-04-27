@@ -53,40 +53,43 @@ namespace Protego.Pages
         {
             try
             {
-                string processorFamily = await Task.Run(() => GetProcessorFamily());
-                Application.Current.Dispatcher.Invoke(() => LblProcFamily.Text = processorFamily);
+                var processorFamily = await Task.Run(GetProcessorFamily);
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    LblProcFamily.Text = processorFamily;
+                });
             }
             catch (Exception ex)
             {
-                // Handle the exception appropriately, such as logging or displaying an error message.
-                MessageBox.Show($"An error occurred while loading processor family: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //display error information
+                string errorMessage = $"An error occurred while loading processor family: {ex.Message}";
+                MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private string GetProcessorFamily()
         {
+            // Dictionary to map processor family codes to their names
+            var familyMapping = new Dictionary<int, string>
+    {
+        {198, "Intel(R) Core(TM) i7"},
+        {107, "AMD Ryzen 5 5600G"},
+        {11, "Pentium(R) brand"}
+    };
+
             ManagementClass wmi = new ManagementClass("Win32_Processor");
             var providers = wmi.GetInstances();
-            StringBuilder sbFamily = new StringBuilder();
 
             foreach (var provider in providers)
-            {
+            {                
                 int procFamily = Convert.ToInt16(provider["Family"]);
-
-                if (procFamily == 198)
+                // Check if the code exists in the dictionary
+                if (familyMapping.ContainsKey(procFamily))
                 {
-                    sbFamily.Append("Intel(R) Core(TM) i7");
-                }
-                else if (procFamily == 107)
-                {
-                    sbFamily.Append("AMD Ryzen 5 5600G");
-                }
-                else if (procFamily == 11)
-                {
-                    sbFamily.Append("Pentium(R) brand");
+                    return familyMapping[procFamily]; // Return the corresponding family name
                 }
             }
-
-            return sbFamily.ToString();
+            return "Unknown Processor Family";
         }
 
 
