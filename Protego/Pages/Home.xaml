@@ -12,7 +12,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Home"
-      x:Name="HomePage">
+      x:Name="HomePage"
+      ScrollViewer.CanContentScroll="False">
+
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -45,12 +47,35 @@
         </TextBlock>
 
         <ui:CardAction Grid.Column="2" Grid.RowSpan="2" IsChevronVisible="False" IsEnabled="False" Height="205" Margin="5,13,10,0" VerticalAlignment="Top">
-            <TextBlock Text="FD"/>
+
         </ui:CardAction>
         <ui:CardAction Grid.Column="0" Grid.Row="2" IsChevronVisible="False" IsEnabled="False" Grid.ColumnSpan="2" Margin="10,13,5,0" Height="175" VerticalAlignment="Top"/>
         <ui:CardAction Grid.Column="2" Grid.Row="2" IsChevronVisible="False" IsEnabled="False" Margin="5,13,10,0" Height="175" VerticalAlignment="Top"/>
         <ui:CardAction Grid.Column="2" IsChevronVisible="False" IsEnabled="False" Margin="5,153,10,0" Height="35" VerticalAlignment="Top" Grid.Row="2" BorderBrush="Transparent"/>
         <ui:CardAction IsChevronVisible="False" IsEnabled="False" Margin="10,153,5,0" Height="35" VerticalAlignment="Top" Grid.Row="2" BorderBrush="Transparent" Grid.ColumnSpan="2"/>
         <ui:CardAction Grid.Column="2" IsChevronVisible="False" IsEnabled="False" Margin="5,20,10,0" Height="34" Grid.Row="1" BorderBrush="Transparent" VerticalAlignment="Top"/>
+
+        <StackPanel Grid.Column="2" Margin="10,4,10,3" >
+            <TextBlock x:Name="FlashDriveScanCountLabel" Text="0" IsEnabled="True" Height="159" Width="141" Foreground="White" FontSize="130" TextAlignment="Center" />
+        </StackPanel>
+        <TextBlock Text="Total scan" Foreground="White" FontSize="16" Grid.Column="2" Margin="10,26,10,2" Grid.Row="1" TextAlignment="Center"/>
+
+        <TextBlock Grid.Row="2" x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="24,161,242,0" Grid.ColumnSpan="2" Foreground="White"/>
+
+        <userControl:CpuSpeedProgressBar Margin="34,37,29,159" Grid.ColumnSpan="2" Grid.Row="2"/>
+        <TextBlock Text="CPU Speed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="34,54,0,0" Grid.Row="2" Foreground="White"/>
+        <userControl:CPUSample Margin="182,54,29,145" Grid.Row="2" Grid.Column="1" />
+
+
+        <userControl:SampleTemp Grid.ColumnSpan="2" Margin="35,85,29,112" Grid.Row="2" />
+        <userControl:TempText Margin="182,100,24,97" Grid.Row="2" Grid.Column="1" />
+        <TextBlock Text="Temperature" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Margin="35,0,0,0" Grid.Row="2" Foreground="White"/>
+
+
+        <userControl:CPU x:Name="RAM" Height="120" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" IndicatorBrush="#1D84B5" Grid.Column="2" Grid.Row="2" Margin="0,25,0,0" />
+        <userControl:RAMUsage Margin="5,163,10,31" Grid.Row="2" Grid.Column="2"/>
+        <TextBlock x:Name="RAMpercent"  Text="RAM%" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,74,0,0" Grid.Column="2" Grid.Row="2" Foreground="White"/>
+
+        <TextBlock x:Name="RamNameTextBlock" Text="HAHAHA" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Margin="99,159,0,0" Width="340" Grid.ColumnSpan="2" />
     </Grid>
 </Page>
