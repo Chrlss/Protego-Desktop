@@ -44,7 +44,7 @@ namespace Protego.Pages
         {
             InitializeComponent();
 
-            ResetScanCount();
+            //ResetScanCount();
             LoadScanCountFromSettings();
             UpdateDashboardReport();
 
