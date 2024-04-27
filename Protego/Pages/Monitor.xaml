@@ -27,27 +27,30 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ui:CardAction Grid.Column="0" Grid.ColumnSpan="2" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="12,15,80,0" VerticalAlignment="Top">
+        <ui:CardAction Grid.Column="0" Grid.ColumnSpan="3" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="12,15,90,0" VerticalAlignment="Top">
             <Grid Height="210" Width="auto">
-                <userControl:SampleTemp Margin="0,-40,0,40"/>
+                <userControl:SampleTemp Margin="-51,-48,51,28" Loaded="SampleTemp_Loaded"/>
                 <userControl:TempText Margin="110,-28,-110,28" />
-                <userControl:CpuSpeedProgressBar Margin="0,-91,0,91" Height="10" />
-                <TextBlock Text="CPU Speed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="0,22,0,0" />
-                <userControl:CPUSample Margin="105,-78,-105,78" />
-                <TextBlock x:Name="TempCel" Text="Temperature" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Foreground="White" Margin="0,76,0,0"/>
-                <TextBlock x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="0,161,0,0"/>
+                <userControl:CpuSpeedProgressBar Margin="-51,17,51,183" Height="10" />
+                <TextBlock Text="CPU Speed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="0,27,0,0" />
+                <userControl:CPUSample Margin="110,-69,-110,69" />
+                <TextBlock x:Name="TempCel" Text="Temperature" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Foreground="White" Margin="0,77,0,0"/>
+                <TextBlock x:Name="LblProcFamily" Text="Processor" VerticalAlignment="Top" Margin="0,160,0,0" Height="30"/>
             </Grid>
         </ui:CardAction>
-        <ui:CardAction Grid.Column="1" Grid.ColumnSpan="2" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="120,15,0,0" VerticalAlignment="Top"/>
-        <ui:CardAction Grid.Column="3" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="10,15,10,0" VerticalAlignment="Top">
+        <ui:CardAction Grid.Column="2" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="100,15,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <Grid Height="210">
-                <userControl:CPU x:Name="RAM" Height="120" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" IndicatorBrush="#1D84B5"/>
-                <TextBlock x:Name="RAMpercent"  Text="RAM%" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,51,0,0" />
-                <userControl:RAMUsage Margin="25,136,25,10"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="13*"/>
+                    <RowDefinition Height="22*"/>
+                </Grid.RowDefinitions>
+                <userControl:CPU x:Name="RAM" Height="120" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" IndicatorBrush="#1D84B5" Grid.RowSpan="2" Margin="0,24,0,0"/>
+                <TextBlock x:Name="RAMpercent"  Text="RAM%" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,75,0,0" Grid.RowSpan="2" />
+                <userControl:RAMUsage Margin="25,58,25,10" Grid.Row="1"/>
             </Grid>
         </ui:CardAction>
 
-        <ui:CardExpander Padding="20" ContentPadding="0" Grid.ColumnSpan="4" Margin="10,20,11,0" VerticalAlignment="Top" Grid.Row="1">
+        <ui:CardExpander Padding="20" ContentPadding="0" Grid.ColumnSpan="4" Margin="10,4,11,0" VerticalAlignment="Top" Grid.Row="1">
             <ui:CardExpander.Header>
                 <Grid Height="auto" Width="auto">
                     <Grid.RowDefinitions>
@@ -102,7 +105,7 @@
                 </ui:Anchor>
             </StackPanel>
         </ui:CardExpander>
-        <ui:CardExpander Padding="20" ContentPadding="0" Grid.ColumnSpan="4" Margin="12,0,11,0" Grid.Row="2">
+        <ui:CardExpander Padding="20" ContentPadding="0" Grid.ColumnSpan="4" Margin="10,0,12,0" Grid.Row="2">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -131,7 +134,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock
                         x:Name="LblTotalRam"
-                        Grid.Column="0" Grid.ColumnSpan="2" Margin="519,-10,-519,10"/>
+                        Grid.Column="0" Grid.ColumnSpan="2" Margin="591,-10,-591,10"/>
                     <TextBlock
                         Foreground="White"
                         Text="Total RAM" Margin="0,0,591,0" />
@@ -153,13 +156,13 @@
 
                         <TextBlock
                             x:Name="LblRamSpeed"
-                            Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Grid.ColumnSpan="2" Margin="489,2,-489,-1"/>
+                            Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}" Grid.ColumnSpan="2" Margin="564,2,-564,-1"/>
 
                     </Grid>
                 </ui:Anchor>
             </StackPanel>
         </ui:CardExpander>
-        <ui:CardExpander Padding="20" ContentPadding="0" Grid.ColumnSpan="4" Margin="12,0,12,0" Grid.Row="3">
+        <ui:CardExpander Padding="20" ContentPadding="0" Grid.ColumnSpan="4" Margin="10,0,12,0" Grid.Row="3">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -212,5 +215,7 @@
                 </ui:Anchor>
             </StackPanel>
         </ui:CardExpander>
+        <ui:CardAction IsChevronVisible="False" IsEnabled="False" Margin="12,189,90,0" Height="36" VerticalAlignment="Top" BorderBrush="Transparent" Grid.ColumnSpan="3"/>
+        <ui:CardAction IsChevronVisible="False" IsEnabled="False" Margin="100,190,10,0" Height="35" VerticalAlignment="Top" BorderBrush="Transparent" Grid.Column="2" Grid.ColumnSpan="2"/>
     </Grid>
 </Page>
