@@ -12,11 +12,13 @@
 
   <ItemGroup>
     <None Remove="Assets\cloud-100.png" />
+    <None Remove="Assets\Ext.png" />
     <None Remove="Assets\flashdrive.png" />
     <None Remove="Assets\GoogleSignIn.png" />
     <None Remove="Assets\link.png" />
     <None Remove="Assets\LogInBg..jpg" />
     <None Remove="Assets\LogInBg.jpg" />
+    <None Remove="Assets\NAS.png" />
     <None Remove="Assets\Protego_logo.png" />
     <None Remove="Assets\sampleniwano.png" />
     <None Remove="Assets\scan-64.png" />
@@ -62,9 +64,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Ext.png" />
     <Resource Include="Assets\GoogleSignIn.png" />
     <Resource Include="Assets\link.png" />
     <Resource Include="Assets\LogInBg..jpg" />
+    <Resource Include="Assets\NAS.png" />
     <Resource Include="Assets\Protego_logo.ico" />
   </ItemGroup>
 

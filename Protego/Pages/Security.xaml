@@ -7,16 +7,50 @@
       xmlns:local="clr-namespace:Protego.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Security">
+      Title="Security" ScrollViewer.CanContentScroll="False" >
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
-            <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.ColumnSpan="2" Text="Other Protego features" Foreground="White" FontSize="35" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <ui:CardAction Grid.Column="0" Grid.Row="1" IsEnabled="False" Height="300" Width="350" IsChevronVisible="False">
+            <Grid Height="300">
+                <Image Source="\Assets\Ext.png" Width="320" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <TextBlock FontWeight="Bold" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" Margin="0,175,0,0">
+                    URL analysis browser extension
+                </TextBlock>
+                <TextBlock FontSize="12" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Margin="0,196,0,0" Width="300">
+                    Protego browser extension utilize Support Vector Machine and Random Forest Algorithm to make prediction whether a URL is potenitally dangerous or not.
+                </TextBlock>
+            </Grid>
+        </ui:CardAction>
+
+        <Button Grid.Row="2" Content="Download" HorizontalAlignment="Center" Click="Button_Click" Margin="0,6,0,0" VerticalAlignment="Top" />
 
 
+
+        <ui:CardAction Grid.Row="1" Grid.Column="1" IsEnabled="False" Height="300" Width="350" IsChevronVisible="False">
+            <Grid Height="300">
+                <Image Source="\Assets\NAS.png" Width="326" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,24,0,0" Height="130"/>
+                <TextBlock FontWeight="Bold" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" Margin="0,166,0,0">
+                    Data backup using NAS
+                </TextBlock>
+                <TextBlock FontSize="12" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Margin="0,204,0,0" Width="300">
+                    Users can back up their files to safeguard them against ransomware attacks. Protego has developed its own NAS for data backup purposes.
+                </TextBlock>
+            </Grid>
+        </ui:CardAction>
+
+        <Button Grid.Row="2" Grid.Column="1" Content="Download" HorizontalAlignment="Center" Click="Button_Click_1" Margin="0,6,0,0" VerticalAlignment="Top"/>
 
 
     </Grid>

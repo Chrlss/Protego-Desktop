@@ -34,7 +34,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid>
-                            <TextBlock VerticalAlignment="Center" FontSize="12" Foreground="White" Margin="33,0,723,0" ><Run Text="Protego"/></TextBlock>
+                            <TextBlock VerticalAlignment="Center" FontSize="11" Foreground="White" Margin="33,0,530,0" ><Run Text="Protego - Flashdrive Baiting Prevention App"/></TextBlock>
                             <Image Source="\Assets\Protego_logo.png" Margin="10,0,0,0" Height="20" Width="20" Grid.Row="0" HorizontalAlignment="Left"/>
                         </Grid>
 
@@ -83,13 +83,24 @@
 
             <ui:NavigationView Grid.Row="1" x:Name="NavMenu" PaneDisplayMode="LeftFluent" >
                 <ui:NavigationView.MenuItems>
-                    <ui:NavigationViewItem x:Name="Home" Content="Home" Tag="Home" Icon="{ui:SymbolIcon Home20}" TargetPageType="{x:Type pages:Home}"/>
-                    <ui:NavigationViewItem Content="Protect" Tag="Protection" Icon="{ui:SymbolIcon UsbStick20}" TargetPageType="{x:Type pages:Protection}" />
-                    <ui:NavigationViewItem Content="Backup" Tag="Security" Icon="{ui:SymbolIcon CloudArrowUp20}" TargetPageType="{x:Type pages:Security}" />
-                    <ui:NavigationViewItem x:Name="Monitor" Content="Monitor" Tag="Monitor" Icon="{ui:SymbolIcon DataHistogram20}" TargetPageType="{x:Type pages:Monitor}" />
+                    <ui:NavigationViewItem x:Name="Home"  Tag="Home" Icon="{ui:SymbolIcon Home20}" TargetPageType="{x:Type pages:Home}">
+                        <TextBlock FontSize="11">Home</TextBlock>
+                    </ui:NavigationViewItem>
+                    <ui:NavigationViewItem  Tag="Protection" Icon="{ui:SymbolIcon UsbStick20}" TargetPageType="{x:Type pages:Protection}">
+                        <TextBlock FontSize="11">Protection</TextBlock>
+                    </ui:NavigationViewItem>
+
+                    <ui:NavigationViewItem x:Name="Monitor"  Tag="Monitor" Icon="{ui:SymbolIcon DataHistogram20}" TargetPageType="{x:Type pages:Monitor}">
+                        <TextBlock FontSize="11">Monitor</TextBlock>
+                    </ui:NavigationViewItem>
                 </ui:NavigationView.MenuItems>
                 <ui:NavigationView.FooterMenuItems>
-                    <ui:NavigationViewItem Content="About" Tag="Help" Icon="{ui:SymbolIcon ChatWarning20}" TargetPageType="{x:Type pages:Help}" />
+                    <ui:NavigationViewItem Tag="Security" Icon="{ui:SymbolIcon AppFolder20}" TargetPageType="{x:Type pages:Security}">
+                        <TextBlock FontSize="11" TextWrapping="Wrap" TextAlignment="Center" Margin="0,-4,0,0">Other Features</TextBlock>
+                    </ui:NavigationViewItem>
+                    <ui:NavigationViewItem Tag="Help" Icon="{ui:SymbolIcon ChatWarning20}" TargetPageType="{x:Type pages:Help}">
+                        <TextBlock FontSize="11">About</TextBlock>
+                    </ui:NavigationViewItem>
                     
                 </ui:NavigationView.FooterMenuItems>
                 <ui:NavigationView.ContentOverlay>

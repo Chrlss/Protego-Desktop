@@ -19,6 +19,8 @@ namespace Protego.Pages
     public partial class Protection : Page
     {
 
+        public static int FlashDriveScanCount { get; set; }
+
 
         private readonly HttpClient _httpClient = new HttpClient();
         private Button ScanButton;
@@ -45,6 +47,7 @@ namespace Protego.Pages
         {
             InitializeComponent();
 
+            ResetScanCount();
             LoadScanCountFromSettings();
             UpdateDashboardReport();
 
@@ -327,10 +330,19 @@ namespace Protego.Pages
             Dispatcher.Invoke(() =>
             {
                 FlashDriveScanCountLabel.Content = $"Flash Drive Scans: {flashDriveScanCount}";
+                FlashDriveScanCount = flashDriveScanCount;
             });
         }
 
-        
+
+        private void ResetScanCount()
+        {
+            Properties.Settings.Default.FlashDriveScanCount = 0;
+            Properties.Settings.Default.Save();
+            UpdateDashboardReport();
+        }
+
+
 
         private void HandleCancellation()
         {
