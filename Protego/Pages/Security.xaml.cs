@@ -24,8 +24,32 @@ namespace Protego.Pages
         {
             InitializeComponent();
         }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string targetUrl = "https://github.com/SaibaDev/Protego-Web-extension";
+            try
+            {
+                System.Diagnostics.Process.Start("explorer.exe", targetUrl);
+            }
+            catch (Exception ex)
+            {
+                // Handle exception, for example, display an error message to the user
+                MessageBox.Show("Failed to open link: " + ex.Message);
+            }
+        }
 
-   
-     
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            string targetUrl = "https://saibadev.github.io/Protego-website-deploy/protegoNAS.html";
+            try
+            {
+                System.Diagnostics.Process.Start("explorer.exe", targetUrl);
+            }
+            catch (Exception ex)
+            {
+                // Handle exception, for example, display an error message to the user
+                MessageBox.Show("Failed to open link: " + ex.Message);
+            }
+        }
     }
 }

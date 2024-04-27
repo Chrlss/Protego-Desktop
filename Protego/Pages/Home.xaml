@@ -51,6 +51,12 @@
                 <TextBlock Text="Temperature" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Margin="1,54,0,0" />
                 <userControl:SampleTemp Margin="-115,41,-95,40" />
                 <userControl:TempText Margin="127,13,-127,79" Grid.RowSpan="2" />
+
+                <Label x:Name="FlashDriveScanCountLabel" Content="Flash Drive Scan Count" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="76,18,0,0" Grid.Row="1"/>
+
+                <TextBlock x:Name="RamNameTextBlock" Text="HAHAHA" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="92,46,0,0" Grid.Row="1" />
+
+
             </Grid>
         </ui:CardAction>
         <ui:CardAction Grid.ColumnSpan="2" Height="200" VerticalContentAlignment="Top" IsChevronVisible="False" Width="480">
