@@ -182,6 +182,9 @@ namespace Protego.Pages
             }
         }
 
-       
+        private void SampleTemp_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
