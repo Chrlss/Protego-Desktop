@@ -13,7 +13,7 @@
 
     <Border>
         <Border.Background>
-            <ImageBrush ImageSource="\Assets\Protego_logo.png" Stretch="Uniform" Opacity=".3"/>
+            <ImageBrush ImageSource="\Assets\Protego_logo.png" Stretch="UniformToFill" Opacity=".3"/>
         </Border.Background>
 
         <Grid>
