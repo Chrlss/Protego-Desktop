@@ -44,9 +44,6 @@
                     <RowDefinition Height="13*"/>
                     <RowDefinition Height="22*"/>
                 </Grid.RowDefinitions>
-                <userControl:CPU x:Name="RAM" Height="120" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" IndicatorBrush="#1D84B5" Grid.RowSpan="2" Margin="0,24,0,0"/>
-                <TextBlock x:Name="RAMpercent"  Text="RAM%" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,75,0,0" Grid.RowSpan="2" />
-                <userControl:RAMUsage Margin="25,58,25,10" Grid.Row="1"/>
             </Grid>
         </ui:CardAction>
 

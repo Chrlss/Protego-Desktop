@@ -13,7 +13,7 @@
 
     <Border>
         <Border.Background>
-            <ImageBrush ImageSource="\Assets\logo,.ico" Stretch="Uniform" Opacity=".3"/>
+            <ImageBrush ImageSource="\Assets\Protego_logo.png" Stretch="Uniform" Opacity=".3"/>
         </Border.Background>
 
         <Grid>
@@ -27,7 +27,8 @@
                        TextWrapping="Wrap"
                        Foreground="white" Grid.Column="1"
                        VerticalAlignment="Center"
-                       HorizontalAlignment="Center" Height="226" Width="744" FontSize="25"/>
+                       HorizontalAlignment="Center" Height="202" Width="500" FontSize="20"/>
+            
         </Grid>
     </Border>
 </Page>
