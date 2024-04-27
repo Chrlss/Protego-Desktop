@@ -19,11 +19,10 @@ namespace Protego.Pages
         {
             InitializeComponent();
             InitializeTimer();
-
-            // Start the methods on separate threads
             Task.Run(() => GetProcessorFamily());
             Task.Run(() => GetRamInfo());
             Task.Run(() => GetStorage());
+            Task.Run(() => GetOSInfo());
             LoadProcessorFamilyAsync();
         }
 
@@ -85,6 +84,44 @@ namespace Protego.Pages
             }
 
             return sbFamily.ToString();
+        }
+
+        private void GetOSInfo()
+        {
+            StringBuilder sbFamily = new StringBuilder();
+            StringBuilder sbClock = new StringBuilder();
+
+            using (ManagementClass wmi = new ManagementClass("Win32_Processor"))
+            {
+                var providers = wmi.GetInstances();
+                foreach (var provider in providers)
+                {
+                    int clock = Convert.ToInt32(provider["MaxClockSpeed"]);
+                    int procFamily = Convert.ToInt16(provider["Family"]);
+
+                    sbClock.AppendLine($"{clock} MHz");
+
+                    switch (procFamily)
+                    {
+                        case 107:
+                            sbFamily.Append("AMD Ryzen 5 5600G");
+                            break;
+                        case 11:
+                            sbFamily.Append("Pentium(R) brand");
+                            break;
+                        case 12:
+                            sbFamily.Append("Pentium(R) Pro");
+                            break;
+                            // Add more cases for other processor families
+                    }
+                }
+            }
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                LblProcie.Text = sbFamily.ToString();
+                LblClock.Text = sbClock.ToString();
+            });
         }
 
         private void GetRamInfo()
