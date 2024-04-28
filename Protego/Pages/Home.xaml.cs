@@ -15,9 +15,6 @@ namespace Protego.Pages
     /// </summary>
     public partial class Home : Page
     {
-
-
-
         private readonly PerformanceCounter perfRAM = new PerformanceCounter("Memory", "% Committed Bytes In Use");
         private readonly DispatcherTimer timer = new DispatcherTimer();
 
@@ -71,11 +68,11 @@ namespace Protego.Pages
         {
             // Dictionary to map processor family codes to their names
             var familyMapping = new Dictionary<int, string>
-    {
-        {198, "Intel(R) Core(TM) i7"},
-        {107, "AMD Ryzen 5 5600G"},
-        {11, "Pentium(R) brand"}
-    };
+            {
+                {198, "Intel(R) Core(TM) i7"},
+                {107, "AMD Ryzen 5 5600G"},
+                {11, "Pentium(R) brand"}
+            };
 
             ManagementClass wmi = new ManagementClass("Win32_Processor");
             var providers = wmi.GetInstances();
