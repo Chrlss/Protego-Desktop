@@ -388,22 +388,19 @@ namespace Protego.Pages
         {
             using (var stream = File.OpenRead(filePath))
             {
-                var md5 = MD5.Create();
-                var sha1 = SHA1.Create();
+                
                 var sha256 = SHA256.Create();
-                var sha512 = SHA512.Create();
+                
 
-                var md5HashBytes = md5.ComputeHash(stream);
-                var sha1HashBytes = sha1.ComputeHash(stream);
+                
                 var sha256HashBytes = sha256.ComputeHash(stream);
-                var sha512HashBytes = sha512.ComputeHash(stream);
+                
 
                 var hashValues = new Dictionary<string, string>
                 {
-                    { "MD5", BitConverter.ToString(md5HashBytes).Replace("-", "").ToLower() },
-                    { "SHA-1", BitConverter.ToString(sha1HashBytes).Replace("-", "").ToLower() },
+                    
                     { "SHA-256", BitConverter.ToString(sha256HashBytes).Replace("-", "").ToLower() },
-                    { "SHA-512", BitConverter.ToString(sha512HashBytes).Replace("-", "").ToLower() }
+                    
                 };
 
                 return hashValues;
