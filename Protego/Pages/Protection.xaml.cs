@@ -220,7 +220,7 @@ namespace Protego.Pages
 
             try
             {
-                string apiKey = "your_api_key_here";
+                string apiKey = "00fc286349bdbca1e47b6e78a07cc4791195a230d4f64a44421c6726a5126354";
 
                 var drives = DriveInfo.GetDrives().Where(drive => drive.DriveType == DriveType.Removable).ToList();
 
