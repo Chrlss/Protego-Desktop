@@ -18,7 +18,7 @@ namespace Protego.Pages
 {
     public partial class Protection : Page
     {
-        private NavigationService _navigationService;
+        
 
         public static int FlashDriveScanCount { get; set; }
 
@@ -28,10 +28,10 @@ namespace Protego.Pages
         private ProgressBar ProgressBar;
         private TextBox StatusTextBlock;
 
-        //private readonly string quarantineFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Quarantine");
-        private string quarantineFolderPath = @"C:\Users\LENOVO\Quarantine";
+        private readonly string quarantineFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Quarantine");
+        private string quarantineFolderPath = @"Quarantine";
 
-        private readonly string quarantineFolder = @"C:\Users\LENOVO\Quarantine";
+        //private readonly string quarantineFolder = @"C:\Quarantine";
 
         private ManagementEventWatcher watcher;
 
