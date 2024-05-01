@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using Protego.Navigation;
-using System.Windows;
+
 
 namespace Protego
 {
@@ -14,6 +14,7 @@ namespace Protego
     {
         private bool isDragging = false;
         private Point initialMousePosition;
+        private bool _isScanInProgress;
         private ManagementEventWatcher _deviceWatcher;
 
 
@@ -23,6 +24,21 @@ namespace Protego
             InitializeComponent();            
             Loaded += (_, _) => NavMenu.Navigate(typeof(Home));           
             InitializeDeviceWatcher();
+        }
+
+        public void SetScanInProgress(bool isInProgress)
+        {
+            _isScanInProgress = isInProgress;
+
+            // Disable navigation if scan is in progress
+            if (isInProgress)
+            {
+                NavMenu.IsEnabled = false; // Assuming NavMenu is a Frame or Navigation control
+            }
+            else
+            {
+                NavMenu.IsEnabled = true; // Re-enable navigation after scan
+            }
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
