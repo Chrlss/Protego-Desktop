@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Security.AccessControl;
 using System.Management;
 using System.Windows.Threading;
-
+using System.Windows.Media.Animation;
 
 
 
@@ -15,6 +15,8 @@ namespace Protego.Pages
 {
     public partial class Protection : Page
     {
+
+        
 
         public static int FlashDriveScanCount { get; set; }
 
@@ -44,7 +46,8 @@ namespace Protego.Pages
         {
             InitializeComponent();
 
-            //ResetScanCount();
+            
+            ResetScanCount();
             LoadScanCountFromSettings();
             UpdateDashboardReport();
 
@@ -217,12 +220,13 @@ namespace Protego.Pages
 
             try
             {
-                string apiKey = "00fc286349bdbca1e47b6e78a07cc4791195a230d4f64a44421c6726a5126354";
+                string apiKey = "your_api_key_here";
 
                 var drives = DriveInfo.GetDrives().Where(drive => drive.DriveType == DriveType.Removable).ToList();
 
                 StatusTextBox.Text = "Scanning flash drive...";
                 ProgressBar.Visibility = Visibility.Visible;
+                ProgressBarrPercent.Visibility = Visibility.Visible;
 
                 int totalFilesScanned = 0;
                 int totalFiles = drives.Sum(drive => Directory.GetFiles(drive.Name, "*.*", SearchOption.AllDirectories).Length);
@@ -234,14 +238,6 @@ namespace Protego.Pages
 
                 foreach (var drive in drives)
                 {
-                    // Check if the flash drive is still connected
-                    if (!DriveInfo.GetDrives().Any(d => d.Name == drive.Name))
-                    {
-                        StatusTextBox.Text = "Flash drive removed during scanning.";
-                        ProgressBar.Visibility = Visibility.Collapsed;
-                        return;
-                    }
-
                     string driveLetter = drive.Name;
                     var files = Directory.EnumerateFiles(driveLetter, "*.*", SearchOption.AllDirectories);
 
@@ -249,21 +245,15 @@ namespace Protego.Pages
                     {
                         foreach (var file in files)
                         {
-                            // Check if the flash drive is still connected
                             if (!DriveInfo.GetDrives().Any(d => d.Name == drive.Name))
                             {
                                 cancellationTokenSource.Cancel(); // Cancel the scanning process
                                 return;
                             }
 
-                            // Continue processing the file
                             FileInfo fileInfo = new FileInfo(file);
                             if (fileInfo.Length > 500 * 1024 * 1024) // 500 MB in bytes
                             {
-                                Dispatcher.Invoke(() =>
-                                {
-                                    LogTextBox.AppendText($" ");
-                                });
                                 continue; // Skip processing this file
                             }
 
@@ -277,7 +267,7 @@ namespace Protego.Pages
                                 LogTextBox.AppendText($"{file}: {(isSuspicious ? "Suspicious" : "Clean")}\n");
 
                                 double progress = (double)totalFilesScanned / totalFiles * 100;
-                                ProgressBar.Value = progress;
+                                AnimateProgressBar(ProgressBar.Value, progress);
                             });
                         }
                     }, cancellationToken);
@@ -290,6 +280,7 @@ namespace Protego.Pages
                     StatusTextBox.Text = $"Scan complete. Scanned {totalFilesScanned} files.";
                     ClearLogButton.IsEnabled = true;
                     ProgressBar.Visibility = Visibility.Collapsed;
+
                 });
             }
             catch (Exception ex)
@@ -300,6 +291,7 @@ namespace Protego.Pages
             finally
             {
                 cancellationTokenSource.Dispose();
+                ProgressBarrPercent.Visibility = Visibility.Collapsed;
             }
 
             // Increment the scan count
@@ -309,6 +301,28 @@ namespace Protego.Pages
             // Update the dashboard report
             UpdateDashboardReport();
             SaveScanCountToSettings();
+        }
+        private void AnimateProgressBar(double fromValue, double toValue)
+        {
+            // Create a DoubleAnimation to animate the value of the progress bar
+            DoubleAnimation animation = new DoubleAnimation();
+            animation.From = fromValue; // Start value
+            animation.To = toValue;     // End value
+            animation.Duration = TimeSpan.FromSeconds(0.5); // Animation duration (adjust as needed)
+
+            // Set the easing function for smoother animation
+            animation.EasingFunction = new CubicEase();
+
+            // Set the target property to animate (ProgressBar.ValueProperty)
+            Storyboard.SetTarget(animation, ProgressBar);
+            Storyboard.SetTargetProperty(animation, new PropertyPath(ProgressBar.ValueProperty));
+
+            // Create a Storyboard and add the animation to it
+            Storyboard storyboard = new Storyboard();
+            storyboard.Children.Add(animation);
+
+            // Begin the animation
+            storyboard.Begin();
         }
 
         private void LoadScanCountFromSettings()
