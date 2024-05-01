@@ -9,8 +9,8 @@ using System.Management;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
 using Protego.Navigation;
-using System.Windows.Controls;
 using System.Security.Principal;
+
 
 
 
@@ -44,6 +44,8 @@ namespace Protego.Pages
         private DispatcherTimer timer;
 
         private int flashDriveScanCount = 0;
+
+       
 
         public Protection()
         {
@@ -227,9 +229,12 @@ namespace Protego.Pages
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             if (isScanning)
-            {
+            {                
                 return;
             }
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.SetScanInProgress(true);
+            isScanning = true;
 
             try
             {
@@ -245,9 +250,9 @@ namespace Protego.Pages
                 int totalFiles = drives.Sum(drive => Directory.GetFiles(drive.Name, "*.*", SearchOption.AllDirectories).Length);
 
                 cancellationTokenSource = new CancellationTokenSource();
-                CancellationToken cancellationToken = cancellationTokenSource.Token;
-
+                CancellationToken cancellationToken = cancellationTokenSource.Token;     
                 isScanning = true;
+                
 
                 foreach (var drive in drives)
                 {
@@ -307,7 +312,9 @@ namespace Protego.Pages
             finally
             {
                 cancellationTokenSource.Dispose();
-                ProgressBarrPercent.Visibility = Visibility.Collapsed;
+                ProgressBarrPercent.Visibility = Visibility.Collapsed;                
+                mainWindow?.SetScanInProgress(false); // Re-enable navigation after scan
+                isScanning = false;
             }
 
             // Increment the scan count
@@ -318,6 +325,10 @@ namespace Protego.Pages
             UpdateDashboardReport();
             SaveScanCountToSettings();
         }
+
+       
+
+
         private void AnimateProgressBar(double fromValue, double toValue)
         {
             // Create a DoubleAnimation to animate the value of the progress bar
