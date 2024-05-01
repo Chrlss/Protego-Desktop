@@ -5,6 +5,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using Protego.Navigation;
+using System.Windows;
 
 namespace Protego
 {
@@ -13,6 +15,8 @@ namespace Protego
         private bool isDragging = false;
         private Point initialMousePosition;
         private ManagementEventWatcher _deviceWatcher;
+
+
 
         public MainWindow()
         {
