@@ -8,6 +8,8 @@ using System.Security.AccessControl;
 using System.Management;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
+using Protego.Navigation;
+using System.Windows.Controls;
 
 
 
@@ -15,8 +17,8 @@ namespace Protego.Pages
 {
     public partial class Protection : Page
     {
+        private NavigationService _navigationService;
 
-        
         public static int FlashDriveScanCount { get; set; }
 
 
@@ -690,6 +692,3 @@ namespace Protego.Pages
       
     }
 }
-
-
-
