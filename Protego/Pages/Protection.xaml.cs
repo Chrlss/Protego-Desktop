@@ -107,6 +107,16 @@ namespace Protego.Pages
         }
         private void StartFlashDriveDetectedTimer()
         {
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(5); // Set the timer interval to 5 seconds
+            timer.Tick += (sender, e) =>
+            {
+                // Start the scan when the timer elapses
+                Button_Click(this, new RoutedEventArgs ());
+
+                // Stop the timer
+                timer.Stop();
+            };
             timer.Start();
         }
 
@@ -558,7 +568,7 @@ namespace Protego.Pages
                     } while (File.Exists(quarantineFilePath));
                 }
 
-                File.Copy(filePath, quarantineFilePath);
+                File.Move(filePath, quarantineFilePath);
 
                 File.SetAttributes(quarantineFilePath, File.GetAttributes(quarantineFilePath) | FileAttributes.Hidden);
 
