@@ -548,7 +548,7 @@ namespace Protego.Pages
                 });
 
 
-                File.Move(filePath, quarantineFilePath);
+                File.Copy(filePath, quarantineFilePath);
 
 
                 File.SetAttributes(quarantineFilePath, File.GetAttributes(quarantineFilePath) | FileAttributes.Hidden);
