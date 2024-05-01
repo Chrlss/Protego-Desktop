@@ -28,9 +28,9 @@
 
         <ui:CardAction Grid.Column="0" Grid.Row="1" IsEnabled="False" Height="290" Width="700" IsChevronVisible="False">
             <Grid Height="300">
-                <Image Source="\Assets\Protego_logo.png" Margin="0,-2,0,192" Height="110" Width="110" HorizontalAlignment="Center"/>
+                <Image Source="\Assets\Protego_logo.png" Margin="451,35,0,65" Height="200" Width="200" HorizontalAlignment="Left"/>
 
-                <TextBlock FontSize="14" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Margin="0,111,0,0" Width="650" Height="154">
+                <TextBlock FontSize="14" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Margin="21,40,0,0" Width="425" Height="190">
                     We are a team of dedicated students who share a common goal: protecting users from phishing and flash drive baiting attacks. As cyber threats continue to evolve, our mission is to create effective solutions that shield individuals and organizations from potentially harmful attacks that could compromise sensitive information. Our Goal is to equip users with the resources and insights they need to guard against phishing and flash drive baiting attacks. We strive to build a secure digital environment where users can work with confidence, assured that they are safeguarded from these common but hazardous threats.
                 </TextBlock>
             </Grid>
