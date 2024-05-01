@@ -9,6 +9,7 @@ using System.Management;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
 using Protego.Navigation;
+using System.Security.Principal;
 
 
 
@@ -27,9 +28,10 @@ namespace Protego.Pages
         private ProgressBar ProgressBar;
         private TextBox StatusTextBlock;
 
-        private readonly string quarantineFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Quarantine");
+        //private readonly string quarantineFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Quarantine");
+        private string quarantineFolderPath = @"C:\Users\LENOVO\Quarantine";
 
-        private string quarantineFolderPath = @"C:\Quarantine";
+        private readonly string quarantineFolder = @"C:\Users\LENOVO\Quarantine";
 
         private ManagementEventWatcher watcher;
 
@@ -50,7 +52,7 @@ namespace Protego.Pages
             InitializeComponent();
 
             
-            ResetScanCount();
+            //ResetScanCount();
             LoadScanCountFromSettings();
             UpdateDashboardReport();
 
@@ -280,10 +282,13 @@ namespace Protego.Pages
 
                             Dispatcher.Invoke(() =>
                             {
-                                LogTextBox.AppendText($"{file}: {(isSuspicious ? "Suspicious" : "Clean")}\n");
+                                if (!isSuspicious)
+                                {
+                                    LogTextBox.AppendText($"{file}: Clean\n");
 
-                                double progress = (double)totalFilesScanned / totalFiles * 100;
-                                AnimateProgressBar(ProgressBar.Value, progress);
+                                    double progress = (double)totalFilesScanned / totalFiles * 100;
+                                    AnimateProgressBar(ProgressBar.Value, progress);
+                                }
                             });
                         }
                     }, cancellationToken);
@@ -585,14 +590,9 @@ namespace Protego.Pages
 
                 File.SetAttributes(quarantineFilePath, File.GetAttributes(quarantineFilePath) | FileAttributes.Hidden);
 
-                var fileInfo = new FileInfo(quarantineFilePath);
-                var fileSecurity = fileInfo.GetAccessControl();
-                fileSecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
-                fileInfo.SetAccessControl(fileSecurity);
-
                 QuarantineTextBox.Dispatcher.Invoke(() =>
                 {
-                    QuarantineTextBox.AppendText($"Quarantined: {Path.GetFileName(quarantineFilePath)}\n");
+                    QuarantineTextBox.AppendText($"Suspicious: {Path.GetFileName(quarantineFilePath)}\n");
                 });
             }
             catch (Exception ex)
@@ -628,21 +628,73 @@ namespace Protego.Pages
 
             if (quarantinedFiles.Length == 0)
             {
-                MessageBox.Show("There are no files to clean.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("There are no files to quarantine.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            if (MessageBox.Show("Are you sure you want to clean all quarantined files?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+
+
+            string restrictedFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Restricted");
+            if (!Directory.Exists(restrictedFolderPath))
             {
-                foreach (string quarantinedFile in quarantinedFiles)
+                Directory.CreateDirectory(restrictedFolderPath);
+
+                // Set permissions for the Restricted folder
+                DirectoryInfo directoryInfo = new DirectoryInfo(restrictedFolderPath);
+                directoryInfo.Attributes |= FileAttributes.Hidden;
+
+                DirectorySecurity directorySecurity = directoryInfo.GetAccessControl();
+                directorySecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                directoryInfo.SetAccessControl(directorySecurity);
+            }
+
+            foreach (string quarantinedFile in quarantinedFiles)
+            {
+                string fileName = quarantinedFile.Substring("Quarantined: ".Length).Trim();
+                string filePath = Path.Combine(quarantineFolder, fileName);
+
+                // Move the file to the Restricted folder
+                string targetFilePath = Path.Combine(restrictedFolderPath, fileName);
+                File.Move(filePath, targetFilePath);
+
+                // Set permissions for the moved file
+                SetFilePermissions(targetFilePath);
+            }
+
+            QuarantineTextBox.Clear();
+        }
+
+        private void SetFilePermissions(string filePath)
+        {
+            try
+            {
+                FileInfo fileInfo = new FileInfo(filePath);
+                string fileName = fileInfo.Name; // Get just the file name without the path
+
+                FileSecurity fileSecurity = fileInfo.GetAccessControl();
+                fileSecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
+                fileInfo.SetAccessControl(fileSecurity);
+
+                LogMessage($"{fileName}: Has been quarantined");
+
+                // Schedule the file for deletion after 7 days
+                string deletionDateFilePath = Path.Combine(quarantineFolder, $"{Path.GetFileNameWithoutExtension(fileName)}.delete");
+                if (!File.Exists(deletionDateFilePath))
                 {
-                    string fileName = quarantinedFile.Substring("Quarantined: ".Length).Trim();
-                    string filePath = Path.Combine(quarantineFolder, fileName);
-                    DeleteFile(filePath);
+                    using (StreamWriter writer = File.CreateText(deletionDateFilePath))
+                    {
+                        writer.WriteLine(DateTime.Now.AddDays(7).ToString("yyyy-MM-dd"));
+                    }
                 }
-                QuarantineTextBox.Clear();
+            }
+            catch (Exception ex)
+            {
+                LogMessage($"Error setting permissions for file {filePath}: {ex.Message}");
             }
         }
+
+
+
 
 
         public void LogQuarantinedFiles()
@@ -669,38 +721,74 @@ namespace Protego.Pages
                 return;
             }
 
+            // Get the removable drive path
+            string[] removableDrives = Environment.GetLogicalDrives()
+                .Where(drive => new DriveInfo(drive).DriveType == DriveType.Removable)
+                .ToArray();
+
+            if (removableDrives.Length == 0)
+            {
+                MessageBox.Show("No removable drive found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            string removableDrivePath = removableDrives[0]; // Assuming you want to use the first removable drive found
+            string targetFolderPath = Path.Combine(removableDrivePath, "WARNING!_Quarantined_Files");
+
             if (MessageBox.Show("Are you sure you want to keep all quarantined files?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 foreach (string quarantinedFile in quarantinedFiles)
                 {
-                    string filePath = quarantinedFile.Substring("Quarantined: ".Length).Trim();
-                    KeepFileFor7Days(filePath);
+                    string fileName = quarantinedFile.Substring("Quarantined: ".Length).Trim();
+                    string filePath = Path.Combine(quarantineFolder, fileName);
+                    MoveFileToFolder(filePath, targetFolderPath);
                 }
                 QuarantineTextBox.Clear();
             }
         }
-
-        private async Task KeepFileFor7Days(string filePath)
+        private void MoveFileToFolder(string sourceFilePath, string targetFolderPath)
         {
             try
             {
-                string quarantineFilePath = Path.Combine(quarantineFolder, Path.GetFileName(filePath));
-                DateTime deletionDate = DateTime.Now.AddDays(7);
-
-                await Task.Run(() =>
+                if (!Directory.Exists(targetFolderPath))
                 {
-                    File.Move(filePath, quarantineFilePath);
-                    string deletionDateFilePath = Path.Combine(quarantineFolder, $"{Path.GetFileNameWithoutExtension(filePath)}.delete");
-                    File.WriteAllText(deletionDateFilePath, deletionDate.ToString());
-                });
+                    Directory.CreateDirectory(targetFolderPath);
+                }
 
-                LogMessage($"File {Path.GetFileName(filePath)} will be deleted on {deletionDate}");
+                string fileName = Path.GetFileName(sourceFilePath);
+                string targetFilePath = Path.Combine(targetFolderPath, fileName);
+
+                // Ensure the file is not hidden and has normal attributes
+                File.SetAttributes(sourceFilePath, FileAttributes.Normal);
+
+                File.Copy(sourceFilePath, targetFilePath, true);
+
+                // Get the current user's identity reference
+                IdentityReference user = new NTAccount(Environment.UserDomainName, Environment.UserName).Translate(typeof(SecurityIdentifier));
+
+                // Modify the permissions of the quarantined file to give back full control permissions
+                FileInfo fileInfo = new FileInfo(targetFilePath);
+                FileSecurity fileSecurity = fileInfo.GetAccessControl();
+                fileSecurity.AddAccessRule(new FileSystemAccessRule(user, FileSystemRights.FullControl, AccessControlType.Allow));
+                fileInfo.SetAccessControl(fileSecurity);
+
+                File.Delete(sourceFilePath);
+
+                LogMessage($"File {fileName} moved to the removable drive at {targetFolderPath}");
+
+                // Optional: Remove the deletion date file if it exists
+                string deletionDateFilePath = Path.Combine(quarantineFolder, $"{Path.GetFileNameWithoutExtension(fileName)}.delete");
+                if (File.Exists(deletionDateFilePath))
+                {
+                    File.Delete(deletionDateFilePath);
+                }
             }
             catch (Exception ex)
             {
-                LogMessage($"Error keeping file {Path.GetFileName(filePath)}: {ex.Message}");
+                LogMessage($"Error moving file {Path.GetFileName(sourceFilePath)} to the removable drive: {ex.Message}");
             }
         }
+
 
         private void LogMessage(string message)
         {
