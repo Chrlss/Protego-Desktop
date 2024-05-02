@@ -29,7 +29,7 @@ namespace Protego.Pages
         private TextBox StatusTextBlock;
 
         private readonly string quarantineFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Quarantine");
-        private string quarantineFolderPath = @"Quarantine";
+        private string quarantineFolderPath = @"C:/Quarantine";
 
         //private readonly string quarantineFolder = @"C:\Quarantine";
 
@@ -798,6 +798,10 @@ namespace Protego.Pages
                 LogTextBox.AppendText($"{message}\n");
             });
         }
-      
+
+        private void QuarantineTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
