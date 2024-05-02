@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Help" ScrollViewer.CanContentScroll="False">
+      Title="Help" ScrollViewer.CanContentScroll="True">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -14,9 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-
-            <!-- Adjust to content size -->
+            <RowDefinition Height="auto"/>         
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -40,27 +38,27 @@
             <StackPanel>
                 <Grid Margin="16">
                     <ui:TextBlock Text="Version " Foreground="White"/>
-                    <ui:TextBlock Text="1.0.0.0" Foreground= "White" Margin="590,0,0,0"/>
+                    <ui:TextBlock Text="1.0.0.0" Foreground= "White" Margin="632,0,-42,0"/>
                 </Grid>
 
                 <Grid Margin="16">
                     <TextBlock Text="Developer" Foreground="White"/>
-                    <TextBlock Text="Team Protego" Foreground="White" Margin="544,0,77,0"/>
+                    <TextBlock Text="Team Protego" Foreground="White" Margin="592,0,-210,0"/>
                 </Grid>
 
                 <Grid Margin="16">
                     <TextBlock Text="Contact us" Foreground="White"/>
-                    <TextBlock Text="Protego.bscs2020@gmail.com" Foreground="White" Margin="443,0,108,0"/>
+                    <TextBlock Text="Protego.bscs2020@gmail.com" Foreground="White" Margin="491,0,-262,0"/>
                 </Grid>
                 
                 <Grid Margin="16">
                     <TextBlock Text="Credits" Foreground="White"/>
-                    <TextBlock Text="Open-Source libraries: WPF UI by Lepo" Foreground="White" Margin="390,0,106,2"/>
+                    <TextBlock Text="Open-Source libraries: WPF UI by Lepo" Foreground="White" Margin="436,0,-308,2"/>
                 </Grid>
 
                 <Grid Margin="16">
                     <TextBlock Text="Website" Foreground="White"/>
-                    <TextBlock Foreground="White" Margin="581,0,109,2">
+                    <TextBlock Foreground="White" Margin="622,0,-77,2">
                         <Hyperlink NavigateUri="https://saibadev.github.io/Protego-website-deploy/index.html">Website</Hyperlink>
                     </TextBlock>
                 </Grid>
@@ -134,17 +132,6 @@
                 <TextBlock Text="This is the content for the new CardExpander."/>
             </StackPanel>
         </ui:CardExpander>
-        <TextBlock Text="Visit our socials for more info:" Foreground="White" VerticalAlignment="Top" Grid.Row="3" Margin="308,152,308,0"/>
-        <Image Source="\Assets\Web.png" Width="50" HorizontalAlignment="Center" Margin="0,172,0,25" MouseLeftButtonDown="OnImageClick" Grid.Row="3" RenderTransformOrigin="0.5,0.5">
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="35.333"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Image.RenderTransform>
-        </Image>
-        <TextBlock Text="Website" Foreground="White" FontSize="10" VerticalAlignment="Top" Grid.Row="3" Margin="383,224,369,0"/>
+        
     </Grid>
 </Page>
