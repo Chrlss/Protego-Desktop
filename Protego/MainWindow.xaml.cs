@@ -42,7 +42,7 @@ namespace Protego
             {
                 NavMenu.IsEnabled = true; // Re-enable navigation after scan
             }
-            ContentFrame.Navigate(typeof(Home));
+            
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
