@@ -41,8 +41,8 @@
                             <Image Source="\Assets\Protego_logo.ico" Width="50" Height="50"/>
                         </InlineUIContainer>
                     </ui:TextBlock>
-                    <ui:TextBlock Text="Protego" FontTypography="Body" FontSize="20" Margin="55,1,524,25"/>
-                    <ui:TextBlock Text="© 2023 UCC - NORTH BSCS | Protego - Flashdrive Baiting Prevention App" Grid.ColumnSpan="2" Margin="57,28,-57,-27" Grid.RowSpan="2" FontSize="10"/>
+                    <ui:TextBlock Text="Protego - Flashdrive Baiting Prevention App" FontTypography="Body" FontSize="20" Margin="55,1,213,25"/>
+                    <ui:TextBlock Text="© 2023 UCC - NORTH BSCS | Protego" Grid.ColumnSpan="2" Margin="57,28,-57,-27" Grid.RowSpan="2" FontSize="10"/>
                 </Grid>
             </ui:CardExpander.Header>
             <StackPanel>
