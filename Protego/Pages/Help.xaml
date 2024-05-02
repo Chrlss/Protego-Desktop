@@ -31,7 +31,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="\Assets\Protego_logo.ico" Width="50" Height="50"/>
-                    <ui:TextBlock Text="Protego - Flashdrive Baiting Prevention App" FontTypography="Body" FontSize="18" Margin="0,0,196,0" Grid.Column="1"/>
+                    <ui:TextBlock Text="Protego - Flashdrive Baiting Prevention App" FontTypography="Body" FontSize="18" Margin="0,1,196,-1" Grid.Column="1"/>
                     <ui:TextBlock Text="© 2024 UCC - NORTH BSCS | Protego" FontSize="10" Grid.Column="1" HorizontalAlignment="Right" Margin="0,28,470,-28"/>
                 </Grid>
             </ui:CardExpander.Header>
