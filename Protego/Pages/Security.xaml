@@ -42,7 +42,7 @@
             <Grid Height="300">
                 <Image Source="\Assets\NAS.png" Width="326" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,24,0,0" Height="130"/>
                 <TextBlock FontWeight="Bold" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" Margin="0,166,0,0">
-                    Data backup using NAS
+                    Data backup using TrueNAS
                 </TextBlock>
                 <TextBlock FontSize="12" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" Margin="0,204,0,0" Width="300">
                     Users can back up their files to safeguard them against ransomware attacks. Protego has developed its own NAS for data backup purposes.
