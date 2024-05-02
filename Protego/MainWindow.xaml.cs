@@ -25,7 +25,7 @@ namespace Protego
             Loaded += (_, _) => NavMenu.Navigate(typeof(Home));           
             InitializeDeviceWatcher();
 
-            ContentFrame.Navigate(typeof(Home));
+            
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
