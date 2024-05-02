@@ -5,8 +5,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Help" ScrollViewer.CanContentScroll="False">
+      d:DesignHeight="800" d:DesignWidth="800"
+      Title="Help" >
 
     <Grid>
         <Grid.RowDefinitions>
@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>         
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -31,7 +31,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image Source="\Assets\Protego_logo.ico" Width="50" Height="50"/>
-                    <ui:TextBlock Text="Protego - Flashdrive Baiting Prevention App" FontTypography="Body" FontSize="20" Margin="0,0,196,0" Grid.Column="1"/>
+                    <ui:TextBlock Text="Protego - Flashdrive Baiting Prevention App" FontTypography="Body" FontSize="18" Margin="0,0,196,0" Grid.Column="1"/>
                     <ui:TextBlock Text="© 2024 UCC - NORTH BSCS | Protego" FontSize="10" Grid.Column="1" HorizontalAlignment="Right" Margin="0,28,470,-28"/>
                 </Grid>
             </ui:CardExpander.Header>
@@ -50,7 +50,7 @@
                     <TextBlock Text="Contact us" Foreground="White"/>
                     <TextBlock Text="Protego.bscs2020@gmail.com" Foreground="White" Margin="443,0,108,0"/>
                 </Grid>
-                
+
                 <Grid Margin="16">
                     <TextBlock Text="Credits" Foreground="White"/>
                     <TextBlock Text="Open-Source libraries: WPF UI by Lepo" Foreground="White" Margin="390,0,106,2"/>
@@ -78,7 +78,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Image Source="\Assets\Protego_logo.ico" Width="50" Height="50" Margin="-2,0,74,0" Visibility="Hidden"/>
-                    <ui:TextBlock Text="Release notes:" FontTypography="Body" FontSize="20" Margin="8,9,1,-9" Grid.ColumnSpan="2" />
+                    <ui:TextBlock Text="Release Notes:" FontTypography="Body" FontSize="18" Margin="8,12,1,-12" Grid.ColumnSpan="2" />
 
                 </Grid>
             </ui:CardExpander.Header>
@@ -91,7 +91,7 @@
                     <TextBlock Text="   -Added keep suspicious file feature." Foreground="White" Height="20" Margin="0,72,0,8"/>
                 </Grid>
 
-                
+
                 <Grid Margin="16">
 
                 </Grid>
@@ -108,10 +108,12 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ui:TextBlock Text="Protego - New CardExpander" FontTypography="Body" FontSize="20" Margin="10,0,0,0"/>
+                    <ui:TextBlock Text="Privacy Policy" FontTypography="Body" FontSize="18" Margin="10,11,0,-11"/>
                 </Grid>
+
+
             </ui:CardExpander.Header>
-            <StackPanel>                
+            <StackPanel>
                 <TextBlock Text="This is the content for the new CardExpander."/>
             </StackPanel>
         </ui:CardExpander>
@@ -126,13 +128,21 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ui:TextBlock Text="Protego - New CardExpander" FontTypography="Body" FontSize="20" Margin="10,0,0,0"/>
+                    <ui:TextBlock Text="Acknowledgement" FontTypography="Body" FontSize="18" Margin="10,11,0,-11"/>
                 </Grid>
             </ui:CardExpander.Header>
-            <StackPanel>                
-                <TextBlock Text="This is the content for the new CardExpander."/>
+            <StackPanel>
+                <Grid Height="200" Margin="16">
+                    <TextBlock TextAlignment="Center" TextWrapping="Wrap" Text="We would like to express our profound appreciation to the hardworking and devoted members of our development team, whose perseverance and dedication have made this project possible." Foreground="White" Margin="0,0,0,153"/>
+
+                    <TextBlock TextAlignment="Center" TextWrapping="Wrap" Text="Additionally, we would like to thank the University of Caloocan City for all with the help and inspiration during the production process. This help has been crucial to this project's success." Foreground="White" Margin="0,47,0,106"/>
+                    <TextBlock TextAlignment="Center" TextWrapping="Wrap" Text="We would like to thank the cybersecurity professionals whose astute comments and recommendations have helped us make this program a more dependable and safe tool." Foreground="White" Margin="0,100,0,53"/>
+                    <TextBlock TextAlignment="Center" TextWrapping="Wrap" Text="Special thanks to our Coordinator Prof. Joemen Barrios for her exceptional guidance and teachings, which have been instrumental in our journey towards creating this project." Foreground="White" Margin="0,153,0,0"/>
+
+                </Grid>
+
             </StackPanel>
         </ui:CardExpander>
-        
+
     </Grid>
 </Page>
