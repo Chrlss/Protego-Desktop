@@ -5,7 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="800"
       Title="Help" ScrollViewer.CanContentScroll="True">
 
     <Grid>
@@ -103,13 +103,24 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ui:TextBlock Text="Privacy Policy" FontTypography="Body" FontSize="16" Margin="10,11,0,-11"/>
+                    <ui:TextBlock Text="Our Team" FontTypography="Body" FontSize="16" Margin="10,11,0,-11"/>
                 </Grid>
 
 
             </ui:CardExpander.Header>
             <StackPanel>
-                <TextBlock Text="This is the content for the new CardExpander."/>
+                <Grid Height="200" Margin="16">
+                    <TextBlock Text="Project Manager: Oscar Chin III" Foreground="White" Height="20" Margin="0,0,0,180"/>
+                    <TextBlock Text="Software Engineer: Syber Blaise Tolledo" Foreground="White" Height="20" Margin="0,22,0,158"/>
+                    <TextBlock Text="Assistant Software Engineer: Maureen Fuentes" Foreground="White" Height="20" Margin="0,44,0,136"/>
+                    <TextBlock Text="Programmers: Charles Sebidos" Foreground="White" Height="20" Margin="0,65,0,115"/>
+                    <TextBlock Text="                        Cassandra Navarra" Foreground="White" Height="20" Margin="0,105,0,75"/>
+                    <TextBlock Text="                        John Paul Resurreccion" Foreground="White" Height="20" Margin="0,125,0,55"/>
+                    
+                    <TextBlock Text="                        Princess Ann Rotia" Foreground="White" Height="20" Margin="0,145,0,35"/>
+                    <TextBlock Text="                        John Carlo Suyo" Foreground="White" Height="20" Margin="0,85,0,95"/>
+
+                </Grid>
             </StackPanel>
         </ui:CardExpander>
 
