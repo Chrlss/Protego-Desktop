@@ -232,9 +232,7 @@ namespace Protego.Pages
             {                
                 return;
             }
-            var mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow?.SetScanInProgress(true);
-            isScanning = true;
+            
 
             try
             {
@@ -313,8 +311,7 @@ namespace Protego.Pages
             {
                 cancellationTokenSource.Dispose();
                 ProgressBarrPercent.Visibility = Visibility.Collapsed;                
-                mainWindow?.SetScanInProgress(false); // Re-enable navigation after scan
-                isScanning = false;
+                
             }
 
             // Increment the scan count
@@ -632,8 +629,6 @@ namespace Protego.Pages
                 return;
             }
 
-
-
             string restrictedFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Restricted");
             if (!Directory.Exists(restrictedFolderPath))
             {
@@ -648,21 +643,49 @@ namespace Protego.Pages
                 directoryInfo.SetAccessControl(directorySecurity);
             }
 
+            List<string> remainingFiles = new List<string>();
+
             foreach (string quarantinedFile in quarantinedFiles)
             {
-                string fileName = quarantinedFile.Substring("Quarantined: ".Length).Trim();
+                string fileName = quarantinedFile.Substring("Suspicious: ".Length).Trim();
                 string filePath = Path.Combine(quarantineFolder, fileName);
 
-                // Move the file to the Restricted folder
-                string targetFilePath = Path.Combine(restrictedFolderPath, fileName);
-                File.Move(filePath, targetFilePath);
+                // Confirm with the user before moving the file
+                MessageBoxResult result = MessageBox.Show($"Do you want to move the file {fileName} to the Restricted folder?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Move the file to the Restricted folder
+                    string targetFilePath = Path.Combine(restrictedFolderPath, fileName);
+                    File.Move(filePath, targetFilePath);
 
-                // Set permissions for the moved file
-                SetFilePermissions(targetFilePath);
+                    // Set permissions for the moved file
+                    SetFilePermissions(targetFilePath);
+
+                    // Schedule the file for deletion after 7 days
+                    string deletionDateFilePath = Path.Combine(restrictedFolderPath, $"{Path.GetFileNameWithoutExtension(fileName)}.delete");
+                    if (!File.Exists(deletionDateFilePath))
+                    {
+                        using (StreamWriter writer = File.CreateText(deletionDateFilePath))
+                        {
+                            writer.WriteLine(DateTime.Now.AddDays(7).ToString("yyyy-MM-dd"));
+                        }
+                    }
+                }
+                else
+                {
+                    remainingFiles.Add(quarantinedFile); // Add the file back to the list if not moved
+                }
             }
 
-            QuarantineTextBox.Clear();
+            // Update the QuarantineTextBox with the remaining files
+            QuarantineTextBox.Text = string.Join(Environment.NewLine, remainingFiles);
+
+            // Clear the text box only after all files have been processed
+            // QuarantineTextBox.Clear();
         }
+
+
+
 
         private void SetFilePermissions(string filePath)
         {
@@ -676,22 +699,13 @@ namespace Protego.Pages
                 fileInfo.SetAccessControl(fileSecurity);
 
                 LogMessage($"{fileName}: Has been quarantined");
-
-                // Schedule the file for deletion after 7 days
-                string deletionDateFilePath = Path.Combine(quarantineFolder, $"{Path.GetFileNameWithoutExtension(fileName)}.delete");
-                if (!File.Exists(deletionDateFilePath))
-                {
-                    using (StreamWriter writer = File.CreateText(deletionDateFilePath))
-                    {
-                        writer.WriteLine(DateTime.Now.AddDays(7).ToString("yyyy-MM-dd"));
-                    }
-                }
             }
             catch (Exception ex)
             {
                 LogMessage($"Error setting permissions for file {filePath}: {ex.Message}");
             }
         }
+
 
 
 
