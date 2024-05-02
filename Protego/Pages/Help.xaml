@@ -13,6 +13,8 @@
             <RowDefinition Height="65"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
 
             <!-- Adjust to content size -->
             <RowDefinition Height="*"/>
@@ -64,21 +66,45 @@
             </ui:CardExpander.Header>
             <StackPanel>
                 <Grid Margin="16">
-                    
+
                 </Grid>
             </StackPanel>
         </ui:CardExpander>
-        <TextBlock Text="Visit our socials for more info:" Foreground="White" VerticalAlignment="Top" Grid.Row="3" Margin="308,152,308,0"/>
-        <Image Source="\Assets\Web.png" Width="50" HorizontalAlignment="Center" Margin="0,172,0,25" MouseLeftButtonDown="OnImageClick" Grid.Row="3" RenderTransformOrigin="0.5,0.5">
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="35.333"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Image.RenderTransform>
-        </Image>
-        <TextBlock Text="Website" Foreground="White" FontSize="10" VerticalAlignment="Top" Grid.Row="3" Margin="383,224,369,0"/>
+
+        <ui:CardExpander Padding="5" ContentPadding="0" Margin="10,10,10,0" Grid.Row="3" VerticalAlignment="Top">
+            <ui:CardExpander.Header>
+                <Grid Height="48">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ui:TextBlock Text="Protego - New CardExpander" FontTypography="Body" FontSize="20" Margin="10,0,0,0"/>
+                </Grid>
+            </ui:CardExpander.Header>
+            <StackPanel>                
+                <TextBlock Text="This is the content for the new CardExpander."/>
+            </StackPanel>
+        </ui:CardExpander>
+
+        <ui:CardExpander Padding="5" ContentPadding="0" Margin="10,10,10,0" Grid.Row="4" VerticalAlignment="Top">
+            <ui:CardExpander.Header>
+                <Grid Height="48">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ui:TextBlock Text="Protego - New CardExpander" FontTypography="Body" FontSize="20" Margin="10,0,0,0"/>
+                </Grid>
+            </ui:CardExpander.Header>
+            <StackPanel>                
+                <TextBlock Text="This is the content for the new CardExpander."/>
+            </StackPanel>
+        </ui:CardExpander>
     </Grid>
 </Page>
