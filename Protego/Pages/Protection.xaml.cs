@@ -643,6 +643,8 @@ namespace Protego.Pages
                 directoryInfo.SetAccessControl(directorySecurity);
             }
 
+            List<string> remainingFiles = new List<string>();
+
             foreach (string quarantinedFile in quarantinedFiles)
             {
                 string fileName = quarantinedFile.Substring("Suspicious: ".Length).Trim();
@@ -669,10 +671,19 @@ namespace Protego.Pages
                         }
                     }
                 }
+                else
+                {
+                    remainingFiles.Add(quarantinedFile); // Add the file back to the list if not moved
+                }
             }
 
-            QuarantineTextBox.Clear();
+            // Update the QuarantineTextBox with the remaining files
+            QuarantineTextBox.Text = string.Join(Environment.NewLine, remainingFiles);
+
+            // Clear the text box only after all files have been processed
+            // QuarantineTextBox.Clear();
         }
+
 
 
 
