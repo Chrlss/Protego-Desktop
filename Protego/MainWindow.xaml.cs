@@ -16,6 +16,7 @@ namespace Protego
         private Point initialMousePosition;
         
         private ManagementEventWatcher _deviceWatcher;
+        private bool _isScanInProgress;
 
 
 
@@ -26,6 +27,22 @@ namespace Protego
             InitializeDeviceWatcher();
 
             
+        }
+
+        public void SetScanInProgress(bool isInProgress)
+        {
+            _isScanInProgress = isInProgress;
+
+            // Disable navigation if scan is in progress
+            if (isInProgress)
+            {
+                NavMenu.IsEnabled = false; // Assuming NavMenu is a Frame or Navigation control
+            }
+            else
+            {
+                NavMenu.IsEnabled = true; // Re-enable navigation after scan
+            }
+            ContentFrame.Navigate(typeof(Home));
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)

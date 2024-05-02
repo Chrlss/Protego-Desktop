@@ -117,7 +117,7 @@ namespace Protego.Pages
                 }
             }
 
-            Application.Current.Dispatcher.Invoke(() =>
+               Application.Current.Dispatcher.Invoke(() =>
             {
                 LblProcie.Text = sbFamily.ToString();
                 LblClock.Text = sbClock.ToString();
