@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Help" ScrollViewer.CanContentScroll="False">
+      Title="Help" ScrollViewer.CanContentScroll="True">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -38,27 +38,27 @@
             <StackPanel>
                 <Grid Margin="16">
                     <ui:TextBlock Text="Version " Foreground="White"/>
-                    <ui:TextBlock Text="1.0.0.0" Foreground= "White" Margin="590,0,0,0"/>
+                    <ui:TextBlock Text="1.0.0.0" Foreground= "White" Margin="636,0,-137,0"/>
                 </Grid>
 
                 <Grid Margin="16">
                     <TextBlock Text="Developer" Foreground="White"/>
-                    <TextBlock Text="Team Protego" Foreground="White" Margin="544,0,-239,0"/>
+                    <TextBlock Text="Team Protego" Foreground="White" Margin="593,0,-288,0"/>
                 </Grid>
 
                 <Grid Margin="16">
                     <TextBlock Text="Contact us" Foreground="White" Margin="0,0,-213,0"/>
-                    <TextBlock Text="Protego.bscs2020@gmail.com" Foreground="White" Margin="443,0,108,0"/>
+                    <TextBlock Text="Protego.bscs2020@gmail.com" Foreground="White" Margin="493,0,-242,0"/>
                 </Grid>
                 
                 <Grid Margin="16">
                     <TextBlock Text="Credits" Foreground="White"/>
-                    <TextBlock Text="Open-Source libraries: WPF UI by Lepo" Foreground="White" Margin="390,0,-202,2"/>
+                    <TextBlock Text="Open-Source libraries: WPF UI by Lepo" Foreground="White" Margin="439,0,-251,2"/>
                 </Grid>
 
                 <Grid Margin="16">
                     <TextBlock Text="Website" Foreground="White"/>
-                    <TextBlock Foreground="White" Margin="581,0,-114,2">
+                    <TextBlock Foreground="White" Margin="627,0,-160,2">
                         <Hyperlink NavigateUri="https://saibadev.github.io/Protego-website-deploy/index.html">Website</Hyperlink>
                     </TextBlock>
                 </Grid>
