@@ -43,22 +43,22 @@
 
                 <Grid Margin="16">
                     <TextBlock Text="Developer" Foreground="White"/>
-                    <TextBlock Text="Team Protego" Foreground="White" Margin="544,0,77,0"/>
+                    <TextBlock Text="Team Protego" Foreground="White" Margin="544,0,-239,0"/>
                 </Grid>
 
                 <Grid Margin="16">
-                    <TextBlock Text="Contact us" Foreground="White"/>
+                    <TextBlock Text="Contact us" Foreground="White" Margin="0,0,-213,0"/>
                     <TextBlock Text="Protego.bscs2020@gmail.com" Foreground="White" Margin="443,0,108,0"/>
                 </Grid>
                 
                 <Grid Margin="16">
                     <TextBlock Text="Credits" Foreground="White"/>
-                    <TextBlock Text="Open-Source libraries: WPF UI by Lepo" Foreground="White" Margin="390,0,106,2"/>
+                    <TextBlock Text="Open-Source libraries: WPF UI by Lepo" Foreground="White" Margin="390,0,-202,2"/>
                 </Grid>
 
                 <Grid Margin="16">
                     <TextBlock Text="Website" Foreground="White"/>
-                    <TextBlock Foreground="White" Margin="581,0,109,2">
+                    <TextBlock Foreground="White" Margin="581,0,-114,2">
                         <Hyperlink NavigateUri="https://saibadev.github.io/Protego-website-deploy/index.html">Website</Hyperlink>
                     </TextBlock>
                 </Grid>
