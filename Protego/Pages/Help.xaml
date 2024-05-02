@@ -4,75 +4,81 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Protego.Pages"
-      xmlns:userControl="clr-namespace:Protego.UserControls"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Help"  ScrollViewer.CanContentScroll="False">
+      Title="Help" ScrollViewer.CanContentScroll="False">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="75"/>
-            <RowDefinition Height="320"/>
-            <RowDefinition Height="42"/>
-            <RowDefinition Height="Auto" MinHeight="13"/>
+            <RowDefinition Height="65"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+
+            <!-- Adjust to content size -->
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="About us" Foreground="White" FontSize="28" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Height="38" Width="151"  Margin="24,27,0,0"/>
+        <TextBlock Text="About us" Foreground="White" FontSize="28" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,27,0,0"/>
 
-        <ui:CardExpander Padding="5" ContentPadding="0" Height="222" Margin="10,1,10,0" VerticalAlignment="Top" Grid.Row="1">
+        <ui:CardExpander Padding="5" ContentPadding="0" Margin="10,0,10,0" Grid.Row="1">
             <ui:CardExpander.Header>
-                <Grid Height="auto" Width="671">
+                <Grid Width="Auto">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <ui:TextBlock>
-                        <InlineUIContainer>
-                            <Image Source="\Assets\Protego_logo.ico" Width="50" Height="50"/>
-                        </InlineUIContainer>
-                    </ui:TextBlock>
-                    <ui:TextBlock Text="Protego - Flashdrive Baiting Prevention App" FontTypography="Body" FontSize="20" Margin="55,1,213,25"/>
-                    <ui:TextBlock Text="© 2023 UCC - NORTH BSCS | Protego" Grid.ColumnSpan="2" Margin="57,28,-57,-27" Grid.RowSpan="2" FontSize="10"/>
+                    <Image Source="\Assets\Protego_logo.ico" Width="50" Height="50"/>
+                    <ui:TextBlock Text="Protego - Flashdrive Baiting Prevention App" FontTypography="Body" FontSize="20" Margin="50,0,318,0" Grid.ColumnSpan="2"/>
+                    <ui:TextBlock Text="© 2023 UCC - NORTH BSCS | Protego" FontSize="10" Grid.Column="1" HorizontalAlignment="Right" Margin="0,28,535,-28"/>
                 </Grid>
             </ui:CardExpander.Header>
             <StackPanel>
                 <Grid Margin="16">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Text="BSCS 4 A/B" Margin="542,0,-196,0" Height="19" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
-                    <TextBlock
-                        Foreground="White"
-                        Text="University of Caloocan City" Margin="0,0,363,0" />
+                    <ui:TextBlock Text="University of Caloocan City" Foreground="White"/>
+                    <ui:TextBlock Text="BSCS 4 A/B" Foreground= "White" Margin="590,0,0,0"/>
                 </Grid>
+
                 <Grid Margin="16">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Foreground="White"
-                        Text="Protego - v1.0.0.0" Margin="0,0,464,0" />
+                    <TextBlock Text="Protego - v1.0.0.0" Foreground="White"/>
                 </Grid>
             </StackPanel>
         </ui:CardExpander>
 
-        <TextBlock Grid.Row="1" Text="Visit our socials for more info:" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Top" Height="14" Width="158" Margin="0,260,0,0"/>
-
-        <Image Source="\Assets\Web.png" Width="50" Grid.Row="1" HorizontalAlignment="Center" Margin="0,266,0,18" MouseLeftButtonDown="OnImageClick" Grid.RowSpan="2"/>
-
-        <TextBlock Grid.Row="2" Text="Website" Foreground="White" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,8,0,0" Height="13" Width="36"/>
+        <ui:CardExpander Padding="5" ContentPadding="0" Margin="10,10,10,0" Grid.Row="2">
+            <ui:CardExpander.Header>
+                <Grid Width="Auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="61*"/>
+                        <ColumnDefinition Width="316*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Image Source="\Assets\Protego_logo.ico" Width="50" Height="50" Margin="-2,0,74,0"/>
+                    <ui:TextBlock Text="Protego - Flashdrive Baiting Prevention App" FontTypography="Body" FontSize="20" Margin="50,0,-41,0" Grid.ColumnSpan="2"/>
+                    <ui:TextBlock Text="© 2023 UCC - NORTH BSCS | Protego" FontSize="10" HorizontalAlignment="Left" Margin="50,29,0,-29" Grid.ColumnSpan="2"/>
+                </Grid>
+            </ui:CardExpander.Header>
+            <StackPanel>
+                <Grid Margin="16">
+                    
+                </Grid>
+            </StackPanel>
+        </ui:CardExpander>
+        <TextBlock Text="Visit our socials for more info:" Foreground="White" VerticalAlignment="Top" Grid.Row="3" Margin="308,152,308,0"/>
+        <Image Source="\Assets\Web.png" Width="50" HorizontalAlignment="Center" Margin="0,172,0,25" MouseLeftButtonDown="OnImageClick" Grid.Row="3" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="35.333"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <TextBlock Text="Website" Foreground="White" FontSize="10" VerticalAlignment="Top" Grid.Row="3" Margin="383,224,369,0"/>
     </Grid>
 </Page>
