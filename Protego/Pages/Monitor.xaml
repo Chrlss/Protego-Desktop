@@ -50,8 +50,9 @@
         <ui:CardAction Grid.Column="2" IsEnabled="False" IsChevronVisible="False" Height="210" Margin="100,15,10,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <Grid>
                 <userControl:CPU x:Name="RAM" Height="140" Width="140" HorizontalAlignment="Center" VerticalAlignment="Top" IndicatorBrush="#1D84B5" Margin="0,-27,0,0"  />
-                <userControl:RAMUsage Margin="0,87,0,-87"/>
+                <userControl:RAMUsage Margin="46,89,-46,-89"/>
                 <TextBlock x:Name="RAMpercent"  Text="RAM%" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,34,0,0" Foreground="White"/>
+                <TextBlock Text="Memory" FontSize="20" Margin="30,131,109,-42"/>
             </Grid>
         </ui:CardAction>
 

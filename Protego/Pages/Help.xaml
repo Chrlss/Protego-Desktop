@@ -93,7 +93,7 @@
             </StackPanel>
         </ui:CardExpander>
 
-        <ui:CardExpander Padding="5" ContentPadding="0" Margin="10,10,10,0" Grid.Row="3" VerticalAlignment="Top">
+        <ui:CardExpander Padding="5" ContentPadding="0" Margin="10,11,10,0" Grid.Row="5" VerticalAlignment="Top">
             <ui:CardExpander.Header>
                 <Grid Height="48">
                     <Grid.RowDefinitions>
