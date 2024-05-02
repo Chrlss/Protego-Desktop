@@ -90,7 +90,7 @@ namespace Protego.Pages
                 {
                     if (eventType == "2")
                     {
-                        LogTextBox.AppendText($"Drive detected: {driveName}\n");
+                        
                         Button_Click(this, new RoutedEventArgs());
                     }
                     else if (eventType == "3")
