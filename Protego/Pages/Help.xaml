@@ -32,7 +32,7 @@
                     </Grid.ColumnDefinitions>
                     <Image Source="\Assets\Protego_logo.ico" Width="50" Height="50"/>
                     <ui:TextBlock Text="Protego - Flashdrive Baiting Prevention App" FontTypography="Body" FontSize="20" Margin="0,0,196,0" Grid.Column="1"/>
-                    <ui:TextBlock Text="© 2024 UCC - NORTH BSCS | Protego" FontSize="10" Grid.Column="1" HorizontalAlignment="Right" Margin="0,28,455,-28"/>
+                    <ui:TextBlock Text="© 2024 UCC - NORTH BSCS | Protego" FontSize="10" Grid.Column="1" HorizontalAlignment="Right" Margin="0,28,470,-28"/>
                 </Grid>
             </ui:CardExpander.Header>
             <StackPanel>
@@ -84,10 +84,11 @@
             </ui:CardExpander.Header>
             <StackPanel>
                 <Grid Height="100" Margin="16">
-                    <TextBlock Text="Version 1.0.0.0: Initial release of Protego." Foreground="White" Height="20" Margin="0,5,0,75"/>
-                    <TextBlock Text="   Added file scanning and quarantine features." Foreground="White" Height="20" Margin="0,30,0,50"/>
-                    <TextBlock Text="   Improved performance and stability." Foreground="White" Height="20" Margin="0,80,0,0"/>
-                    <TextBlock Text="   Added keep suspicious file feature." Foreground="White" Height="20" Margin="0,55,0,25"/>
+                    <TextBlock Text="Version 1.0.0.0:" Foreground="White" Height="20" Margin="0,5,0,75"/>
+                    <TextBlock Text="   -Initial release of Protego." Foreground="White" Height="20" Margin="0,30,0,50"/>
+                    <TextBlock Text="   -Added file scanning and quarantine features." Foreground="White" Height="20" Margin="0,52,0,28"/>
+                    <TextBlock Text="   -Improved performance and stability." Foreground="White" Height="20" Margin="0,92,0,-12"/>
+                    <TextBlock Text="   -Added keep suspicious file feature." Foreground="White" Height="20" Margin="0,72,0,8"/>
                 </Grid>
 
                 
