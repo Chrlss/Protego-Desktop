@@ -73,9 +73,10 @@
 
 
         <userControl:CPU x:Name="RAM" Height="120" Width="120" HorizontalAlignment="Center" VerticalAlignment="Top" IndicatorBrush="#1D84B5" Grid.Column="2" Grid.Row="2" Margin="0,25,0,0" />
-        <userControl:RAMUsage Margin="5,163,10,31" Grid.Row="2" Grid.Column="2"/>
+        <userControl:RAMUsage Margin="43,163,-28,31" Grid.Row="2" Grid.Column="2"/>
         <TextBlock x:Name="RAMpercent"  Text="RAM%" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,74,0,0" Grid.Column="2" Grid.Row="2" Foreground="White"/>
+        <TextBlock Text="Memory" Grid.Column="2" Grid.Row="2" FontSize="20" Foreground="White" Margin="30,155,130,11"/>
 
-        
+
     </Grid>
 </Page>
