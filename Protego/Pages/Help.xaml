@@ -18,7 +18,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="About us" Foreground="White" FontSize="28" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,22,0,0"/>
+        <TextBlock Text="About us" Foreground="White" FontSize="28" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="24,17,0,0"/>
 
         <ui:CardExpander Padding="5" ContentPadding="0" Margin="10,0,10,0" Grid.Row="1">
             <ui:CardExpander.Header>
@@ -52,14 +52,9 @@
                 </Grid>
 
                 <Grid Margin="16">
-                    <TextBlock Text="Credits" Foreground="White"/>
-                    <TextBlock Text="Open-Source libraries: WPF UI by Lepo" Foreground="White" Margin="439,0,-251,2"/>
-                </Grid>
-
-                <Grid Margin="16">
                     <TextBlock Text="Website" Foreground="White"/>
-                    <TextBlock Foreground="White" Margin="627,0,-160,2">
-                        <Hyperlink NavigateUri="https://saibadev.github.io/Protego-website-deploy/index.html">Website</Hyperlink>
+                    <TextBlock Foreground="White" Margin="604,0,-137,2">
+                        <Hyperlink NavigateUri="https://saibadev.github.io/Protego-website-deploy/index.html">Our Website</Hyperlink>
                     </TextBlock>
                 </Grid>
 
@@ -78,7 +73,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Image Source="\Assets\Protego_logo.ico" Width="50" Height="50" Margin="-2,0,74,0" Visibility="Hidden"/>
-                    <ui:TextBlock Text="Release Notes:" FontTypography="Body" FontSize="18" Margin="8,12,1,-12" Grid.ColumnSpan="2" />
+                    <ui:TextBlock Text="Release Notes:" FontTypography="Body" FontSize="16" Margin="8,12,1,-12" Grid.ColumnSpan="2" />
 
                 </Grid>
             </ui:CardExpander.Header>
@@ -108,7 +103,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ui:TextBlock Text="Privacy Policy" FontTypography="Body" FontSize="18" Margin="10,11,0,-11"/>
+                    <ui:TextBlock Text="Privacy Policy" FontTypography="Body" FontSize="16" Margin="10,11,0,-11"/>
                 </Grid>
 
 
@@ -128,7 +123,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <ui:TextBlock Text="Acknowledgement" FontTypography="Body" FontSize="18" Margin="10,11,0,-11"/>
+                    <ui:TextBlock Text="Acknowledgement" FontTypography="Body" FontSize="16" Margin="10,11,0,-11"/>
                 </Grid>
             </ui:CardExpander.Header>
             <StackPanel>
