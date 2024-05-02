@@ -22,6 +22,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
+            <Frame x:Name="ContentFrame" JournalOwnership="OwnsJournal" NavigationUIVisibility="Hidden" />
             <Border x:Name="StatusbarBorder" Grid.ColumnSpan="2">
 
                 <StackPanel x:Name="StatusBar" Height="30" Width="auto" VerticalAlignment="Top" >
@@ -109,7 +110,7 @@
                     </Grid>
                 </ui:NavigationView.ContentOverlay>
             </ui:NavigationView>
-           
+
             
         </Grid>
     </Border>
