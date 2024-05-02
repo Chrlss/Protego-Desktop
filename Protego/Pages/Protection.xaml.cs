@@ -50,8 +50,8 @@ namespace Protego.Pages
         public Protection()
         {
             InitializeComponent();
+            LogTextBox.TextChanged += LogTextBox_TextChanged;
 
-            
             //ResetScanCount();
             LoadScanCountFromSettings();
             UpdateDashboardReport();
@@ -107,7 +107,11 @@ namespace Protego.Pages
 
         }
 
-
+        private void LogTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // Scroll to the end of the LogTextBox
+            LogTextBox.ScrollToEnd();
+        }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
