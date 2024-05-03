@@ -107,6 +107,8 @@ namespace Protego.Pages
 
         }
 
+
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             timer.Stop();
@@ -232,7 +234,10 @@ namespace Protego.Pages
             {                
                 return;
             }
-            
+
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.SetScanInProgress(true);
+            isScanning = true;
 
             try
             {
@@ -299,6 +304,8 @@ namespace Protego.Pages
                     StatusTextBox.Text = $"Scan complete. Scanned {totalFilesScanned} files.";
                     ClearLogButton.IsEnabled = true;
                     ProgressBar.Visibility = Visibility.Collapsed;
+                    mainWindow?.SetScanInProgress(false); // Re-enable navigation after scan
+                    isScanning = false;
 
                 });
             }
