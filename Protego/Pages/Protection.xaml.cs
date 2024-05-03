@@ -678,7 +678,7 @@ namespace Protego.Pages
                     {
                         using (StreamWriter writer = File.CreateText(deletionDateFilePath))
                         {
-                            writer.WriteLine(DateTime.Now.AddDays(7).ToString("yyyy-MM-dd"));
+                            writer.WriteLine(DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"));
                         }
                     }
                 }
@@ -717,11 +717,6 @@ namespace Protego.Pages
             }
         }
 
-
-
-
-
-
         public void LogQuarantinedFiles()
         {
             if (Directory.Exists(quarantineFolder))
@@ -730,11 +725,10 @@ namespace Protego.Pages
                 foreach (var file in files)
                 {
                     string fileName = Path.GetFileName(file);
-                    QuarantineTextBox.AppendText($"Quarantined: {fileName}\n");
+                    QuarantineTextBox.AppendText($"Suspicious: {fileName}\n");
                 }
             }
         }
-
 
         private void KeepButton_Click(object sender, RoutedEventArgs e)
         {
@@ -758,19 +752,25 @@ namespace Protego.Pages
             }
 
             string removableDrivePath = removableDrives[0]; // Assuming you want to use the first removable drive found
-            string targetFolderPath = Path.Combine(removableDrivePath, "WARNING!_Quarantined_Files");
+            string targetFolderPath = Path.Combine(removableDrivePath, "WARNING!_Suspicios_Files");
 
             if (MessageBox.Show("Are you sure you want to keep all quarantined files?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 foreach (string quarantinedFile in quarantinedFiles)
                 {
-                    string fileName = quarantinedFile.Substring("Quarantined: ".Length).Trim();
-                    string filePath = Path.Combine(quarantineFolder, fileName);
-                    MoveFileToFolder(filePath, targetFolderPath);
+                    // Split the line by colon (':') and take the second part as the file name
+                    string[] parts = quarantinedFile.Split(':');
+                    if (parts.Length >= 2)
+                    {
+                        string fileName = parts[1].Trim();
+                        string filePath = Path.Combine(quarantineFolder, fileName);
+                        MoveFileToFolder(filePath, targetFolderPath);
+                    }
                 }
                 QuarantineTextBox.Clear();
             }
         }
+
         private void MoveFileToFolder(string sourceFilePath, string targetFolderPath)
         {
             try
@@ -799,7 +799,7 @@ namespace Protego.Pages
 
                 File.Delete(sourceFilePath);
 
-                LogMessage($"File {fileName} moved to the removable drive at {targetFolderPath}");
+                LogMessage($"{fileName} has been moved back to the removable drive at {targetFolderPath}");
 
                 // Optional: Remove the deletion date file if it exists
                 string deletionDateFilePath = Path.Combine(quarantineFolder, $"{Path.GetFileNameWithoutExtension(fileName)}.delete");
@@ -824,9 +824,6 @@ namespace Protego.Pages
             });
         }
 
-        private void QuarantineTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+        
     }
 }
