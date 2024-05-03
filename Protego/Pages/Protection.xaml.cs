@@ -667,19 +667,29 @@ namespace Protego.Pages
                 {
                     // Move the file to the Restricted folder
                     string targetFilePath = Path.Combine(restrictedFolderPath, fileName);
-                    File.Move(filePath, targetFilePath);
 
-                    // Set permissions for the moved file
-                    SetFilePermissions(targetFilePath);
-
-                    // Schedule the file for deletion after 7 days
-                    string deletionDateFilePath = Path.Combine(restrictedFolderPath, $"{Path.GetFileNameWithoutExtension(fileName)}.delete");
-                    if (!File.Exists(deletionDateFilePath))
+                    try
                     {
-                        using (StreamWriter writer = File.CreateText(deletionDateFilePath))
+                        // Use File.Move with overwrite option set to true
+                        File.Move(filePath, targetFilePath, true); // Set overwrite to true
+
+                        // Set permissions for the moved file
+                        SetFilePermissions(targetFilePath);
+
+                        // Schedule the file for deletion after 7 days
+                        string deletionDateFilePath = Path.Combine(restrictedFolderPath, $"{Path.GetFileNameWithoutExtension(fileName)}.delete");
+                        if (!File.Exists(deletionDateFilePath))
                         {
-                            writer.WriteLine(DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"));
+                            using (StreamWriter writer = File.CreateText(deletionDateFilePath))
+                            {
+                                writer.WriteLine(DateTime.Now.AddDays(7).ToString("yyyy-MM-dd"));
+                            }
                         }
+                    }
+                    catch (IOException ex)
+                    {
+                        // Handle file already exists scenario
+                        MessageBox.Show($"File '{fileName}' already exists in the destination folder.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
@@ -687,6 +697,7 @@ namespace Protego.Pages
                     remainingFiles.Add(quarantinedFile); // Add the file back to the list if not moved
                 }
             }
+
 
             // Update the QuarantineTextBox with the remaining files
             QuarantineTextBox.Text = string.Join(Environment.NewLine, remainingFiles);
