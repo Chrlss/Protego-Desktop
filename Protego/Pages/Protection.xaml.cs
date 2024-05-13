@@ -50,6 +50,10 @@ namespace Protego.Pages
         public Protection()
         {
             InitializeComponent();
+
+            StartMonitoringForFlashDrive();
+            LogConnectedRemovableDrives();
+
             LogTextBox.TextChanged += LogTextBox_TextChanged;
 
             //ResetScanCount();
@@ -73,11 +77,6 @@ namespace Protego.Pages
             LogTextBox = FindName("LogTextBox") as TextBox;
             ClearLogButton = FindName("ClearLogButton") as Button;
             ClearLogButton.IsEnabled = false;
-
-            StartMonitoringForFlashDrive();
-            LogConnectedRemovableDrives();
-
-
 
             watcher = new ManagementEventWatcher();
             watcher.Query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 OR EventType = 3");
@@ -275,11 +274,7 @@ namespace Protego.Pages
                                 return;
                             }
 
-                            FileInfo fileInfo = new FileInfo(file);
-                            if (fileInfo.Length > 500 * 1024 * 1024) 
-                            {
-                                continue; 
-                            }
+                            
 
                             totalFilesScanned++;
 
@@ -693,18 +688,6 @@ namespace Protego.Pages
             }
         }
 
-        public void LogQuarantinedFiles()
-        {
-            if (Directory.Exists(quarantineFolder))
-            {
-                var files = Directory.GetFiles(quarantineFolder);
-                foreach (var file in files)
-                {
-                    string fileName = Path.GetFileName(file);
-                    QuarantineTextBox.AppendText($"Suspicious: {fileName}\n");
-                }
-            }
-        }
 
         private void KeepButton_Click(object sender, RoutedEventArgs e)
         {
@@ -732,6 +715,7 @@ namespace Protego.Pages
             {
                 foreach (string quarantinedFile in quarantinedFiles)
                 {
+                    // Split the line by colon (':') and take the second part as the file name
                     string[] parts = quarantinedFile.Split(':');
                     if (parts.Length >= 2)
                     {
@@ -769,6 +753,8 @@ namespace Protego.Pages
                 File.Delete(sourceFilePath);
 
                 LogMessage($"{fileName} has been moved back to the removable drive at {targetFolderPath}");
+
+                // Optional: Remove the deletion date file if it exists
                 string deletionDateFilePath = Path.Combine(quarantineFolder, $"{Path.GetFileNameWithoutExtension(fileName)}.delete");
                 if (File.Exists(deletionDateFilePath))
                 {
@@ -789,7 +775,18 @@ namespace Protego.Pages
                 LogTextBox.AppendText($"{message}\n");
             });
         }
+        public void LogQuarantinedFiles()
+        {
+            if (Directory.Exists(quarantineFolder))
+            {
+                var files = Directory.GetFiles(quarantineFolder);
+                foreach (var file in files)
+                {
+                    string fileName = Path.GetFileName(file);
+                    QuarantineTextBox.AppendText($"Suspicious: {fileName}\n");
+                }
+            }
+        }
 
-        
     }
 }
