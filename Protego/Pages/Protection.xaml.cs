@@ -50,6 +50,10 @@ namespace Protego.Pages
         public Protection()
         {
             InitializeComponent();
+
+            StartMonitoringForFlashDrive();
+            LogConnectedRemovableDrives();
+
             LogTextBox.TextChanged += LogTextBox_TextChanged;
 
             //ResetScanCount();
@@ -73,11 +77,6 @@ namespace Protego.Pages
             LogTextBox = FindName("LogTextBox") as TextBox;
             ClearLogButton = FindName("ClearLogButton") as Button;
             ClearLogButton.IsEnabled = false;
-
-            StartMonitoringForFlashDrive();
-            LogConnectedRemovableDrives();
-
-
 
             watcher = new ManagementEventWatcher();
             watcher.Query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2 OR EventType = 3");
@@ -728,18 +727,6 @@ namespace Protego.Pages
             }
         }
 
-        public void LogQuarantinedFiles()
-        {
-            if (Directory.Exists(quarantineFolder))
-            {
-                var files = Directory.GetFiles(quarantineFolder);
-                foreach (var file in files)
-                {
-                    string fileName = Path.GetFileName(file);
-                    QuarantineTextBox.AppendText($"Suspicious: {fileName}\n");
-                }
-            }
-        }
 
         private void KeepButton_Click(object sender, RoutedEventArgs e)
         {
@@ -834,7 +821,18 @@ namespace Protego.Pages
                 LogTextBox.AppendText($"{message}\n");
             });
         }
+        public void LogQuarantinedFiles()
+        {
+            if (Directory.Exists(quarantineFolder))
+            {
+                var files = Directory.GetFiles(quarantineFolder);
+                foreach (var file in files)
+                {
+                    string fileName = Path.GetFileName(file);
+                    QuarantineTextBox.AppendText($"Suspicious: {fileName}\n");
+                }
+            }
+        }
 
-        
     }
 }

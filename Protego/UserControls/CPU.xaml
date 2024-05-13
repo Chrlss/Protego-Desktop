@@ -8,13 +8,20 @@
              x:Name="_this"     
              xmlns:local="clr-namespace:Protego.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="1000" d:DesignWidth="1000">
     <UserControl.Resources>
         <local:ValueToAngle x:Key="ValueToAngle" />
     </UserControl.Resources>
 
     <Grid>
         <!---->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Grid>
             <Ellipse x:Name="Background" Fill="{Binding BackgroundBrush, ElementName=_this}" Margin="0" Stroke="Gray" />
             <ed:Arc x:Name="Indicator" ArcThickness="10" ArcThicknessUnit="Pixel" 
