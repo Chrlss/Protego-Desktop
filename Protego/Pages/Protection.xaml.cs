@@ -271,15 +271,11 @@ namespace Protego.Pages
                         {
                             if (!DriveInfo.GetDrives().Any(d => d.Name == drive.Name))
                             {
-                                cancellationTokenSource.Cancel(); // Cancel the scanning process
+                                cancellationTokenSource.Cancel(); 
                                 return;
                             }
 
-                            FileInfo fileInfo = new FileInfo(file);
-                            if (fileInfo.Length > 500 * 1024 * 1024) // 500 MB in bytes
-                            {
-                                continue; // Skip processing this file
-                            }
+                            
 
                             totalFilesScanned++;
 
@@ -749,14 +745,14 @@ namespace Protego.Pages
                 return;
             }
 
-            string removableDrivePath = removableDrives[0]; // Assuming you want to use the first removable drive found
+            string removableDrivePath = removableDrives[0]; 
             string targetFolderPath = Path.Combine(removableDrivePath, "WARNING!_Suspicios_Files");
 
             if (MessageBox.Show("Are you sure you want to keep all quarantined files?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 foreach (string quarantinedFile in quarantinedFiles)
                 {
-                    // Split the line by colon (':') and take the second part as the file name
+                    
                     string[] parts = quarantinedFile.Split(':');
                     if (parts.Length >= 2)
                     {
@@ -799,7 +795,7 @@ namespace Protego.Pages
 
                 LogMessage($"{fileName} has been moved back to the removable drive at {targetFolderPath}");
 
-                // Optional: Remove the deletion date file if it exists
+                
                 string deletionDateFilePath = Path.Combine(quarantineFolder, $"{Path.GetFileNameWithoutExtension(fileName)}.delete");
                 if (File.Exists(deletionDateFilePath))
                 {
