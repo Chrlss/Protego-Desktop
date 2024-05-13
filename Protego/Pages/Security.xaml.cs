@@ -33,7 +33,6 @@ namespace Protego.Pages
             }
             catch (Exception ex)
             {
-                // Handle exception, for example, display an error message to the user
                 MessageBox.Show("Failed to open link: " + ex.Message);
             }
         }
@@ -47,7 +46,6 @@ namespace Protego.Pages
             }
             catch (Exception ex)
             {
-                // Handle exception, for example, display an error message to the user
                 MessageBox.Show("Failed to open link: " + ex.Message);
             }
         }

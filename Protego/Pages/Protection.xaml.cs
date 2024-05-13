@@ -108,8 +108,7 @@ namespace Protego.Pages
         }
 
         private void LogTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            // Scroll to the end of the LogTextBox
+        {            
             LogTextBox.ScrollToEnd();
         }
 
@@ -123,10 +122,10 @@ namespace Protego.Pages
             timer.Interval = TimeSpan.FromSeconds(5); // Set the timer interval to 5 seconds
             timer.Tick += (sender, e) =>
             {
-                // Start the scan when the timer elapses
+               
                 Button_Click(this, new RoutedEventArgs ());
 
-                // Stop the timer
+                
                 timer.Stop();
             };
             timer.Start();
@@ -154,14 +153,14 @@ namespace Protego.Pages
                         
                         isFlashDriveDetected = true;
 
-                        StartFlashDriveDetectedTimer(); // Start the timer when flash drive is inserted
+                        StartFlashDriveDetectedTimer(); 
                     }
                     else if (eventType == "3")
                     {
                         
                         isFlashDriveDetected = false;
 
-                        StopFlashDriveDetectedTimer(); // Stop the timer when flash drive is removed
+                        StopFlashDriveDetectedTimer(); 
                     }
                 });
             };
@@ -272,14 +271,14 @@ namespace Protego.Pages
                         {
                             if (!DriveInfo.GetDrives().Any(d => d.Name == drive.Name))
                             {
-                                cancellationTokenSource.Cancel(); // Cancel the scanning process
+                                cancellationTokenSource.Cancel(); 
                                 return;
                             }
 
                             FileInfo fileInfo = new FileInfo(file);
-                            if (fileInfo.Length > 500 * 1024 * 1024) // 500 MB in bytes
+                            if (fileInfo.Length > 500 * 1024 * 1024) 
                             {
-                                continue; // Skip processing this file
+                                continue; 
                             }
 
                             totalFilesScanned++;
@@ -308,14 +307,13 @@ namespace Protego.Pages
                     StatusTextBox.Text = $"Scan complete. Scanned {totalFilesScanned} files.";
                     ClearLogButton.IsEnabled = true;
                     ProgressBar.Visibility = Visibility.Collapsed;
-                    mainWindow?.SetScanInProgress(false); // Re-enable navigation after scan
+                    mainWindow?.SetScanInProgress(false);
                     isScanning = false;
 
                 });
             }
             catch (Exception ex)
             {
-                // Handle any exceptions
                 MessageBox.Show($"Error occurred during scan: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
@@ -325,11 +323,11 @@ namespace Protego.Pages
                 
             }
 
-            // Increment the scan count
+            
             flashDriveScanCount++;
             SaveScanCountToSettings();
 
-            // Update the dashboard report
+            
             UpdateDashboardReport();
             SaveScanCountToSettings();
         }
@@ -339,24 +337,17 @@ namespace Protego.Pages
 
         private void AnimateProgressBar(double fromValue, double toValue)
         {
-            // Create a DoubleAnimation to animate the value of the progress bar
+            
             DoubleAnimation animation = new DoubleAnimation();
-            animation.From = fromValue; // Start value
-            animation.To = toValue;     // End value
-            animation.Duration = TimeSpan.FromSeconds(0.5); // Animation duration (adjust as needed)
-
-            // Set the easing function for smoother animation
+            animation.From = fromValue; 
+            animation.To = toValue;    
+            animation.Duration = TimeSpan.FromSeconds(0.5);             
             animation.EasingFunction = new CubicEase();
-
-            // Set the target property to animate (ProgressBar.ValueProperty)
+            
             Storyboard.SetTarget(animation, ProgressBar);
-            Storyboard.SetTargetProperty(animation, new PropertyPath(ProgressBar.ValueProperty));
-
-            // Create a Storyboard and add the animation to it
+            Storyboard.SetTargetProperty(animation, new PropertyPath(ProgressBar.ValueProperty));                        
             Storyboard storyboard = new Storyboard();
-            storyboard.Children.Add(animation);
-
-            // Begin the animation
+            storyboard.Children.Add(animation);            
             storyboard.Begin();
         }
 
@@ -410,11 +401,7 @@ namespace Protego.Pages
         {
             isScanning = false;
         }
-
-
-
-        // Add a method to handle cancellation of the scanning process
-
+        
         private void ClearLogButton_Click(object sender, RoutedEventArgs e)
         {
             ClearLog();
@@ -432,26 +419,19 @@ namespace Protego.Pages
             });
         }
 
-
         private Dictionary<string, string> GetFileHash(string filePath)
         {
             using (var stream = File.OpenRead(filePath))
             {
                 
-                var sha256 = SHA256.Create();
-                
-
-                
+                var sha256 = SHA256.Create();                               
                 var sha256HashBytes = sha256.ComputeHash(stream);
-                
-
                 var hashValues = new Dictionary<string, string>
                 {
                     
                     { "SHA-256", BitConverter.ToString(sha256HashBytes).Replace("-", "").ToLower() },
                     
                 };
-
                 return hashValues;
             }
         }
@@ -460,7 +440,6 @@ namespace Protego.Pages
         private List<string> LoadAdditionalHashList(string filePath)
         {
             List<string> additionalHashList = new List<string>();
-
             try
             {
                 string[] lines = File.ReadAllLines(filePath);
@@ -470,7 +449,6 @@ namespace Protego.Pages
             {
                 LogTextBox.AppendText($"Error loading additional hash list: {ex.Message}\n");
             }
-
             return additionalHashList;
         }
 
@@ -481,7 +459,6 @@ namespace Protego.Pages
                 string fileHash = hashValues["SHA-256"];
                 if (hashList.Contains(fileHash.ToLower()))
                 {
-
                     QuarantineFile(filePath);
                     return true;
                 }
@@ -489,13 +466,11 @@ namespace Protego.Pages
                 string extension = Path.GetExtension(filePath);
                 if (IsSuspiciousExtension(extension))
                 {
-
                     QuarantineFile(filePath);
                     return true;
                 }
 
                 string url = $"https://www.virustotal.com/api/v3/files/{fileHash}";
-
                 using (var request = new HttpRequestMessage(HttpMethod.Get, url))
                 {
                     request.Headers.Add("x-apikey", apiKey);
@@ -669,11 +644,8 @@ namespace Protego.Pages
                     string targetFilePath = Path.Combine(restrictedFolderPath, fileName);
 
                     try
-                    {
-                        // Use File.Move with overwrite option set to true
-                        File.Move(filePath, targetFilePath, true); // Set overwrite to true
-
-                        // Set permissions for the moved file
+                    {                        
+                        File.Move(filePath, targetFilePath, true); 
                         SetFilePermissions(targetFilePath);
 
                         // Schedule the file for deletion after 7 days
@@ -688,22 +660,15 @@ namespace Protego.Pages
                     }
                     catch (IOException ex)
                     {
-                        // Handle file already exists scenario
                         MessageBox.Show($"File '{fileName}' already exists in the destination folder.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
                 {
-                    remainingFiles.Add(quarantinedFile); // Add the file back to the list if not moved
+                    remainingFiles.Add(quarantinedFile);
                 }
-            }
-
-
-            // Update the QuarantineTextBox with the remaining files
-            QuarantineTextBox.Text = string.Join(Environment.NewLine, remainingFiles);
-
-            // Clear the text box only after all files have been processed
-            // QuarantineTextBox.Clear();
+            }                       
+            QuarantineTextBox.Text = string.Join(Environment.NewLine, remainingFiles);                       
         }
 
 
@@ -714,7 +679,7 @@ namespace Protego.Pages
             try
             {
                 FileInfo fileInfo = new FileInfo(filePath);
-                string fileName = fileInfo.Name; // Get just the file name without the path
+                string fileName = fileInfo.Name; 
 
                 FileSecurity fileSecurity = fileInfo.GetAccessControl();
                 fileSecurity.AddAccessRule(new FileSystemAccessRule(Environment.UserName, FileSystemRights.ReadAndExecute, AccessControlType.Deny));
@@ -749,9 +714,7 @@ namespace Protego.Pages
             {
                 MessageBox.Show("There are no quarantined files to keep.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
-            }
-
-            // Get the removable drive path
+            }            
             string[] removableDrives = Environment.GetLogicalDrives()
                 .Where(drive => new DriveInfo(drive).DriveType == DriveType.Removable)
                 .ToArray();
@@ -762,14 +725,13 @@ namespace Protego.Pages
                 return;
             }
 
-            string removableDrivePath = removableDrives[0]; // Assuming you want to use the first removable drive found
+            string removableDrivePath = removableDrives[0]; 
             string targetFolderPath = Path.Combine(removableDrivePath, "WARNING!_Suspicios_Files");
 
             if (MessageBox.Show("Are you sure you want to keep all quarantined files?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 foreach (string quarantinedFile in quarantinedFiles)
                 {
-                    // Split the line by colon (':') and take the second part as the file name
                     string[] parts = quarantinedFile.Split(':');
                     if (parts.Length >= 2)
                     {
@@ -793,16 +755,12 @@ namespace Protego.Pages
 
                 string fileName = Path.GetFileName(sourceFilePath);
                 string targetFilePath = Path.Combine(targetFolderPath, fileName);
-
-                // Ensure the file is not hidden and has normal attributes
+                                
                 File.SetAttributes(sourceFilePath, FileAttributes.Normal);
-
                 File.Copy(sourceFilePath, targetFilePath, true);
 
-                // Get the current user's identity reference
-                IdentityReference user = new NTAccount(Environment.UserDomainName, Environment.UserName).Translate(typeof(SecurityIdentifier));
-
-                // Modify the permissions of the quarantined file to give back full control permissions
+                
+                IdentityReference user = new NTAccount(Environment.UserDomainName, Environment.UserName).Translate(typeof(SecurityIdentifier));                
                 FileInfo fileInfo = new FileInfo(targetFilePath);
                 FileSecurity fileSecurity = fileInfo.GetAccessControl();
                 fileSecurity.AddAccessRule(new FileSystemAccessRule(user, FileSystemRights.FullControl, AccessControlType.Allow));
@@ -811,8 +769,6 @@ namespace Protego.Pages
                 File.Delete(sourceFilePath);
 
                 LogMessage($"{fileName} has been moved back to the removable drive at {targetFolderPath}");
-
-                // Optional: Remove the deletion date file if it exists
                 string deletionDateFilePath = Path.Combine(quarantineFolder, $"{Path.GetFileNameWithoutExtension(fileName)}.delete");
                 if (File.Exists(deletionDateFilePath))
                 {
@@ -827,8 +783,7 @@ namespace Protego.Pages
 
 
         private void LogMessage(string message)
-        {
-            // Use Dispatcher to update UI elements
+        {            
             LogTextBox.Dispatcher.Invoke(() =>
             {
                 LogTextBox.AppendText($"{message}\n");

@@ -28,8 +28,7 @@ namespace Protego.Pages
 
         public Help()
         {
-            InitializeComponent();
-            
+            InitializeComponent();            
 
         }
         private void OnImageClick(object sender, RoutedEventArgs e)

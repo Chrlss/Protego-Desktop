@@ -54,7 +54,6 @@ namespace Protego.Pages
             }
             catch (Exception ex)
             {
-                // Handle the exception appropriately, such as logging or displaying an error message.
                 MessageBox.Show($"An error occurred while loading processor family: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

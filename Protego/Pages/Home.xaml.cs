@@ -66,7 +66,7 @@ namespace Protego.Pages
         }
         private string GetProcessorFamily()
         {
-            // Dictionary to map processor family codes to their names
+            
             var familyMapping = new Dictionary<int, string>
             {
                 {198, "Intel(R) Core(TM) i7"},
@@ -79,11 +79,9 @@ namespace Protego.Pages
 
             foreach (var provider in providers)
             {                
-                int procFamily = Convert.ToInt16(provider["Family"]);
-                // Check if the code exists in the dictionary
-                if (familyMapping.ContainsKey(procFamily))
-                {
-                    return familyMapping[procFamily]; // Return the corresponding family name
+                int procFamily = Convert.ToInt16(provider["Family"]);               
+                if (familyMapping.ContainsKey(procFamily))                {
+                    return familyMapping[procFamily]; 
                 }
             }
             return "Unknown Processor Family";
