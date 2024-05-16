@@ -635,34 +635,44 @@ namespace Protego.Pages
                 MessageBoxResult result = MessageBox.Show($"Do you want to move the file {fileName} to the Restricted folder?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    // Move the file to the Restricted folder
-                    string targetFilePath = Path.Combine(restrictedFolderPath, fileName);
+                    MessageBoxResult quarantineResult = MessageBox.Show("Are you sure you want to quarantine this file?", "Confirm Quarantine", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-                    try
-                    {                        
-                        File.Move(filePath, targetFilePath, true); 
-                        SetFilePermissions(targetFilePath);
+                    if (quarantineResult == MessageBoxResult.Yes)
+                    {
+                        // Move the file to the Restricted folder
+                        string targetFilePath = Path.Combine(restrictedFolderPath, fileName);
 
-                        // Schedule the file for deletion after 7 days
-                        string deletionDateFilePath = Path.Combine(restrictedFolderPath, $"{Path.GetFileNameWithoutExtension(fileName)}.delete");
-                        if (!File.Exists(deletionDateFilePath))
+                        try
                         {
-                            using (StreamWriter writer = File.CreateText(deletionDateFilePath))
+                            File.Move(filePath, targetFilePath, true);
+                            SetFilePermissions(targetFilePath);
+
+                            // Schedule the file for deletion after 7 days
+                            string deletionDateFilePath = Path.Combine(restrictedFolderPath, $"{Path.GetFileNameWithoutExtension(fileName)}.delete");
+                            if (!File.Exists(deletionDateFilePath))
                             {
-                                writer.WriteLine(DateTime.Now.AddDays(7).ToString("yyyy-MM-dd"));
+                                using (StreamWriter writer = File.CreateText(deletionDateFilePath))
+                                {
+                                    writer.WriteLine(DateTime.Now.AddDays(7).ToString("yyyy-MM-dd"));
+                                }
                             }
                         }
+                        catch (IOException ex)
+                        {
+                            MessageBox.Show($"File '{fileName}' already exists in the destination folder.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
-                    catch (IOException ex)
+                    else
                     {
-                        MessageBox.Show($"File '{fileName}' already exists in the destination folder.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        remainingFiles.Add(quarantinedFile);
                     }
                 }
                 else
                 {
                     remainingFiles.Add(quarantinedFile);
                 }
-            }                       
+
+            }
             QuarantineTextBox.Text = string.Join(Environment.NewLine, remainingFiles);                       
         }
 

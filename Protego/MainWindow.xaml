@@ -39,7 +39,7 @@
                         </Grid>
 
                         <!-- Minimize Button -->
-                        <Button  Content="_" Foreground="White" Height="22" Width="22" BorderBrush="Transparent" Background="Transparent" Click="MinimizeButton_Click" Margin="745,0,0,0" >
+                        <Button  Content="-" Foreground="White" Height="22" Width="22" BorderBrush="Transparent" Background="Transparent" Click="MinimizeButton_Click" Margin="745,0,0,0" >
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
